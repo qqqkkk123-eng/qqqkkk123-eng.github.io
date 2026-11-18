@@ -1530,7 +1530,7 @@ html[data-theme="dark"] .xcPart td,html[data-theme="dark"] .exGrp td{background:
 'use strict';
 const DB = [];
 const BAKERY_SHARE = true;
-var BAKERY_HIDE_CATS = ["exam", "study"];
+var BAKERY_HIDE_CATS = ["exam", "exam_p", "exam_b", "study"];
 /* ===== 제과 이론 (1) ===== */
 DB.push(
 {
@@ -6182,13 +6182,17 @@ RECIPE_SRC.forEach(function (r) {
   (r.parts || []).forEach(function (p) {
     p.rows.forEach(function (row) { total += Number(row[1]) || 0; });
   });
+  var RMG = { '케이크': 'cake', '시트': 'cake', '스펀지': 'cake', '무스케이크': 'mousse',
+    '치즈케이크': 'mousse', '디저트컵': 'mousse', '무스': 'mousse',
+    '타르트·파이': 'tart', '구움과자': 'baked', '제빵': 'bread',
+    '크림·커드': 'cream', '잠·시럽': 'cream', '잼·시럽': 'cream' };
   var tags = [r.c, r.unit || ''];
   (r.parts || []).forEach(function (p) { tags.push(p.p || ''); });
   var all = [];
   (r.parts || []).forEach(function (p) { p.rows.forEach(function (row) { all.push(row); }); });
   all.slice(0, 8).forEach(function (row) { tags.push(row[0]); });
   DB.push({
-    id: r.id, cat: 'recipe', title: r.n, en: r.en || '',
+    id: r.id, cat: 'recipe', mg: RMG[r.c] || 'etc', title: r.n, en: r.en || '',
     tags: tags.filter(Boolean),
     summary: r.c + ' · ' + (r.unit || '1배') + ' · ' + (r.parts || []).length + '파트 · 총 ' + total + 'g' +
       (r.note ? ' · ' + r.note : ''),
@@ -8292,7 +8296,8 @@ DB.push({
     { k: 'world', n: '세계 제과·제빵', ic: '🌍' },
     { k: 'study', n: '베이킹 공부', ic: '🎓' },
     { k: 'shop', n: '원부재료 최저가', ic: '🛒' },
-    { k: 'exam', n: '기능사 실기', ic: '🏅' },
+    { k: 'exam_p', n: '제과기능사 실기', ic: '🍰' },
+    { k: 'exam_b', n: '제빵기능사 실기', ic: '🍞' },
     { k: 'practical', n: '실무 꿀팁', ic: '🏭' },
     { k: 'term', n: '용어 사전', ic: '📖' },
     { k: 'tool', n: '도구·구매', ic: '🛠️' },
@@ -8579,12 +8584,25 @@ DB.push({
      원본 카테고리(tags[0])를 7개 묶음으로 정리하고, 예외 항목은 id로 지정한다. */
   var MY_GROUPS = [
     { k: 'all', n: '전체', ic: '🍓' },
+    { k: 'gear', n: '사용 도구·기계', ic: '🛠️' },
+    { k: 'stock', n: '사용 재료', ic: '📦' },
     { k: 'cake', n: '케이크·무스·시트' },
     { k: 'baked', n: '구움과자·쿠키' },
     { k: 'tart', n: '타르트·파이' },
     { k: 'bread', n: '제빵·모찌' },
     { k: 'cream', n: '크림·커드·시럽' },
     { k: 'etc', n: '전통떡·기타' }
+  ];
+  /* 레시피 사전 하위 분류 */
+  var RECIPE_GROUPS = [
+    { k: 'all', n: '전체', ic: '📖' },
+    { k: 'baked', n: '구움과자·쿠키', ic: '🍪' },
+    { k: 'cake', n: '케이크·스펀지', ic: '🍰' },
+    { k: 'mousse', n: '무스·치즈케이크', ic: '🧁' },
+    { k: 'tart', n: '타르트·파이', ic: '🥧' },
+    { k: 'bread', n: '제빵·페이스트리', ic: '🥐' },
+    { k: 'cream', n: '크림·베이스·시럽', ic: '🥣' },
+    { k: 'etc', n: '기타', ic: '📌' }
   ];
   var MYG_BY_C = {
     '케이크': 'cake', '시트': 'cake', '무스케이크': 'cake', '치즈케이크': 'cake', '디저트컵': 'cake',
@@ -8597,8 +8615,14 @@ DB.push({
     r056: 'baked',    /* 참고 피 */
     ex77: 'all'       /* 원가·배합 통합표는 전체에서만 */
   };
+  /* 기능사 실기: 데이터는 cat 'exam' 하나로 두고, id 접두어로 제과/제빵을 나눈다 */
+  DB.forEach(function (e) {
+    if (e.cat === 'exam') e.cat = /^bz/.test(e.id) ? 'exam_b' : 'exam_p';
+  });
   DB.forEach(function (e) {
     if (e.cat !== 'my') return;
+    /* 데이터 파일에서 mg를 지정한 항목(도구·기계 / 사용 재료)은 그대로 존중한다 */
+    if (e.mg === 'gear' || e.mg === 'stock') return;
     e.mg = MYG_BY_ID[e.id] || MYG_BY_C[(e.tags || [])[0]] || 'etc';
   });
 
@@ -8735,19 +8759,25 @@ DB.push({
     renderMyChips();
   }
   function myCount(k) {
+    var cat = (state.cat === 'recipe') ? 'recipe' : 'my';
     var n = 0;
     DB.forEach(function (e) {
-      if (e.cat !== 'my') return;
+      if (e.cat !== cat) return;
       if (k === 'all' || e.mg === k) n++;
     });
     return n;
   }
+  function myGroupsNow() {
+    return state.cat === 'recipe' ? RECIPE_GROUPS : MY_GROUPS;
+  }
   function renderMyChips() {
     var el = $('#myChips');
     if (!el) return;
-    if (SHARE || state.cat !== 'my') { el.hidden = true; el.innerHTML = ''; return; }
+    if ((SHARE && state.cat === 'my') || (state.cat !== 'my' && state.cat !== 'recipe')) {
+      el.hidden = true; el.innerHTML = ''; return;
+    }
     el.hidden = false;
-    el.innerHTML = MY_GROUPS.map(function (g) {
+    el.innerHTML = myGroupsNow().filter(function (g) { return g.k === 'all' || myCount(g.k) > 0; }).map(function (g) {
       var on = state.myg === g.k;
       return '<button type="button" class="mchip' + (on ? ' on' : '') + '" data-myg="' + g.k + '"' +
         ' aria-pressed="' + (on ? 'true' : 'false') + '">' +
@@ -8808,7 +8838,7 @@ DB.push({
         return matches(e, tks);
       }
       if (state.cat !== 'all' && e.cat !== state.cat) return false;
-      if (state.cat === 'my' && state.myg !== 'all' && e.mg !== state.myg) return false;
+      if ((state.cat === 'my' || state.cat === 'recipe') && state.myg !== 'all' && e.mg !== state.myg) return false;
       if (state.tag && e.tags.indexOf(state.tag) < 0) return false;
       if (state.bmOnly && !state.bm.has(e.id)) return false;
       return matches(e, tks);
@@ -9050,7 +9080,8 @@ DB.push({
     { k:'g10', n:'세계 제과·제빵', s:'프랑스·이탈리아·독일·영미·일본·한국', cats:['world'], ic:'🌍' },
     { k:'gshop', n:'원부재료 최저가', s:'전재료 260품목+장비 · 확인 시세 · 네이버/쿠팡 최저가 링크', cats:['shop'], ic:'🛒' },
     { k:'gstudy', n:'베이킹 공부', s:'장별 핵심 정리 · 도해', cats:['study'], ic:'🎓' },
-    { k:'gexam', n:'기능사 실기 배합', s:'제과 20과제 · 제빵 20과제 · 배합·분할·발효·굽기', cats:['exam'], ic:'🏅' },
+    { k:'gexamp', n:'제과기능사 실기', s:'제과 20과제 · 배합·분할·굽기·감점 포인트', cats:['exam_p'], ic:'🍰' },
+    { k:'gexamb', n:'제빵기능사 실기', s:'제빵 20과제 · 배합·발효·굽기·감점 포인트', cats:['exam_b'], ic:'🍞' },
     { k:'gprac', n:'실무 꿀팁', s:'계절 온습도 · 응급 복구 · 쇼케이스 · 생산 관리', cats:['practical'], ic:'🏭' },
     { k:'g11', n:'용어 사전', s:'불어·일본어 발음과 뜻 · 한국 표준', cats:['term'], ic:'📖' },
     { k:'g12', n:'도구·구매', s:'매트·몰드·깍지·온도계·칼 비교', cats:['tool'], ic:'🛠️' }
@@ -9729,14 +9760,20 @@ DB.push({
       var orig = c[0] || '', pron, mean, sub = '', roman = '';
       if (three) { pron = c[1] || orig; mean = c[2] || ''; sub = orig; }
       else {
-        var m = /^(.*?)\s*[(（]([^)）]{1,60})[)）]\s*$/.exec(orig);
-        if (m && /[A-Za-z]/.test(m[2])) { pron = m[1]; roman = m[2]; sub = m[2]; }
-        else pron = orig;
+        /* 2열 표(한국 표준 용어): '용어 (원어)'에서 라틴 문자 원어만 부제로 떼어 낸다.
+           한자·한글 괄호는 용어의 일부(다른 이름·한자)이므로 그대로 둔다. */
+        var m = /^(.*?)\s*[(（]([^)）]{1,60})[)）]\s*(.*)$/.exec(orig);
+        if (m && /^[A-Za-z0-9 .&'\-·]+$/.test(m[2].trim())) {
+          var tail = (m[3] || '').replace(/\s+/g, ' ').trim();
+          pron = (m[1] + (tail ? ' ' + tail : '')).trim() || orig;
+          roman = m[2].trim(); sub = roman;
+        } else pron = orig;
         mean = c[1] || '';
       }
       if (!mean) continue;
       items.push({
-        orig: orig, pron: pron, mean: mean, sub: sub, roman: roman, say: TTS.say(orig, spk.lang) || orig,
+        orig: orig, pron: pron, mean: mean, sub: sub, roman: roman,
+        say: (spk && TTS.say(orig, spk.lang)) || orig,
         key: norm([orig, pron, mean, sub].join(' '))
       });
     }
@@ -11514,8 +11551,10 @@ DB.push({
       '<label>③ 성형·팬닝<textarea id="edShape">' + esc(st.shape || '') + '</textarea></label>' +
       '<label>④ 굽기·숙성 (온도·시간)<textarea id="edBake">' + esc(st.bake || '') + '</textarea></label>' +
       '<label>⑤ 마무리·보관<textarea id="edFinish">' + esc(st.finish || '') + '</textarea></label>' +
-      '</div><h4>사진</h4><div class="edGallery" id="edGallery"></div>' +
-      '<label class="uploadBtn">📷 사진 추가 (자동 800px 압축)<input id="edFiles" type="file" accept="image/*" multiple hidden></label>' +
+      '</div><h4>사진 <span class="wUnit">갤러리에서 선택 · 자동 압축</span></h4><div class="edGallery" id="edGallery"></div>' +
+      '<label class="uploadBtn" id="edGalleryBtn">📷 갤러리 사진 첨부' +
+      '<input id="edFiles" type="file" accept="image/*" multiple hidden></label>' +
+      '<p class="note">핸드폰 갤러리·파일에서 여러 장 고를 수 있습니다. 폭 900px·JPEG 75%로 줄여 저장하고(레시피당 8장), 미리보기에서 ✕로 지울 수 있습니다.</p>' +
       '<div class="editMsg" id="edMsg"></div>' +
       '<h4>백업</h4><div class="editBackup">' +
       '<button type="button" class="ghostBtn" id="edExport">⬇ JSON 내보내기</button>' +
@@ -11704,7 +11743,7 @@ DB.push({
       fr.onload = function (e) {
         var img = new Image();
         img.onload = function () {
-          var max = 800, w = img.width, h = img.height;
+          var max = 900, w = img.width, h = img.height;
           var s = Math.min(1, max / Math.max(w, h));
           w = Math.max(1, Math.round(w * s)); h = Math.max(1, Math.round(h * s));
           var c = document.createElement('canvas');
