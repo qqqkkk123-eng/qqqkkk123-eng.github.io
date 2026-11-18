@@ -976,6 +976,13 @@ html[data-theme=dark] .delBtn{color:#f0a08a;border-color:#a05a48}
 .mTbl,.termTbl{table-layout:fixed}
 .wTbl{table-layout:auto;width:100%}
 .wTbl th,.wTbl td{min-width:0}
+/* 유제품 활용표(4열): 첫 열이 낱자로 깨지지 않을 만큼만 폭을 준다 */
+.dairyTbl td:first-child,.dairyTbl th:first-child{min-width:76px}
+@media (min-width:560px){
+  .dairyTbl td:first-child,.dairyTbl th:first-child{min-width:92px}
+  .dairyTbl td:nth-child(2),.dairyTbl td:nth-child(3){min-width:118px}
+  .dairyTbl td:nth-child(4){min-width:140px}
+}
 .mbody table td:first-child{white-space:normal;min-width:52px}
 .videoLinks,.shopLinks{flex-wrap:wrap;max-width:100%}
 .videoBtn{max-width:100%;white-space:normal;overflow-wrap:anywhere;word-break:keep-all}
@@ -1290,6 +1297,7 @@ html[data-theme="dark"] .xcPart td,html[data-theme="dark"] .exGrp td{background:
       <span class="crumbPath" id="crumbPath"></span>
     </div>
     <div class="chips myChips" id="myChips" aria-label="레시피 분류" hidden></div>
+    <div class="chips myChips" id="kindChips" aria-label="세계 제과·제빵 구분" hidden></div>
     <div class="chips" id="chips" aria-label="태그 필터"></div>
   </div>
 </header>
@@ -3529,32 +3537,82 @@ DB.push(
   related:['머랭 3종','크렘 앙글레즈','별립법','유화제와 개량제']
 },
 {
-  id:'i05', cat:'ingredient', title:'유제품: 생크림·마스카포네·크림치즈', en:'Dairy', exam:false,
-  tags:['생크림','마스카포네','크림치즈','유지방'],
-  summary:'유제품은 유지방 함량에 따라 휘핑성·산도·풍미가 달라진다. 동물성과 식물성의 차이도 크다.',
+  id:'i05', cat:'ingredient', title:'유제품: 생크림·마스카포네·크림치즈 — 제과·제빵 활용과 결과', en:'Dairy', exam:false,
+  tags:['생크림','마스카포네','크림치즈','유지방','휘핑','산미','제과','제빵','활용'],
+  summary:'유제품은 유지방 함량에 따라 휘핑성·산도·풍미가 달라진다. 생크림·마스카포네·크림치즈를 제과/제빵 어디에 쓰면 좋은지, 그때 식감·풍미·유지력·굽기 후 변화가 어떻게 나오는지 정리.',
   body:`
-  <h4>생크림</h4>
-  <table>
-    <tr><th>유지방</th><th>특징</th><th>용도</th></tr>
-    <tr><td>30~32%</td><td>휘핑 약함, 묽음</td><td>소스, 커피</td></tr>
-    <tr><td>35~38%</td><td>휘핑 최적, 부드러움</td><td>샹티이, 무스</td></tr>
-    <tr><td>40% 이상</td><td>단단하고 무거움</td><td>장식, 가나슈</td></tr>
+  <h4>제과 vs 제빵 — 어디에 쓰면 좋은가</h4>
+  <table class="wTbl dairyTbl">
+    <tr><th>유제품</th><th>제과에서 (품목·공정)</th><th>제빵에서 (품목·공정)</th><th>피해야 할 곳</th></tr>
+    <tr><td><b>생크림</b></td>
+      <td>샹티이 아이싱(38%, 설탕 8~10%)·딸기 생크림 케이크·무스(젤라틴 1~2%)·가나슈(40%가 유리)·크렘 앙글레즈·파베·컵케이크 토핑</td>
+      <td>식빵·스콘·브리오슈·크림빵 반죽의 물+버터 일부 대체(총액의 15~30%) · 슈·크림빵 필링 · 단팥크림빵</td>
+      <td>휘핑한 채 오븐에 넣는 제품(녹아 흐름) · 산미 강한 필링(분리)</td></tr>
+    <tr><td><b>마스카포네</b></td>
+      <td>티라미수 크림(마스카포네 250g + 생크림 150~200g + 설탕 40~60g) · 마스카포네 무스 · <b>생크림 안정화(생크림의 10~20% 혼합)</b> · 산미 없는 크림치즈 대체</td>
+      <td>크림필링·스프레드(카이막·클로티드크림 자리) · 브리오슈·페이스트리 필링에 소량 · 반죽엔 버터의 10~20%까지</td>
+      <td>고온 굽기(수분·지방 분리) · 냉동(유청 분리) · 산미가 필요한 치즈케이크</td></tr>
+    <tr><td><b>크림치즈</b></td>
+      <td>뉴욕·바스크 치즈케이크 · 레어치즈케이크(젤라틴) · 당근케이크·레드벨벳 프로스팅 · 크림치즈 무스 · 크림치즈 타르트</td>
+      <td>크림치즈빵 · 소보로 크림치즈빵 · 베이글 필링 · 브레첼 딥 · 치즈 소보로 토핑</td>
+      <td>60~65℃ 이상 가열(단백질 응고) · 과도한 휘핑(입자감) · 티라미수(산미 부담)</td></tr>
+  </table>
+
+  <h4>① 생크림 — 유지방·유형별 결과</h4>
+  <table class="wTbl dairyTbl">
+    <tr><th>유형 (예)</th><th>제과 활용</th><th>제빵 활용</th><th>썼을 때 결과</th></tr>
+    <tr><td><b>30~32%</b><br>묽은 유크림</td><td>크렘 앙글레즈·소스·커피(휘핑 안 됨)</td><td>식빵·스콘의 우유 대체</td><td>휘핑해도 볼륨이 거의 안 나고 흐름. 반죽에 넣으면 유당·유지방으로 결이 부드럽고 갈변이 조금 빨라지며 부피는 큰 차이가 없다</td></tr>
+    <tr><td><b>35~35.5%</b><br>휘핑 전용(카라기난·유화제)</td><td>데코·케이크 옆면·대량 생산 필링</td><td>반죽엔 부적합(안정제가 기포·글루텐을 방해)</td><td>보형성·유지력 최고(냉장 6~8시간 모양 유지). 입안에 기름진 막이 남고 향은 중립. 단단해 스패츌라로 각을 세우기 쉽다</td></tr>
+    <tr><td><b>38%</b><br>국산 생크림(서울우유·매일)</td><td>샹티이·딸기 생크림 케이크·무스·아이스크림 베이스</td><td>크림빵·브리오슈 반죽에 물+버터 대체(총액의 15~30%)</td><td>휘핑 잘 되고 단단하며 우유맛이 진함. 유통기한 약 1주. 반죽에 넣으면 기공이 조밀하고 다음 날까지 촉촉하지만 부피는 대략 3~5% 줄고 굽는 색은 진해진다</td></tr>
+    <tr><td><b>40% 이상</b><br>(이즈니 AOP 등)</td><td>가나슈·크렘 앙글레즈·고급 생크림</td><td>페이스트리 크림·버터 일부 대체</td><td>볼륨은 적고 밀도·풍미가 진함. 오버런이 낮아 적은 양으로도 무겁고, 온도가 오르면 분리되기 쉽다</td></tr>
+    <tr><td><b>식물성 24~30%</b></td><td>진열용 데코(맛 우선이면 비추)</td><td>—</td><td>모양이 오래가지만 팜유의 기름진 단맛이 남고 입에서 녹지 않는다. 굽지 않은 제품에만 쓴다</td></tr>
   </table>
   <p>동물성 생크림은 유지방이 공기막을 만들어 휘핑된다. 식물성(식물성 유지+카라기난)은 오래 단단함을 유지하지만 맛이 중립이고 입에서 녹는 느낌이 다르다.</p>
+
   <h4>발효 유제품</h4>
-  <table>
+  <table class="wTbl">
     <tr><th>제품</th><th>유지방</th><th>특징</th></tr>
     <tr><td>마스카포네</td><td>35~45%</td><td>부드럽고 산미 약함, 티라미수</td></tr>
     <tr><td>크림치즈</td><td>30~35%</td><td>산미·염분, 치즈케이크</td></tr>
     <tr><td>사워크림</td><td>18~20%</td><td>산미 강함, 소스·치즈케이크 보조</td></tr>
     <tr><td>버터밀크</td><td>1~2%</td><td>산미, 팬케이크·스콘</td></tr>
   </table>
+
+  <h4>② 마스카포네 — 지방·원료별 결과</h4>
+  <table class="wTbl dairyTbl">
+    <tr><th>유형 (예)</th><th>제과 활용</th><th>제빵 활용</th><th>썼을 때 결과</th></tr>
+    <tr><td><b>40~41%</b><br>크림+우유+구연산(갈바니)</td><td>티라미수·무스·생크림 안정화</td><td>크림필링·스프레드</td><td>매끈하고 가벼움. 생크림에 10~20% 넣으면 유지방·고형분이 거품막을 보강해 아이싱이 덜 무너지고 우유맛이 둥글어진다. 산미가 없어 설탕·커피와 균형이 쉽다</td></tr>
+    <tr><td><b>47.7%</b><br>크림 100%(암브로시)</td><td>티라미수·마스카포네 크림 단독</td><td>브리오슈·페이스트리 필링에 소량</td><td>진하고 밀도가 높아 같은 양으로도 묵직. 20%를 넘겨 섞으면 크림이 무거워져 휘핑감이 사라지고 입에 붙는다</td></tr>
+    <tr><td><b>40%</b><br>우유 기반 테트라팩(엘르앤비르)</td><td>휘핑 크림치즈·티라미수·무스</td><td>크림빵 필링</td><td>휘핑이 잘 되고 볼륨이 좋아 생크림 보강·대체용으로 편함. 소비기한이 길어(약 9개월) 소량 쓰는 업장에 유리하고 맛은 살짝 담백</td></tr>
+    <tr><td>수분 많은 저가·오래된 제품</td><td>소스·묽은 무스</td><td>—</td><td>유청이 떠서 물이 보이고 묽어져 크림이 고정되지 않음. 무게를 재서 물을 덜어내거나 생크림을 섞어 밀도를 보강한다. 냉동하면 해동 후 입자가 거칠어짐</td></tr>
+  </table>
+
+  <h4>③ 크림치즈 — 지방·산미별 결과</h4>
+  <table class="wTbl dairyTbl">
+    <tr><th>유형 (예)</th><th>제과 활용</th><th>제빵 활용</th><th>썼을 때 결과</th></tr>
+    <tr><td><b>34%·수분 55% 이하·산미 뚜렷</b>(필라델피아)</td><td>뉴욕·바스크 치즈케이크·레어</td><td>크림치즈빵·베이글 필링</td><td>수분이 많아 생크림과 섞어도 갈라짐이 적고 산미가 살아 있다. 바스크는 윗면 갈변이 진하고 속은 촉촉. 티라미수엔 산미가 부담</td></tr>
+    <tr><td><b>부드러운 유럽식</b>(끼리)</td><td>레어·바스크·크림치즈 무스</td><td>소보로 크림치즈빵·딥</td><td>크리미하고 산미가 은은하며 굽기 후 갈변이 옅어 색이 연하다. 대중적인 맛이라 당근케이크 프로스팅엔 레몬즙·소금으로 산미를 보태야 한다</td></tr>
+    <tr><td><b>저지방 30% 이하</b>(부코형)</td><td>레어·업소용 대량</td><td>크림치즈 크림빵</td><td>가볍고 매끈하지만 밀도가 낮아 생크림 10~20%를 보태야 모양이 잡힌다. 굽으면 수분이 빠져 푸석해지기 쉽다</td></tr>
+    <tr><td><b>담백·되직</b>(뉴질랜드산)</td><td>치즈케이크 베이스·타르트</td><td>베이글·브레첼 딥</td><td>산미가 약해 단맛만으로는 밋밋하고, 되직해 모양 유지가 좋다. 프로스팅에 쓰면 냉장 후 단단해진다</td></tr>
+  </table>
+
   <h4>휘핑의 원리</h4>
-  <p>차가운 생크림(4~8°C)을 휘저으면 유지방 결정이 부분적으로 녹아 공기-물 계면에 막을 만든다. 10°C를 넘으면 지방이 완전히 녹아 거품이 꺼지고, 너무 차가우면(0°C 근처) 결정이 딱딱해 휘핑이 더디다.</p>`,
+  <p>차가운 생크림(4~8°C)을 휘저으면 유지방 결정이 부분적으로 녹아 공기-물 계면에 막을 만든다. 10°C를 넘으면 지방이 완전히 녹아 거품이 꺼지고, 너무 차가우면(0°C 근처) 결정이 딱딱해 휘핑이 더디다.</p>
+
+  <h4>배합·공정 포인트</h4>
+  <ul>
+    <li><strong>생크림 + 마스카포네</strong>: 생크림 100에 마스카포네 10~20. 유지방이 늘어 보형성과 풍미가 함께 오르고, 하루 지나도 물이 덜 빠진다.</li>
+    <li><strong>크림치즈는 60~65℃를 넘기지 않는다</strong>: 단백질이 응고돼 거칠어지고 기름이 분리된다. 중탕·저온에서 풀고, 치즈케이크는 150~160℃에서 오래 굽는다.</li>
+    <li><strong>굽는 제품엔 크림을 나중에</strong>: 생크림·마스카포네 필링은 오븐 후 주입(크림빵·슈). 미리 넣으면 수분이 빠져 무거워지고 빵이 눌린다.</li>
+    <li><strong>마스카포네는 냉동 금지</strong>: 해동 후 유청이 분리돼 입자가 거칠어진다. 크림치즈는 냉동 후에도 쓰지만 유화가 약해져 휘핑하면 분리되기 쉽다.</li>
+    <li><strong>유지력 기준</strong>: 38% 생크림 아이싱 2~3일, 마스카포네 크림 1~2일, 크림치즈 프로스팅 3~4일(냉장 4~8℃).</li>
+  </ul>`,
   tips:[
     '샹티이는 볼과 휘퍼를 차갑게 하고, 8분 정도 지나면 멈춰 상태를 확인한다. 과휘핑은 분리로 이어진다.',
     '식물성 크림에 젤라틴을 넣으면 더 단단해지지만 입에서 녹지 않는다. 동물성으로 대체를 권한다.',
-    '마스카포네는 수분이 많아 오래 휘핑하면 분리된다. 주걱으로 부드럽게 섞는 정도가 좋다.'
+    '마스카포네는 수분이 많아 오래 휘핑하면 분리된다. 주걱으로 부드럽게 섞는 정도가 좋다.',
+    '생크림을 반죽에 넣을 때는 물과 버터를 함께 줄인다. 38% 생크림 100g이면 물 약 60g·버터 약 35g을 뺀 셈이다.',
+    '크림치즈 프로스팅은 크림치즈:버터:슈가파우더 = 2:1:1. 냉장 후 다시 풀 때는 20℃에서 10분 두고 저속으로 섞는다.'
   ],
   related:['크림 패밀리','가나슈','버터크림 4종','무스·젤리케이크 설계']
 },
@@ -6292,6 +6350,7 @@ function wRecipe(title, unit, rows, method, note) {
 
 DB.push({
   id: 'w01', cat: 'world', title: '프랑스 — 크루아상·바게트·까눌레·밀푀유·타르트 타탱', en: 'France', exam: false,
+  mg2: 'ov',
   tags: ['프랑스', '크루아상', '바게트', '까눌레', '밀푀유', '타르트 타탱', '역사', '세계 제과'],
   summary: '프랑스 제과·제빵의 유래와 대표 레시피 5종(배합·공정).',
   body: `
@@ -6326,6 +6385,7 @@ DB.push({
 
 DB.push({
   id: 'w02', cat: 'world', title: '이탈리아 — 티라미수·판토네·포카치아·치아바타·카놀리', en: 'Italy', exam: false,
+  mg2: 'ov',
   tags: ['이탈리아', '티라미수', '판토네', '포카치아', '치아바타', '카놀리', '역사', '세계 제과'],
   summary: '이탈리아 대표 디저트·빵의 유래와 레시피 5종(배합·공정).',
   body: `
@@ -6361,6 +6421,7 @@ DB.push({
 
 DB.push({
   id: 'w03', cat: 'world', title: '독일·오스트리아 — 슈톨렌·프레첼·자허토르테·바움쿠헨', en: 'Germany & Austria', exam: false,
+  mg2: 'ov',
   tags: ['독일', '오스트리아', '슈톨렌', '프레첼', '자허토르테', '바움쿠헨', '역사', '세계 제과'],
   summary: '독일·오스트리아 전통 빵과 케이크의 유래와 레시피 4종.',
   body: `
@@ -6393,6 +6454,7 @@ DB.push({
 
 DB.push({
   id: 'w04', cat: 'world', title: '영미 — 스콘·브라우니·당근케이크·뉴욕 치즈케이크', en: 'UK & USA', exam: false,
+  mg2: 'ov',
   tags: ['영국', '미국', '스콘', '브라우니', '당근케이크', '뉴욕 치즈케이크', '역사', '세계 제과'],
   summary: '영국·미국 대표 베이킹의 유래와 레시피 4종.',
   body: `
@@ -6423,6 +6485,7 @@ DB.push({
 
 DB.push({
   id: 'w05', cat: 'world', title: '일본 — 카스테라·쇼쿠판·말차 모찌', en: 'Japan', exam: false,
+  mg2: 'ov',
   tags: ['일본', '카스테라', '쇼쿠판', '우유식빵', '말차', '모찌', '역사', '세계 제과'],
   summary: '일본 카스테라·식빵·말차 디저트의 유래와 레시피 3종.',
   body: `
@@ -6447,6 +6510,7 @@ DB.push({
 
 DB.push({
   id: 'w06', cat: 'world', title: '한국 — 단팥빵·소보로빵·약과·주악', en: 'Korea', exam: false,
+  mg2: 'ov',
   tags: ['한국', '단팥빵', '소보로빵', '약과', '주악', '역사', '세계 제과'],
   summary: '한국 전통·근대 빵과 한과의 유래와 레시피 4종.',
   body: `
@@ -6479,6 +6543,7 @@ DB.push({
    data-world.js의 wRecipe()를 그대로 사용. 각 나라마다 제(과)과 제빵을 따로 둔다. */
 DB.push({
   id: 'wp01', cat: 'world', title: '프랑스 — 제과(Patisserie)', en: 'France · pastry', exam: false,
+  mg2: 'pastry',
   tags: ['프랑스', '제과', '마들렌', '파리브레스트', '생토노레', '파티시에', '세계 제과'],
   summary: '프랑스 궁정 제과의 기본기 — 마들렌·파리브레스트·생토노레 배합과 공정.',
   body: `
@@ -6502,6 +6567,7 @@ DB.push({
 
 DB.push({
   id: 'wp02', cat: 'world', title: '프랑스 — 제빵(Boulangerie)', en: 'France · bread', exam: false,
+  mg2: 'bread',
   tags: ['프랑스', '제빵', '바게트', '크루아상', '브리오슈', 'T55', '르방'],
   summary: '바게트 트래디션·크루아상·브리오슈 낭테르 — 프랑스 제빵의 수분·라미네이션·버터 비율.',
   body: `
@@ -6525,6 +6591,7 @@ DB.push({
 
 DB.push({
   id: 'wp03', cat: 'world', title: '이탈리아 — 제과(Dolci)', en: 'Italy · pastry', exam: false,
+  mg2: 'pastry',
   tags: ['이탈리아', '제과', '티라미수', '판나코타', '카놀리', '마스카포네', '세계 제과'],
   summary: '티라미수·판나코타·카놀리 — 마스카포네·리코타·젤라틴을 쓰는 이탈리아 디저트.',
   body: `
@@ -6549,6 +6616,7 @@ DB.push({
 
 DB.push({
   id: 'wp04', cat: 'world', title: '이탈리아 — 제빵(Pane)', en: 'Italy · bread', exam: false,
+  mg2: 'bread',
   tags: ['이탈리아', '제빵', '치아바타', '포카치아', '파네토네', '빅아', '올리브유'],
   summary: '치아바타·포카치아·파네토네 — 수분 75~80% 반죽과 올리브유, 천연발효종.',
   body: `
@@ -6573,6 +6641,7 @@ DB.push({
 
 DB.push({
   id: 'wp05', cat: 'world', title: '독일 — 제과(Kuchen & Gebäck)', en: 'Germany · pastry', exam: false,
+  mg2: 'pastry',
   tags: ['독일', '제과', '슈바르츠발트', '카이저슈마른', '슈트로이젤쿠헨', '체리', '세계 제과'],
   summary: '슈바르츠발트 케이크·카이저슈마른·슈트로이젤쿠헨 — 체리·사과와 버터 슈트로이젤.',
   body: `
@@ -6597,6 +6666,7 @@ DB.push({
 
 DB.push({
   id: 'wp06', cat: 'world', title: '독일 — 제빵(Brot & Brötchen)', en: 'Germany · bread', exam: false,
+  mg2: 'bread',
   tags: ['독일', '제빵', '로겐브로트', '브레첸', '브로트헨', '호밀', '사워도우'],
   summary: '호밀 사워도우 브로트·바이에른 브레첸·브로트헨 — 호밀·잿물·알칼리 처리.',
   body: `
@@ -6620,6 +6690,7 @@ DB.push({
 
 DB.push({
   id: 'wp07', cat: 'world', title: '영국 — 제과(Teatime)', en: 'UK · pastry', exam: false,
+  mg2: 'pastry',
   tags: ['영국', '제과', '스콘', '빅토리아 스펀지', '트레클타르트', '애프터눈 티', '세계 제과'],
   summary: '스콘·빅토리아 스펀지·트레클 타르트 — 애프터눈 티의 기본 3종.',
   body: `
@@ -6643,6 +6714,7 @@ DB.push({
 
 DB.push({
   id: 'wp08', cat: 'world', title: '영국 — 제빵(Bread)', en: 'UK · bread', exam: false,
+  mg2: 'bread',
   tags: ['영국', '제빵', '소다브레드', '브라우니 소다', '잉글리시 머핀', '홀밀'],
   summary: '소다브레드·잉글리시 머핀·홀밀 브레드 — 이스트 없이 굽는 빵과 팬 구이 빵.',
   body: `
@@ -6666,6 +6738,7 @@ DB.push({
 
 DB.push({
   id: 'wp09', cat: 'world', title: '미국 — 제과(Dessert)', en: 'USA · pastry', exam: false,
+  mg2: 'pastry',
   tags: ['미국', '제과', '브라우니', '뉴욕 치즈케이크', '초코칩 쿠키', '세계 제과'],
   summary: '브라우니·뉴욕 치즈케이크·초코칩 쿠키 — 진한 단맛과 쫀득한 식감.',
   body: `
@@ -6689,6 +6762,7 @@ DB.push({
 
 DB.push({
   id: 'wp10', cat: 'world', title: '미국 — 제빵(Bread)', en: 'USA · bread', exam: false,
+  mg2: 'bread',
   tags: ['미국', '제빵', '샌프란시스코 사워도우', '시나몬롤', '콘브레드', '천연발효'],
   summary: '샌프란시스코 사워도우·시나몬롤·콘브레드 — 천연발효와 달콤한 소프트 브레드.',
   body: `
@@ -6713,6 +6787,7 @@ DB.push({
 
 DB.push({
   id: 'wp11', cat: 'world', title: '일본 — 제과(洋菓子)', en: 'Japan · pastry', exam: false,
+  mg2: 'pastry',
   tags: ['일본', '제과', '카스텔라', '시폰케이크', '다이후쿠', '쇼쿠판', '세계 제과'],
   summary: '카스텔라·시폰케이크·다이후쿠 — 촉촉한 계란 케이크와 찹쌀 디저트.',
   body: `
@@ -6737,6 +6812,7 @@ DB.push({
 
 DB.push({
   id: 'wp12', cat: 'world', title: '일본 — 제빵(製パン)', en: 'Japan · bread', exam: false,
+  mg2: 'bread',
   tags: ['일본', '제빵', '쇼쿠판', '멜론빵', '카레빵', '탕종', '우유식빵'],
   summary: '쇼쿠판(식빵)·멜론빵·카레빵 — 탕종과 쿠키 반죽으로 만드는 일본식 빵.',
   body: `
@@ -6761,6 +6837,7 @@ DB.push({
 
 DB.push({
   id: 'wp13', cat: 'world', title: '한국 — 제과(과자·떡)', en: 'Korea · pastry', exam: false,
+  mg2: 'pastry',
   tags: ['한국', '제과', '카스텔라', '약과', '호두과자', '떡', '세계 제과'],
   summary: '한국식 카스텔라·약과·호두과자 — 견과·조청·찹쌀을 쓰는 한국 제과.',
   body: `
@@ -6785,6 +6862,7 @@ DB.push({
 
 DB.push({
   id: 'wp14', cat: 'world', title: '한국 — 제빵(단팥빵·소금빵)', en: 'Korea · bread', exam: false,
+  mg2: 'bread',
   tags: ['한국', '제빵', '단팥빵', '소금빵', '마늘빵', '앙금', '시오판'],
   summary: '단팥빵·소금빵·마늘빵 — 한국 베이커리에서 가장 많이 팔리는 식사빵.',
   body: `
@@ -7516,6 +7594,66 @@ var VIDEOLINKS = {
       why: '깍지 없이 모양 내기·공기 빼기·현장에서 깍지 바꾸는 법 (국문)' },
     { v: 'wBr0ymDOI1Y', t: 'Practice basic piping skill with templates', ch: 'Cake Decorating School',
       why: '도안 위에서 점·선·로제트를 연습하는 순서 (영문)' }
+  ],
+  /* ---- 유제품: 생크림 · 마스카포네 · 크림치즈 (2026-11-18 oEmbed 확인) ---- */
+  i05: [
+    { v: 'Sw7VYs5ST-4', t: '생크림 휘핑크림 무엇을 사야 하는지 정리, 13개 생크림 종류 결과는?', ch: '케이크업 ㅣ 케이크창업',
+      why: '생크림·휘핑크림 13종을 같은 조건으로 휘핑 — 유지방·첨가물별 보형성·유지력' },
+    { v: '2j6lMfRuNHM', t: '생크림 13종으로 만든 8가지 배합, 최고 조합의 크림은??', ch: '케이크업 ㅣ 케이크창업',
+      why: '생크림+휘핑크림 배합비 8가지 비교 — 매장 배합 정할 때' },
+    { v: 'aXlzIpp3FO8', t: '생크림과 휘핑크림을 구분해서 써야하는 이유', ch: '슈가풀 SUGARFUL',
+      why: '유크림 100%(생크림)와 첨가물 휘핑크림의 차이' },
+    { v: 'ZQGvqqFMb1s', t: 'Our Taste Test of Mascarpone Cheese', ch: "America's Test Kitchen",
+      why: '마스카포네 브랜드 블라인드 테스트 — 지방·질감·맛 차이 (영문)' },
+    { v: 'NJGSZvNH7nk', t: '화이트초코와 마스카포네를 넣은 생크림의 차이는?', ch: '올라신디 HolaCindy',
+      why: '생크림에 마스카포네를 넣었을 때 안정화·질감 차이 실험' },
+    { v: 'nDFy6rsIiMk', t: '크림치즈 대신 마스카포네치즈로 바스크치즈케이크 만들기가 가능할까?', ch: '소담한베이킹 sodamhan baking',
+      why: '크림치즈↔마스카포네를 바꿔 구웠을 때의 결과 차이' },
+    { v: 'dL9ymeUBwoA', t: '카페/베이커리 사장님들, 크림치즈 비싼 것만 쓰지 마세요｜업소용 7종 비교', ch: '무해한베이킹, 딥드',
+      why: '업소용 크림치즈 7종을 성분·가격·작업성으로 비교' },
+    { v: 'KMa6SfW2jRo', t: '크림치즈를 종류별로 먹어보았습니다 | 끼리, 필라델피아, 마담로익 등 크림치즈 7종 리뷰', ch: '슈가풀 SUGARFUL',
+      why: '산미·밀도 차이를 먹어보며 비교 — 바스크·레어 선택 기준' },
+    { v: 'OFGWNlbIC28', t: '바스크치즈케이크 조회수 Top3 비교 (feat. 크림치즈)', ch: '빵 만드는 공대생',
+      why: '같은 크림치즈로 굽기 조건을 달리했을 때의 결과(꾸덕·촉촉)' }
+  ],
+  /* ---- 브랜드 비교표(비밀본 index) 안의 참고 영상 ---- */
+  br02: [
+    { v: 'Sw7VYs5ST-4', t: '생크림 휘핑크림 무엇을 사야 하는지 정리, 13개 생크림 종류 결과는?', ch: '케이크업 ㅣ 케이크창업',
+      why: '13개 생크림·휘핑크림 동시 휘핑 비교' },
+    { v: '2j6lMfRuNHM', t: '생크림 13종으로 만든 8가지 배합, 최고 조합의 크림은??', ch: '케이크업 ㅣ 케이크창업',
+      why: '생크림+휘핑크림 배합비별 결과' },
+    { v: 'Rr433qjuB7g', t: '[휘핑크림 최종편] 서울우유, 라르사, 칸디아, 스노휘핑, 비바리타 크리스티스', ch: '케이크업 ㅣ 케이크창업',
+      why: '국산·수입 휘핑크림 5종 실측 비교' },
+    { v: 'aXlzIpp3FO8', t: '생크림과 휘핑크림을 구분해서 써야하는 이유', ch: '슈가풀 SUGARFUL',
+      why: '유크림 100%와 첨가물 휘핑크림의 차이' },
+    { v: 'qLRJ8xelnSQ', t: '재료학개론 #3 | 생크림 — 재료를 이해하면 베이킹이 보인다', ch: '소담한베이킹 sodamhan baking',
+      why: '유지방·휘핑 원리 이론 정리' }
+  ],
+  br07: [
+    { v: 'dL9ymeUBwoA', t: '카페/베이커리 사장님들, 크림치즈 비싼 것만 쓰지 마세요｜업소용 7종 비교', ch: '무해한베이킹, 딥드',
+      why: '업소용 크림치즈 7종 성분·가격·작업성 비교' },
+    { v: 'sL7k6ro4IM0', t: '카페 사장님 필수 크림치즈 싹 다 모았다! (성분별 꼼꼼비교 & 솔직후기)', ch: '무해한베이킹, 딥드',
+      why: '성분표(지방·수분)와 작업성으로 본 크림치즈 비교' },
+    { v: 'KMa6SfW2jRo', t: '크림치즈를 종류별로 먹어보았습니다 | 끼리, 필라델피아, 마담로익 등 크림치즈 7종 리뷰', ch: '슈가풀 SUGARFUL',
+      why: '7종을 먹어보며 산미·밀도 비교' },
+    { v: 'OFGWNlbIC28', t: '바스크치즈케이크 조회수 Top3 비교 (feat. 크림치즈)', ch: '빵 만드는 공대생',
+      why: '굽기 조건별 결과(꾸덕·촉촉) 비교' },
+    { v: '1iU34iFHWLw', t: '국내 시판 크림치즈 10개 브랜드의 성분표를 전부 분석했더니, 진짜 치즈는 단 3개뿐이었다', ch: '한국 식품 진실',
+      why: '10개 브랜드 성분표 비교 — 유지방·수분·첨가물' }
+  ],
+  br08: [
+    { v: 'ZQGvqqFMb1s', t: 'Our Taste Test of Mascarpone Cheese', ch: "America's Test Kitchen",
+      why: '마스카포네 브랜드 블라인드 테스트 (영문)' },
+    { v: 'gXE-3rseclM', t: "What's the Difference Between Pricey Mascarpone and Cream Cheese?", ch: 'Food Unwrapped',
+      why: '가격대별 마스카포네와 크림치즈의 차이 (영문)' },
+    { v: 'NJGSZvNH7nk', t: '화이트초코와 마스카포네를 넣은 생크림의 차이는?', ch: '올라신디 HolaCindy',
+      why: '생크림에 넣었을 때의 안정화·질감 차이' },
+    { v: 'nDFy6rsIiMk', t: '크림치즈 대신 마스카포네치즈로 바스크치즈케이크 만들기가 가능할까?', ch: '소담한베이킹 sodamhan baking',
+      why: '크림치즈와 바꿔 구웠을 때의 결과' },
+    { v: 'd9HggQxD1kk', t: 'Baking study 4) 마스카포네 치즈란? 마스카포네치즈 활용', ch: '베이크앤미 BAKE & 米',
+      why: '마스카포네 정의·활용 기초' },
+    { v: 'IenmuJ25X0U', t: '"고오급" 빵 스프레드 3종 카이막, 클로티드크림, 마스카포네치즈 전격 비교!', ch: '주쿡남 JooCookNam의 2분 요리',
+      why: '제빵 스프레드로 쓸 때의 비교' }
   ]
 };
 /* 가성비 철판(베이킹 팬) & 모양틀 추천 — 두 버전 공통 (가격은 판매처 확인, 추정 표기 없음) */
@@ -8407,7 +8545,8 @@ DB.push({
     group: null,
     limit: 0,         /* 대량 목록 점진 렌더: 지금까지 그린 개수(0이면 기본 PAGE개) */
     page: 1,          /* 페이지네이션: 현재 페이지(한 페이지 PS개) */
-    myg: 'all'        /* 🍓 레시피 분류 칩 */
+    myg: 'all',       /* 🍓 레시피 분류 칩 (세계 제과·제빵에서는 나라 칩) */
+    wk: 'all'         /* 🌍 세계 제과·제빵 구분 칩: ov(개요)·pastry(제과)·bread(제빵) */
   };
   var PAGE = 48;      /* 한 번에 DOM으로 그리는 최대 항목 수 (모바일 렉 방지) */
   var PS = 10;        /* 목록 페이지네이션: 한 페이지 10개 */
@@ -8444,7 +8583,7 @@ DB.push({
   function snap() {
     return {
       k: 0,
-      q: state.q, cat: state.cat, tag: state.tag, matcat: state.matcat, myg: state.myg,
+      q: state.q, cat: state.cat, tag: state.tag, matcat: state.matcat, myg: state.myg, wk: state.wk,
       bm: state.bmOnly, view: state.view,
       group: state.group ? state.group.k : null,
       modal: state.openId || null,
@@ -8476,6 +8615,7 @@ DB.push({
     state.q = s.q || ''; qEl.value = state.q;
     state.cat = s.cat || 'all'; state.tag = s.tag || ''; state.matcat = s.matcat || '';
     state.myg = s.myg || 'all';
+    state.wk = s.wk || 'all';
     state.bmOnly = !!s.bm;
     state.view = (s.view === 'card') ? 'card' : 'toc';
     state.group = null;
@@ -8498,7 +8638,7 @@ DB.push({
     if (fallback) fallback();
   }
   function goHomeDirect() {
-    state.group = null; state.cat = 'all'; state.tag = ''; state.bmOnly = false;
+    state.group = null; state.cat = 'all'; state.tag = ''; state.bmOnly = false; state.wk = 'all';
     state.q = ''; qEl.value = ''; state.matcat = '';
     resetLimit();
     renderTabs(); renderChips(); render();
@@ -8693,6 +8833,43 @@ DB.push({
     cafe: [
       { k: 'caf', n: '카페인', ic: '☕' },
       { k: 'decaf', n: '논카페인', ic: '🍵' }
+    ],
+    world: [
+      { k: 'fr', n: '프랑스', ic: '🇫🇷' },
+      { k: 'it', n: '이탈리아', ic: '🇮🇹' },
+      { k: 'de', n: '독일·오스트리아', ic: '🇩🇪' },
+      { k: 'eu', n: '영미', ic: '🇬🇧' },
+      { k: 'jp', n: '일본', ic: '🇯🇵' },
+      { k: 'kr', n: '한국', ic: '🇰🇷' }
+    ],
+    exam_p: [
+      { k: 'cake', n: '케이크·스펀지·시트', ic: '🎂' },
+      { k: 'pound', n: '파운드·구움과자·쿠키', ic: '🍪' },
+      { k: 'pie', n: '파이·타르트·슈', ic: '🥧' },
+      { k: 'etc', n: '기타(머핀·브라우니 등)', ic: '📌' }
+    ],
+    exam_b: [
+      { k: 'loaf', n: '식빵류', ic: '🍞' },
+      { k: 'sweet', n: '단과자·충전빵류', ic: '🥐' },
+      { k: 'special', n: '특수·하드·페이스트리', ic: '🥖' }
+    ],
+    trouble: [
+      { k: 'cake', n: '케이크·스펀지·파운드', ic: '🎂' },
+      { k: 'baked', n: '구움과자·쿠키·마카롱', ic: '🍪' },
+      { k: 'pastry', n: '슈·퍼프·타르트', ic: '🥐' },
+      { k: 'cream', n: '크림·초콜릿·젤', ic: '🥣' },
+      { k: 'bread', n: '제빵·발효·굽기', ic: '🍞' },
+      { k: 'etc', n: '판별·설계·대체', ic: '🧪' }
+    ],
+    equip: [
+      { k: 'oven', n: '오븐·발효·도우컨디셔너', ic: '⚙️' },
+      { k: 'mixer', n: '믹서·반죽기', ic: '🌀' },
+      { k: 'cafe', n: '카페·커피 장비', ic: '☕' }
+    ],
+    tool: [
+      { k: 'deco', n: '깍지·데코', ic: '🍦' },
+      { k: 'pan', n: '철판·모양틀·팬·매트', ic: '🍳' },
+      { k: 'measure', n: '계량·소도구·칼', ic: '📏' }
     ]
   };
   var ID_GROUP = {
@@ -8727,6 +8904,43 @@ DB.push({
     cafe: {
       caf: ['c01', 'c02', 'c03', 'c04', 'c05', 'c06', 'c07', 'c08', 'c09', 'c10', 'c13'],
       decaf: ['c11', 'c12', 'c14', 'c15', 'c16', 'c17', 'c18', 'c19', 'c20', 'c21']
+    },
+    world: {
+      fr: ['w01', 'wp01', 'wp02'],
+      it: ['w02', 'wp03', 'wp04'],
+      de: ['w03', 'wp05', 'wp06'],
+      eu: ['w04', 'wp07', 'wp08', 'wp09', 'wp10'],
+      jp: ['w05', 'wp11', 'wp12'],
+      kr: ['w06', 'wp13', 'wp14']
+    },
+    exam_p: {
+      cake: ['bk02', 'bk03', 'bk04', 'bk05', 'bk14', 'bk15', 'bk20'],
+      pound: ['bk06', 'bk07', 'bk10', 'bk11', 'bk12', 'bk16', 'bk17'],
+      pie: ['bk08', 'bk13', 'bk19'],
+      etc: ['bk01', 'bk09', 'bk18']
+    },
+    exam_b: {
+      loaf: ['bz01', 'bz06', 'bz07', 'bz14', 'bz20'],
+      sweet: ['bz04', 'bz05', 'bz08', 'bz09', 'bz10', 'bz11', 'bz12', 'bz13', 'bz18', 'bz19'],
+      special: ['bz02', 'bz03', 'bz15', 'bz16', 'bz17']
+    },
+    trouble: {
+      cake: ['t01', 't13'],
+      baked: ['t02', 't03', 't09'],
+      pastry: ['t04', 't07', 't08'],
+      cream: ['t05', 't10', 't11', 't12'],
+      bread: ['t06', 't14'],
+      etc: ['t15', 't16', 't17']
+    },
+    equip: {
+      oven: ['e01', 'e02', 'e04', 'e05'],
+      mixer: ['e03'],
+      cafe: ['ce01', 'ce02', 'ce03', 'ce04', 'ce05']
+    },
+    tool: {
+      deco: ['tl03', 'tl09'],
+      pan: ['tl01', 'tl02', 'tl10'],
+      measure: ['tl04', 'tl05']
     }
   };
   var ID2GRP = {};
@@ -8881,7 +9095,7 @@ DB.push({
     if (k === state.cat && !state.tag && !state.group && !state.q) return;
     navDo(function () {
       state.cat = k;
-      state.tag = ''; state.matcat = ''; state.group = null; state.myg = 'all';
+      state.tag = ''; state.matcat = ''; state.group = null; state.myg = 'all'; state.wk = 'all';
       state.q = ''; qEl.value = '';
       resetLimit();
       renderTabs(); renderChips(); render();
@@ -8889,10 +9103,57 @@ DB.push({
   });
 
   /* ---------- 태그 칩 ---------- */
+  /* 🌍 세계 제과·제빵: 나라(1줄) + 구분(2줄: 개요·제과·제빵) 두 겹 필터 */
+  var WORLD_KINDS = [
+    { k: 'all', n: '전체 보기', ic: '🌍' },
+    { k: 'ov', n: '나라별 개요', ic: '📜' },
+    { k: 'pastry', n: '제과', ic: '🍰' },
+    { k: 'bread', n: '제빵', ic: '🍞' }
+  ];
+  function worldMode() {
+    return state.cat === 'world' ||
+      !!(state.group && state.group.cats && state.group.cats.length === 1 && state.group.cats[0] === 'world');
+  }
+  function worldCount(mgK, wkK) {
+    var n = 0;
+    DB.forEach(function (e) {
+      if (e.cat !== 'world') return;
+      if (mgK !== 'all' && e.mg !== mgK) return;
+      if (wkK !== 'all' && e.mg2 !== wkK) return;
+      n++;
+    });
+    return n;
+  }
+  function mchipHTML(attr, key, g, n, on) {
+    return '<button type="button" class="mchip' + (on ? ' on' : '') + '" ' + attr + '="' + key + '"' +
+      ' aria-pressed="' + (on ? 'true' : 'false') + '">' +
+      (g.ic ? '<b class="ic" aria-hidden="true">' + g.ic + '</b>' : '') + esc(g.n) +
+      '<span class="cnt">' + n + '</span></button>';
+  }
+  function renderWorldChips() {
+    var c = $('#myChips'), k = $('#kindChips');
+    if (!c || !k) return;
+    var countries = [{ k: 'all', n: '전체 나라', ic: '🌍' }].concat(CAT_GROUPS.world || []);
+    c.hidden = false;
+    c.setAttribute('aria-label', '세계 제과·제빵 나라별 분류');
+    c.innerHTML = countries.map(function (g) {
+      var n = worldCount(g.k, state.wk);
+      if (g.k !== 'all' && n === 0) return '';
+      return mchipHTML('data-myg', g.k, g, n, state.myg === g.k);
+    }).join('');
+    k.hidden = false;
+    k.innerHTML = WORLD_KINDS.map(function (g) {
+      var n = worldCount(state.myg, g.k);
+      if (g.k !== 'all' && n === 0) return '';
+      return mchipHTML('data-wk', g.k, g, n, state.wk === g.k);
+    }).join('');
+  }
   function renderChips() {
     if (state.cat === 'material') { $('#chips').innerHTML = ''; renderMyChips(); return; }
+    var wm = worldMode();
     var pool = DB.filter(function (e) {
       if (e.cat === 'material') return false;
+      if (wm) return e.cat === 'world';
       return state.cat === 'all' || e.cat === state.cat;
     });
     var freq = {};
@@ -8904,7 +9165,7 @@ DB.push({
     $('#chips').innerHTML = arr.map(function (t) {
       return '<button class="chip' + (state.tag === t ? ' on' : '') + '" data-tag="' + esc(t) + '">' + esc(t) + '</button>';
     }).join('');
-    renderMyChips();
+    if (wm) renderWorldChips(); else renderMyChips();
   }
   function myCount(k) {
     var cat = state.cat;
@@ -8923,9 +9184,12 @@ DB.push({
   function renderMyChips() {
     var el = $('#myChips');
     if (!el) return;
+    var kc = $('#kindChips');
+    if (kc) { kc.hidden = true; kc.innerHTML = ''; }
     if ((SHARE && state.cat === 'my') || (state.cat !== 'my' && state.cat !== 'recipe' && !CAT_GROUPS[state.cat])) {
       el.hidden = true; el.innerHTML = ''; return;
     }
+    if (worldMode()) { renderWorldChips(); return; }
     el.hidden = false;
     el.innerHTML = myGroupsNow().filter(function (g) { return g.k === 'all' || myCount(g.k) > 0; }).map(function (g) {
       var on = state.myg === g.k;
@@ -8944,7 +9208,20 @@ DB.push({
     navDo(function () {
       state.myg = k;
       resetLimit();
-      renderMyChips();
+      renderChips();
+      render();
+    });
+  });
+  var kindChipEl = $('#kindChips');
+  if (kindChipEl) kindChipEl.addEventListener('click', function (ev) {
+    var b = ev.target.closest('.mchip[data-wk]');
+    if (!b) return;
+    var k = b.getAttribute('data-wk');
+    if (k === state.wk) return;
+    navDo(function () {
+      state.wk = k;
+      resetLimit();
+      renderChips();
       render();
     });
   });
@@ -8988,6 +9265,10 @@ DB.push({
         return matches(e, tks);
       }
       if (state.cat !== 'all' && e.cat !== state.cat) return false;
+      if (worldMode()) {
+        if (state.myg !== 'all' && e.mg !== state.myg) return false;
+        if (state.wk !== 'all' && e.mg2 !== state.wk) return false;
+      }
       if ((state.cat === 'my' || state.cat === 'recipe' || CAT_GROUPS[state.cat]) && state.myg !== 'all' && e.mg !== state.myg) return false;
       if (state.tag && e.tags.indexOf(state.tag) < 0) return false;
       if (state.bmOnly && !state.bm.has(e.id)) return false;
@@ -9402,6 +9683,7 @@ DB.push({
           state.group = g.cats.length > 1 ? g : null;
           state.cat = g.cats.length > 1 ? 'all' : g.cats[0];
           state.tag = ''; state.bmOnly = false; state.q = ''; qEl.value = '';
+          state.myg = 'all'; state.wk = 'all';
           resetLimit();
           renderTabs(); renderChips(); render();
           window.scrollTo({ top: 0, behavior: 'smooth' });
