@@ -8828,7 +8828,7 @@ DB.push({
     { k:'g5', n:'트러블슈팅 & 실패·R&D', s:'원인·보완·대체·레시피 설계 17항목', cats:['trouble'], ic:'🧪' },
     { k:'g6', n:'레시피 사전', s:'클래식·기본 레시피 · 만드는 방법·편집·사진', cats:['recipe'], ic:'📖' },
     { k:'g7', n:'카페 음료', s:'레시피 21 · 음료 원가 계산', cats:['cafe'], ic:'☕' },
-    { k:'g8', n:'실무 계산기', s:'원가·변형·배합·비건·음료·R&D 등 8종', cats:['formula'], ic:'🧮' },
+    { k:'g8', n:'실무 계산기', s:'원가·변형·배합·비건·음료·R&D' + (window.BAKERY_CALC_EXTRA || '') + ' 등 ' + (window.BAKERY_CALC_COUNT || 8) + '종', cats:['formula'], ic:'🧮' },
     { k:'g9', n:'참고 영상 · 세미나', s:'명장·크리에이터·기업 테크닉 영상', cats:['video'], ic:'🎥' },
     { k:'g10', n:'세계 제과·제빵', s:'프랑스·이탈리아·독일·영미·일본·한국', cats:['world'], ic:'🌍' },
     { k:'gshop', n:'판매처·원부재료', s:'B2B 발주·제조사 4 · 전문몰 6 · 마트/온라인 · 전재료 260 시세', cats:['shop'], ic:'🛒' },
@@ -8950,7 +8950,7 @@ DB.push({
     var cat = CATS.filter(function (c) { return c.k === state.cat; })[0] || { n: '' };
     var extra = '';
     if (state.cat === 'formula') {
-      extra = '<button type="button" class="contLink calcLaunch" data-calc="1">🧮 실무 계산기 8종 열기 — 원가·변형·배합·비건·음료·DDP·오븐</button>';
+      extra = '<button type="button" class="contLink calcLaunch" data-calc="1">🧮 실무 계산기 ' + (window.BAKERY_CALC_COUNT || 8) + '종 열기 — 원가' + (window.BAKERY_CALC_EXTRA || '') + '·변형·배합·비건·음료·DDP·오븐</button>';
     }
     if (!SHARE && (state.cat === 'recipe' || state.cat === 'my')) {
       extra = '<div class="recipeTools">' +
