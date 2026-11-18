@@ -1098,6 +1098,18 @@ html[data-theme="dark"] .tmSpk.on{background:var(--accent);border-color:var(--ac
 .tmMeta b{font-weight:650;color:var(--ink2);word-break:break-word}
 .tmNone{margin:0;padding:16px 4px;font-size:12.5px;color:var(--muted);line-height:1.6}
 html[data-theme="dark"] .tmRow[aria-expanded="true"]{background:#2f251c}
+/* 용어 사전 탭: 언어·주제 칩이 붙은 통합 목록 */
+#termWrap[hidden]{display:none !important}
+.tmIntro{margin:2px 0 8px;font-size:12px;color:var(--muted);line-height:1.65;font-weight:600;letter-spacing:.005em}
+.tmIntro b{color:var(--ink);font-weight:800}
+.tmChips{margin:0 0 5px;padding-bottom:3px}
+.tmChips:empty{display:none}
+.tmChips .mchip{flex:none}
+.tmExplorer{margin:0 0 10px}
+.tmExplorer .tmTools{position:static;top:auto;background:transparent;box-shadow:none;padding:2px 0 6px}
+.tmExplorer .tmCount{margin:0 0 6px}
+.tmExplorer .tmList{border-radius:0}
+.tmLang{font-style:normal;font-size:12px;line-height:1;flex:none;margin-right:1px}
 
 /* ---------- 참고 영상 ---------- */
 .vlBlock{margin:16px 0 4px;padding:12px 13px;border:1px solid var(--line);border-radius:13px;background:var(--surface2)}
@@ -1498,6 +1510,7 @@ html[data-theme="dark"] .xcPart td,html[data-theme="dark"] .exGrp td{background:
 
   <section id="toc" aria-label="목차" hidden></section>
   <section id="matWrap" aria-label="전재료 표" hidden></section>
+  <section id="termWrap" aria-label="용어 사전" hidden></section>
   <section id="grid" class="grid" aria-live="polite"></section>
 
   <div id="empty" class="empty" hidden>
@@ -6421,139 +6434,139 @@ DB.push({
   <p>발음은 한국어로 가깝게 적은 것이며, 현장에서 통하는 표기를 우선했습니다. 아래 목록에서 용어를 누르면 뜻·원어·발음·현장 쓰임이 펼쳐지고, 위 검색창에 한글 발음이나 뜻으로 바로 찾을 수 있습니다. 각 용어 옆 <b>🔊</b>를 누르면 프랑스어 원어 발음을 들을 수 있습니다.</p>
   <table class="wTbl termTbl">
     <tr><th>원어</th><th>한국어 발음</th><th>뜻 · 현장 쓰임</th></tr>
-    <tr><td>mise en place</td><td>미즈 앙 플라스</td><td>작업 전 재료·도구를 모두 준비해 두는 것</td></tr>
-    <tr><td>bain-marie</td><td>뱅 마리</td><td>중탕. 초콜릿·크림을 간접 가열</td></tr>
-    <tr><td>pâte</td><td>파트</td><td>반죽</td></tr>
-    <tr><td>pâte sablée</td><td>파트 사블레</td><td>모래알 질감의 달콤한 타르트·쿠키 반죽</td></tr>
-    <tr><td>pâte sucrée</td><td>파트 쉬크레</td><td>설탕을 넣은 타르트 반죽(사블레보다 매끈)</td></tr>
-    <tr><td>pâte brisée</td><td>파트 브리제</td><td>버터를 덩어리로 남긴 파이 반죽</td></tr>
-    <tr><td>pâte feuilletée</td><td>파트 푀이테</td><td>퍼프 페이스트리(밀푀유·크루아상)</td></tr>
-    <tr><td>pâte à choux</td><td>파트 아 슈</td><td>슈 반죽. 호화 후 계란을 넣어 농도 조절</td></tr>
-    <tr><td>crème pâtissière</td><td>크렘 파티시에르</td><td>커스터드 크림. 우유·노른자·전분을 85°C까지</td></tr>
-    <tr><td>crème anglaise</td><td>크렘 앙글레즈</td><td>앙글레즈 소스. 82~85°C 커스터드</td></tr>
-    <tr><td>crème chantilly</td><td>크렘 샹티이</td><td>설탕·바닐라 넣은 휘핑크림</td></tr>
-    <tr><td>crème mousseline</td><td>크렘 무슬린</td><td>파티시에르에 버터를 넣어 가볍게 만든 크림</td></tr>
-    <tr><td>crème diplomate</td><td>크렘 디플로마트</td><td>파티시에르+휘핑크림+젤라틴</td></tr>
-    <tr><td>crème légère</td><td>크렘 레제르</td><td>파티시에르+휘핑크림(젤라틴 없이)</td></tr>
-    <tr><td>ganache</td><td>가나슈</td><td>초콜릿+크림 유화. 비율로 점도 조절</td></tr>
-    <tr><td>glaçage</td><td>글라사주</td><td>케이크 표면 코팅(초콜릿·설탕)</td></tr>
-    <tr><td>miroir</td><td>미루아르</td><td>거울처럼 광택 나는 글라사주</td></tr>
-    <tr><td>nappage</td><td>나파주</td><td>과일·타르트 표면에 바르는 광택 젤리</td></tr>
-    <tr><td>imbibage</td><td>앵비바주</td><td>시트에 시럽을 적시는 작업</td></tr>
-    <tr><td>sirop</td><td>시롭</td><td>시럽(설탕+물)</td></tr>
-    <tr><td>tant pour tant (TPT)</td><td>탕 푸르 땅·티피티</td><td>아몬드가루와 슈가파우더를 1대1로 섞은 것. 약자 <b>TPT</b>. 마카롱·다쿠아즈·아몬드 크림 기본</td></tr>
-    <tr><td>TPT</td><td>티피티</td><td>Tant pour Tant의 약자 — 아몬드가루:슈가파우더 = 1:1 혼합. 100g이면 아몬드가루 50g + 슈가파우더 50g</td></tr>
-    <tr><td>macaronnage</td><td>마카로나주</td><td>마카롱 반죽을 눌러 섞어 기포를 정리하는 작업</td></tr>
-    <tr><td>montage</td><td>몽타주</td><td>케이크·디저트 조립</td></tr>
-    <tr><td>monté</td><td>몽테</td><td>휘핑해 부풀린 상태(크림 몽테)</td></tr>
-    <tr><td>appareil</td><td>아파레유</td><td>한 덩어리로 만든 반죽·혼합물</td></tr>
-    <tr><td>bombe</td><td>봉브</td><td>설탕 시럽을 넣어 만든 계란 거품 반죽</td></tr>
-    <tr><td>craquelin</td><td>크라클랭</td><td>슈 위에 올리는 얇은 크런치 시트</td></tr>
-    <tr><td>beurre noisette</td><td>뵈르 누아제트</td><td>헤이즐넛 향이 나도록 태운 버터</td></tr>
-    <tr><td>beurre pommade</td><td>뵈르 포마드</td><td>손가락으로 눌리는 말랑한 버터</td></tr>
-    <tr><td>beurre clarifié</td><td>뵈르 클라리피에</td><td>수분·유단백을 제거한 정제 버터</td></tr>
-    <tr><td>fleur de sel</td><td>플뢰르 드 셀</td><td>천일염의 얇은 결정(마무리 소금)</td></tr>
-    <tr><td>levain</td><td>르방</td><td>천연발효종. 밀가루+물의 야생 효모</td></tr>
-    <tr><td>poolish</td><td>풀리시</td><td>액종. 물 100%로 만든 발효 반죽</td></tr>
-    <tr><td>autolyse</td><td>오토리즈</td><td>가루+물만 섞어 수화·글루텐 형성을 돕는 단계</td></tr>
-    <tr><td>pétrissage</td><td>페트리사주</td><td>반죽 치기</td></tr>
-    <tr><td>pointage</td><td>포인타주</td><td>1차 발효</td></tr>
-    <tr><td>apprêt</td><td>아프레</td><td>2차 발효(성형 후)</td></tr>
-    <tr><td>détrempe</td><td>데트랑프</td><td>퍼프의 기본 반죽(버터 넣기 전)</td></tr>
-    <tr><td>tourage</td><td>투라주</td><td>퍼프에 버터를 접어 넣는 작업</td></tr>
-    <tr><td>laminage</td><td>라미나주</td><td>반죽을 얇게 밀어 층을 만드는 압연</td></tr>
-    <tr><td>abaisse</td><td>아베스</td><td>밀어 편 반죽</td></tr>
-    <tr><td>fonçage</td><td>퐁사주</td><td>반죽을 팬에 깔기</td></tr>
-    <tr><td>cuisson</td><td>퀴종</td><td>굽기</td></tr>
-    <tr><td>chinois</td><td>시누아</td><td>원뿔형 체(거르기)</td></tr>
-    <tr><td>tamis</td><td>타미</td><td>체</td></tr>
-    <tr><td>Maryse</td><td>마리스</td><td>고무·플라스틱 스크래퍼</td></tr>
-    <tr><td>cornet</td><td>코르네</td><td>종이로 만든 짤주머니</td></tr>
-    <tr><td>douille</td><td>두이</td><td>짤주머니 깍지</td></tr>
-    <tr><td>poche</td><td>포슈</td><td>짤주머니</td></tr>
-    <tr><td>cul-de-poule</td><td>퀼 드 풀</td><td>둥근 볼</td></tr>
-    <tr><td>spatule</td><td>스파툴</td><td>주걱·스패출러</td></tr>
-    <tr><td>rouleau</td><td>룰로</td><td>밀대</td></tr>
-    <tr><td>pinceau</td><td>팽소</td><td>붓(계란물·시럽 칠하기)</td></tr>
-    <tr><td>entremet</td><td>앙트르메</td><td>무스·시트·글라사주를 층으로 쌓은 케이크</td></tr>
-    <tr><td>verrine</td><td>베린</td><td>유리컵에 담은 디저트</td></tr>
-    <tr><td>petit four</td><td>쁘티 푸르</td><td>한입 크기 과자</td></tr>
-    <tr><td>viennoiserie</td><td>비에누아즈리</td><td>크루아상·빵 계열 페이스트리</td></tr>
-    <tr><td>pâtisserie</td><td>파티스리</td><td>제과</td></tr>
-    <tr><td>boulangerie</td><td>불랑주리</td><td>제빵</td></tr>
-    <tr><td>chocolatier</td><td>쇼콜라티에</td><td>초콜릿 공예</td></tr>
-    <tr><td>tempérage</td><td>탕페라주</td><td>템퍼링. 초콜릿 결정을 안정화</td></tr>
-    <tr><td>tablage</td><td>타블라주</td><td>대리석 위에서 초콜릿을 펴고 모으는 템퍼링</td></tr>
-    <tr><td>émulsion</td><td>에뮐시옹</td><td>유화. 물과 기름을 균일하게 섞기</td></tr>
-    <tr><td>foisonnement</td><td>푸아조넬망</td><td>휘핑으로 기포를 넣는 것</td></tr>
-    <tr><td>salpicon</td><td>살피콩</td><td>과일을 작은 큐브로 썬 것</td></tr>
-    <tr><td>compote</td><td>콩포트</td><td>과일을 설탕과 졸인 것</td></tr>
-    <tr><td>coulis</td><td>쿨리</td><td>과일 퓌레 소스</td></tr>
-    <tr><td>praliné</td><td>프랄리네</td><td>아몬드·헤이즐넛 캐러멜 갈은 것</td></tr>
-    <tr><td>gianduja</td><td>장두자</td><td>헤이즐넛 초콜릿</td></tr>
-    <tr><td>dacquoise</td><td>다쿠아즈</td><td>아몬드 머랭 시트</td></tr>
-    <tr><td>joconde</td><td>조콩드</td><td>아몬드·계란 시트</td></tr>
-    <tr><td>génoise</td><td>제누와즈</td><td>전란 휘핑 시트</td></tr>
-    <tr><td>biscuit</td><td>비스퀴</td><td>시트·비스킷</td></tr>
-    <tr><td>brioche</td><td>브리오슈</td><td>달걀·버터가 많은 발효 빵 반죽. 나폴레옹 브리오슈는 틀 없이</td></tr>
-    <tr><td>pâte levée feuilletée (PLF)</td><td>파트 르베 푀이테</td><td>발효시킨 퍼프 반죽. 크루아상·파니에 오 쇼콜라</td></tr>
-    <tr><td>crème d'amande</td><td>크렘 다망드</td><td>아몬드크림. 버터·설탕·아몬드가루·계란을 섞은 것</td></tr>
-    <tr><td>crème frangipane</td><td>크렘 프랑지판</td><td>파티시에르에 아몬드크림을 섞은 크림. 갈레트 데 루아·타르트</td></tr>
-    <tr><td>crème chiboust</td><td>크렘 시부스트</td><td>파티시에르+이탈리안 머랭. 생토노레 크림</td></tr>
-    <tr><td>crème au beurre</td><td>크렘 오 뵈르</td><td>버터크림. 케이크 필링·장식</td></tr>
-    <tr><td>ganache montée</td><td>가나슈 몽테</td><td>차갑게 식혀 휘핑해 쓰는 가나슈. 무스 대용</td></tr>
-    <tr><td>crémeux</td><td>크레뫼</td><td>푸딩처럼 부드러운 과일·초콜릿 크림. 앙트르메 층</td></tr>
-    <tr><td>curd</td><td>커드</td><td>레몬·시트러스 주스에 계란·버터를 졸인 크림</td></tr>
-    <tr><td>pâte de fruit</td><td>파트 드 프뤼</td><td>과일 퓌레와 펙틴으로 만든 젤리 사탕</td></tr>
-    <tr><td>confit</td><td>콩피</td><td>과일을 설탕에 천천히 졸인 것. 컨피</td></tr>
-    <tr><td>marmelade</td><td>마르멜라드</td><td>시트러스 껍질이 든 잼</td></tr>
-    <tr><td>caramel au beurre salé</td><td>카라멜 오 뵈르 살레</td><td>소금버터 캐러멜. 브르타뉴 전통</td></tr>
-    <tr><td>nougatine</td><td>누가틴</td><td>설탕·아몬드를 캐러멜화해 얇게 편 장식</td></tr>
-    <tr><td>feuilletine</td><td>푀이야틴</td><td>크레프를 부순 얇은 조각. 크런치 레이어</td></tr>
-    <tr><td>macaron</td><td>마카롱</td><td>꼬끄 두 장 사이에 필링을 넣은 과자</td></tr>
-    <tr><td>coque</td><td>코크</td><td>마카롱 껍질. 표면을 건조시킨 뒤 굽기</td></tr>
-    <tr><td>meringue française</td><td>머랭 프랑세즈</td><td>흰자에 설탕을 넣어 그대로 휘핑한 머랭</td></tr>
-    <tr><td>meringue italienne</td><td>머랭 이탈리엔</td><td>118°C 시럽을 흰자에 부어 만든 머랭</td></tr>
-    <tr><td>meringue suisse</td><td>머랭 스위스</td><td>흰자+설탕을 중탕으로 데운 뒤 휘핑한 머랭</td></tr>
-    <tr><td>pâte d'amande</td><td>파트 다망드</td><td>마지팬. 아몬드가루+설탕+시럽 반죽</td></tr>
-    <tr><td>sucre glace</td><td>슈크르 글라스</td><td>슈가파우더</td></tr>
-    <tr><td>sucre semoule</td><td>슈크르 스뮐</td><td>그래뉴당(알갱이 설탕)</td></tr>
-    <tr><td>cassonade</td><td>카소나드</td><td>사탕수수 흑설탕</td></tr>
-    <tr><td>vergeoise</td><td>베르주아즈</td><td>사탕수수 즙을 졸여 만든 갈색 설탕</td></tr>
-    <tr><td>glucose</td><td>글루코즈</td><td>포도당 시럽. 설탕 결정 방지</td></tr>
-    <tr><td>trimoline</td><td>트리몰린</td><td>전화당 시럽. 흡습·결정 방지(브랜드명이 통용)</td></tr>
-    <tr><td>pectine</td><td>펙틴</td><td>과일 젤화제. 잼·파트 드 프뤼</td></tr>
-    <tr><td>gélatine</td><td>젤라틴</td><td>판젤라틴은 찬물에 불려 물기를 짜 사용</td></tr>
-    <tr><td>agar-agar</td><td>아가아가</td><td>우뭇가사리 젤화제. 40°C 이하에서 굳음</td></tr>
-    <tr><td>amidon de maïs</td><td>아미동 드 마이스</td><td>옥수수전분</td></tr>
-    <tr><td>farine T45</td><td>파린 T45</td><td>회분 0.45%. 제과·페이스트리용 박력분</td></tr>
-    <tr><td>farine T55</td><td>파린 T55</td><td>회분 0.55%. 제빵 표준 밀가루</td></tr>
-    <tr><td>farine T65</td><td>파린 T65</td><td>회분 0.65%. 루스티크·바게트</td></tr>
-    <tr><td>levure fraîche</td><td>르뷔르 프레슈</td><td>생이스트. 물·설탕에 풀어 사용</td></tr>
-    <tr><td>levure chimique</td><td>르뷔르 시미크</td><td>베이킹파우더</td></tr>
-    <tr><td>beurre de cacao</td><td>뵈르 드 카카오</td><td>카카오버터. 템퍼링·광택·몰드 이형</td></tr>
-    <tr><td>chocolat de couverture</td><td>쇼콜라 드 쿠베르튀르</td><td>코코아버터 함량이 높은 공정용 초콜릿</td></tr>
-    <tr><td>enrobage</td><td>앙로바주</td><td>초콜릿 입히기(코팅)</td></tr>
-    <tr><td>cercle à entremet</td><td>세르클 아 앙트르메</td><td>무스 링. 바닥 없는 원형 틀</td></tr>
-    <tr><td>cadre</td><td>캐드르</td><td>사각 프레임. 시트·가나슈 두께 맞추기</td></tr>
-    <tr><td>coupe-pâte</td><td>쿠프 파트</td><td>반죽을 자르는 스크래퍼</td></tr>
-    <tr><td>corne</td><td>코른</td><td>둥근 스크래퍼. 볼 긁기·반죽 정리</td></tr>
-    <tr><td>chambre de pousse</td><td>샹브르 드 푸스</td><td>발효실. 온습도 관리 공간</td></tr>
-    <tr><td>pousse contrôlée</td><td>푸스 콩트롤레</td><td>저온에서 오래 발효시키는 완효</td></tr>
-    <tr><td>façonnage</td><td>파소나주</td><td>성형. 반죽을 목적한 모양으로</td></tr>
-    <tr><td>détente</td><td>데탕트</td><td>성형 전 반죽을 쉬게 해 힘을 빼는 것</td></tr>
-    <tr><td>grigne</td><td>그린</td><td>빵 표면에 넣는 칼집</td></tr>
-    <tr><td>coup de buée</td><td>쿠 드 뷔에</td><td>굽기 초반 오븐에 스팀 넣기</td></tr>
-    <tr><td>cuisson à blanc</td><td>퀴종 아 블랑</td><td>속을 비우고 타르트지만 먼저 굽는 공(빈) 굽기</td></tr>
-    <tr><td>dorage</td><td>도라주</td><td>계란물 칠하기</td></tr>
-    <tr><td>fondant</td><td>퐁당</td><td>설탕·포도당을 반죽한 코팅. 페티푸르·에클레르</td></tr>
-    <tr><td>glaçage royal</td><td>글라사주 로얄</td><td>로열 아이싱. 흰자+슈가파우더 장식</td></tr>
-    <tr><td>pochage</td><td>포사주</td><td>짤주머니로 짜기</td></tr>
-    <tr><td>dressage</td><td>드레사주</td><td>완성된 디저트를 담기·플레이팅</td></tr>
-    <tr><td>brigade</td><td>브리가드</td><td>주방 조직. 셰프 드 파르티로 업무 분담</td></tr>
-    <tr><td>tourier</td><td>투리에</td><td>퍼프·비에누아즈리 담당 파티시에</td></tr>
-    <tr><td>glacier</td><td>글라시에</td><td>아이스크림·셔벳 담당</td></tr>
-    <tr><td>confiseur</td><td>콩피죄르</td><td>사탕·젤리·초콜릿 과자 담당</td></tr>
+    <tr data-t="e"><td>mise en place</td><td>미즈 앙 플라스</td><td>작업 전 재료·도구를 모두 준비해 두는 것</td></tr>
+    <tr data-t="d"><td>bain-marie</td><td>뱅 마리</td><td>중탕. 초콜릿·크림을 간접 가열</td></tr>
+    <tr data-t="d"><td>pâte</td><td>파트</td><td>반죽</td></tr>
+    <tr data-t="d"><td>pâte sablée</td><td>파트 사블레</td><td>모래알 질감의 달콤한 타르트·쿠키 반죽</td></tr>
+    <tr data-t="d"><td>pâte sucrée</td><td>파트 쉬크레</td><td>설탕을 넣은 타르트 반죽(사블레보다 매끈)</td></tr>
+    <tr data-t="d"><td>pâte brisée</td><td>파트 브리제</td><td>버터를 덩어리로 남긴 파이 반죽</td></tr>
+    <tr data-t="d"><td>pâte feuilletée</td><td>파트 푀이테</td><td>퍼프 페이스트리(밀푀유·크루아상)</td></tr>
+    <tr data-t="d"><td>pâte à choux</td><td>파트 아 슈</td><td>슈 반죽. 호화 후 계란을 넣어 농도 조절</td></tr>
+    <tr data-t="c"><td>crème pâtissière</td><td>크렘 파티시에르</td><td>커스터드 크림. 우유·노른자·전분을 85°C까지</td></tr>
+    <tr data-t="c"><td>crème anglaise</td><td>크렘 앙글레즈</td><td>앙글레즈 소스. 82~85°C 커스터드</td></tr>
+    <tr data-t="c"><td>crème chantilly</td><td>크렘 샹티이</td><td>설탕·바닐라 넣은 휘핑크림</td></tr>
+    <tr data-t="c"><td>crème mousseline</td><td>크렘 무슬린</td><td>파티시에르에 버터를 넣어 가볍게 만든 크림</td></tr>
+    <tr data-t="c"><td>crème diplomate</td><td>크렘 디플로마트</td><td>파티시에르+휘핑크림+젤라틴</td></tr>
+    <tr data-t="c"><td>crème légère</td><td>크렘 레제르</td><td>파티시에르+휘핑크림(젤라틴 없이)</td></tr>
+    <tr data-t="c"><td>ganache</td><td>가나슈</td><td>초콜릿+크림 유화. 비율로 점도 조절</td></tr>
+    <tr data-t="c"><td>glaçage</td><td>글라사주</td><td>케이크 표면 코팅(초콜릿·설탕)</td></tr>
+    <tr data-t="c"><td>miroir</td><td>미루아르</td><td>거울처럼 광택 나는 글라사주</td></tr>
+    <tr data-t="c"><td>nappage</td><td>나파주</td><td>과일·타르트 표면에 바르는 광택 젤리</td></tr>
+    <tr data-t="c"><td>imbibage</td><td>앵비바주</td><td>시트에 시럽을 적시는 작업</td></tr>
+    <tr data-t="c"><td>sirop</td><td>시롭</td><td>시럽(설탕+물)</td></tr>
+    <tr data-t="e"><td>tant pour tant (TPT)</td><td>탕 푸르 땅·티피티</td><td>아몬드가루와 슈가파우더를 1대1로 섞은 것. 약자 <b>TPT</b>. 마카롱·다쿠아즈·아몬드 크림 기본</td></tr>
+    <tr data-t="e"><td>TPT</td><td>티피티</td><td>Tant pour Tant의 약자 — 아몬드가루:슈가파우더 = 1:1 혼합. 100g이면 아몬드가루 50g + 슈가파우더 50g</td></tr>
+    <tr data-t="d"><td>macaronnage</td><td>마카로나주</td><td>마카롱 반죽을 눌러 섞어 기포를 정리하는 작업</td></tr>
+    <tr data-t="e"><td>montage</td><td>몽타주</td><td>케이크·디저트 조립</td></tr>
+    <tr data-t="c"><td>monté</td><td>몽테</td><td>휘핑해 부풀린 상태(크림 몽테)</td></tr>
+    <tr data-t="d"><td>appareil</td><td>아파레유</td><td>한 덩어리로 만든 반죽·혼합물</td></tr>
+    <tr data-t="d"><td>bombe</td><td>봉브</td><td>설탕 시럽을 넣어 만든 계란 거품 반죽</td></tr>
+    <tr data-t="e"><td>craquelin</td><td>크라클랭</td><td>슈 위에 올리는 얇은 크런치 시트</td></tr>
+    <tr data-t="e"><td>beurre noisette</td><td>뵈르 누아제트</td><td>헤이즐넛 향이 나도록 태운 버터</td></tr>
+    <tr data-t="e"><td>beurre pommade</td><td>뵈르 포마드</td><td>손가락으로 눌리는 말랑한 버터</td></tr>
+    <tr data-t="e"><td>beurre clarifié</td><td>뵈르 클라리피에</td><td>수분·유단백을 제거한 정제 버터</td></tr>
+    <tr data-t="e"><td>fleur de sel</td><td>플뢰르 드 셀</td><td>천일염의 얇은 결정(마무리 소금)</td></tr>
+    <tr data-t="d"><td>levain</td><td>르방</td><td>천연발효종. 밀가루+물의 야생 효모</td></tr>
+    <tr data-t="d"><td>poolish</td><td>풀리시</td><td>액종. 물 100%로 만든 발효 반죽</td></tr>
+    <tr data-t="d"><td>autolyse</td><td>오토리즈</td><td>가루+물만 섞어 수화·글루텐 형성을 돕는 단계</td></tr>
+    <tr data-t="d"><td>pétrissage</td><td>페트리사주</td><td>반죽 치기</td></tr>
+    <tr data-t="d"><td>pointage</td><td>포인타주</td><td>1차 발효</td></tr>
+    <tr data-t="d"><td>apprêt</td><td>아프레</td><td>2차 발효(성형 후)</td></tr>
+    <tr data-t="d"><td>détrempe</td><td>데트랑프</td><td>퍼프의 기본 반죽(버터 넣기 전)</td></tr>
+    <tr data-t="d"><td>tourage</td><td>투라주</td><td>퍼프에 버터를 접어 넣는 작업</td></tr>
+    <tr data-t="d"><td>laminage</td><td>라미나주</td><td>반죽을 얇게 밀어 층을 만드는 압연</td></tr>
+    <tr data-t="d"><td>abaisse</td><td>아베스</td><td>밀어 편 반죽</td></tr>
+    <tr data-t="d"><td>fonçage</td><td>퐁사주</td><td>반죽을 팬에 깔기</td></tr>
+    <tr data-t="d"><td>cuisson</td><td>퀴종</td><td>굽기</td></tr>
+    <tr data-t="t"><td>chinois</td><td>시누아</td><td>원뿔형 체(거르기)</td></tr>
+    <tr data-t="t"><td>tamis</td><td>타미</td><td>체</td></tr>
+    <tr data-t="t"><td>Maryse</td><td>마리스</td><td>고무·플라스틱 스크래퍼</td></tr>
+    <tr data-t="t"><td>cornet</td><td>코르네</td><td>종이로 만든 짤주머니</td></tr>
+    <tr data-t="t"><td>douille</td><td>두이</td><td>짤주머니 깍지</td></tr>
+    <tr data-t="t"><td>poche</td><td>포슈</td><td>짤주머니</td></tr>
+    <tr data-t="t"><td>cul-de-poule</td><td>퀼 드 풀</td><td>둥근 볼</td></tr>
+    <tr data-t="t"><td>spatule</td><td>스파툴</td><td>주걱·스패출러</td></tr>
+    <tr data-t="t"><td>rouleau</td><td>룰로</td><td>밀대</td></tr>
+    <tr data-t="t"><td>pinceau</td><td>팽소</td><td>붓(계란물·시럽 칠하기)</td></tr>
+    <tr data-t="e"><td>entremet</td><td>앙트르메</td><td>무스·시트·글라사주를 층으로 쌓은 케이크</td></tr>
+    <tr data-t="e"><td>verrine</td><td>베린</td><td>유리컵에 담은 디저트</td></tr>
+    <tr data-t="e"><td>petit four</td><td>쁘티 푸르</td><td>한입 크기 과자</td></tr>
+    <tr data-t="e"><td>viennoiserie</td><td>비에누아즈리</td><td>크루아상·빵 계열 페이스트리</td></tr>
+    <tr data-t="e"><td>pâtisserie</td><td>파티스리</td><td>제과</td></tr>
+    <tr data-t="e"><td>boulangerie</td><td>불랑주리</td><td>제빵</td></tr>
+    <tr data-t="e"><td>chocolatier</td><td>쇼콜라티에</td><td>초콜릿 공예</td></tr>
+    <tr data-t="c"><td>tempérage</td><td>탕페라주</td><td>템퍼링. 초콜릿 결정을 안정화</td></tr>
+    <tr data-t="c"><td>tablage</td><td>타블라주</td><td>대리석 위에서 초콜릿을 펴고 모으는 템퍼링</td></tr>
+    <tr data-t="c"><td>émulsion</td><td>에뮐시옹</td><td>유화. 물과 기름을 균일하게 섞기</td></tr>
+    <tr data-t="c"><td>foisonnement</td><td>푸아조넬망</td><td>휘핑으로 기포를 넣는 것</td></tr>
+    <tr data-t="e"><td>salpicon</td><td>살피콩</td><td>과일을 작은 큐브로 썬 것</td></tr>
+    <tr data-t="c"><td>compote</td><td>콩포트</td><td>과일을 설탕과 졸인 것</td></tr>
+    <tr data-t="c"><td>coulis</td><td>쿨리</td><td>과일 퓌레 소스</td></tr>
+    <tr data-t="c"><td>praliné</td><td>프랄리네</td><td>아몬드·헤이즐넛 캐러멜 갈은 것</td></tr>
+    <tr data-t="c"><td>gianduja</td><td>장두자</td><td>헤이즐넛 초콜릿</td></tr>
+    <tr data-t="d"><td>dacquoise</td><td>다쿠아즈</td><td>아몬드 머랭 시트</td></tr>
+    <tr data-t="d"><td>joconde</td><td>조콩드</td><td>아몬드·계란 시트</td></tr>
+    <tr data-t="d"><td>génoise</td><td>제누와즈</td><td>전란 휘핑 시트</td></tr>
+    <tr data-t="d"><td>biscuit</td><td>비스퀴</td><td>시트·비스킷</td></tr>
+    <tr data-t="d"><td>brioche</td><td>브리오슈</td><td>달걀·버터가 많은 발효 빵 반죽. 나폴레옹 브리오슈는 틀 없이</td></tr>
+    <tr data-t="d"><td>pâte levée feuilletée (PLF)</td><td>파트 르베 푀이테</td><td>발효시킨 퍼프 반죽. 크루아상·파니에 오 쇼콜라</td></tr>
+    <tr data-t="c"><td>crème d'amande</td><td>크렘 다망드</td><td>아몬드크림. 버터·설탕·아몬드가루·계란을 섞은 것</td></tr>
+    <tr data-t="c"><td>crème frangipane</td><td>크렘 프랑지판</td><td>파티시에르에 아몬드크림을 섞은 크림. 갈레트 데 루아·타르트</td></tr>
+    <tr data-t="c"><td>crème chiboust</td><td>크렘 시부스트</td><td>파티시에르+이탈리안 머랭. 생토노레 크림</td></tr>
+    <tr data-t="c"><td>crème au beurre</td><td>크렘 오 뵈르</td><td>버터크림. 케이크 필링·장식</td></tr>
+    <tr data-t="c"><td>ganache montée</td><td>가나슈 몽테</td><td>차갑게 식혀 휘핑해 쓰는 가나슈. 무스 대용</td></tr>
+    <tr data-t="c"><td>crémeux</td><td>크레뫼</td><td>푸딩처럼 부드러운 과일·초콜릿 크림. 앙트르메 층</td></tr>
+    <tr data-t="c"><td>curd</td><td>커드</td><td>레몬·시트러스 주스에 계란·버터를 졸인 크림</td></tr>
+    <tr data-t="c"><td>pâte de fruit</td><td>파트 드 프뤼</td><td>과일 퓌레와 펙틴으로 만든 젤리 사탕</td></tr>
+    <tr data-t="c"><td>confit</td><td>콩피</td><td>과일을 설탕에 천천히 졸인 것. 컨피</td></tr>
+    <tr data-t="c"><td>marmelade</td><td>마르멜라드</td><td>시트러스 껍질이 든 잼</td></tr>
+    <tr data-t="c"><td>caramel au beurre salé</td><td>카라멜 오 뵈르 살레</td><td>소금버터 캐러멜. 브르타뉴 전통</td></tr>
+    <tr data-t="c"><td>nougatine</td><td>누가틴</td><td>설탕·아몬드를 캐러멜화해 얇게 편 장식</td></tr>
+    <tr data-t="e"><td>feuilletine</td><td>푀이야틴</td><td>크레프를 부순 얇은 조각. 크런치 레이어</td></tr>
+    <tr data-t="e"><td>macaron</td><td>마카롱</td><td>꼬끄 두 장 사이에 필링을 넣은 과자</td></tr>
+    <tr data-t="d"><td>coque</td><td>코크</td><td>마카롱 껍질. 표면을 건조시킨 뒤 굽기</td></tr>
+    <tr data-t="c"><td>meringue française</td><td>머랭 프랑세즈</td><td>흰자에 설탕을 넣어 그대로 휘핑한 머랭</td></tr>
+    <tr data-t="c"><td>meringue italienne</td><td>머랭 이탈리엔</td><td>118°C 시럽을 흰자에 부어 만든 머랭</td></tr>
+    <tr data-t="c"><td>meringue suisse</td><td>머랭 스위스</td><td>흰자+설탕을 중탕으로 데운 뒤 휘핑한 머랭</td></tr>
+    <tr data-t="e"><td>pâte d'amande</td><td>파트 다망드</td><td>마지팬. 아몬드가루+설탕+시럽 반죽</td></tr>
+    <tr data-t="c"><td>sucre glace</td><td>슈크르 글라스</td><td>슈가파우더</td></tr>
+    <tr data-t="c"><td>sucre semoule</td><td>슈크르 스뮐</td><td>그래뉴당(알갱이 설탕)</td></tr>
+    <tr data-t="c"><td>cassonade</td><td>카소나드</td><td>사탕수수 흑설탕</td></tr>
+    <tr data-t="c"><td>vergeoise</td><td>베르주아즈</td><td>사탕수수 즙을 졸여 만든 갈색 설탕</td></tr>
+    <tr data-t="c"><td>glucose</td><td>글루코즈</td><td>포도당 시럽. 설탕 결정 방지</td></tr>
+    <tr data-t="c"><td>trimoline</td><td>트리몰린</td><td>전화당 시럽. 흡습·결정 방지(브랜드명이 통용)</td></tr>
+    <tr data-t="c"><td>pectine</td><td>펙틴</td><td>과일 젤화제. 잼·파트 드 프뤼</td></tr>
+    <tr data-t="c"><td>gélatine</td><td>젤라틴</td><td>판젤라틴은 찬물에 불려 물기를 짜 사용</td></tr>
+    <tr data-t="c"><td>agar-agar</td><td>아가아가</td><td>우뭇가사리 젤화제. 40°C 이하에서 굳음</td></tr>
+    <tr data-t="e"><td>amidon de maïs</td><td>아미동 드 마이스</td><td>옥수수전분</td></tr>
+    <tr data-t="e"><td>farine T45</td><td>파린 T45</td><td>회분 0.45%. 제과·페이스트리용 박력분</td></tr>
+    <tr data-t="e"><td>farine T55</td><td>파린 T55</td><td>회분 0.55%. 제빵 표준 밀가루</td></tr>
+    <tr data-t="e"><td>farine T65</td><td>파린 T65</td><td>회분 0.65%. 루스티크·바게트</td></tr>
+    <tr data-t="d"><td>levure fraîche</td><td>르뷔르 프레슈</td><td>생이스트. 물·설탕에 풀어 사용</td></tr>
+    <tr data-t="d"><td>levure chimique</td><td>르뷔르 시미크</td><td>베이킹파우더</td></tr>
+    <tr data-t="c"><td>beurre de cacao</td><td>뵈르 드 카카오</td><td>카카오버터. 템퍼링·광택·몰드 이형</td></tr>
+    <tr data-t="c"><td>chocolat de couverture</td><td>쇼콜라 드 쿠베르튀르</td><td>코코아버터 함량이 높은 공정용 초콜릿</td></tr>
+    <tr data-t="c"><td>enrobage</td><td>앙로바주</td><td>초콜릿 입히기(코팅)</td></tr>
+    <tr data-t="t"><td>cercle à entremet</td><td>세르클 아 앙트르메</td><td>무스 링. 바닥 없는 원형 틀</td></tr>
+    <tr data-t="t"><td>cadre</td><td>캐드르</td><td>사각 프레임. 시트·가나슈 두께 맞추기</td></tr>
+    <tr data-t="t"><td>coupe-pâte</td><td>쿠프 파트</td><td>반죽을 자르는 스크래퍼</td></tr>
+    <tr data-t="t"><td>corne</td><td>코른</td><td>둥근 스크래퍼. 볼 긁기·반죽 정리</td></tr>
+    <tr data-t="t"><td>chambre de pousse</td><td>샹브르 드 푸스</td><td>발효실. 온습도 관리 공간</td></tr>
+    <tr data-t="d"><td>pousse contrôlée</td><td>푸스 콩트롤레</td><td>저온에서 오래 발효시키는 완효</td></tr>
+    <tr data-t="d"><td>façonnage</td><td>파소나주</td><td>성형. 반죽을 목적한 모양으로</td></tr>
+    <tr data-t="d"><td>détente</td><td>데탕트</td><td>성형 전 반죽을 쉬게 해 힘을 빼는 것</td></tr>
+    <tr data-t="d"><td>grigne</td><td>그린</td><td>빵 표면에 넣는 칼집</td></tr>
+    <tr data-t="d"><td>coup de buée</td><td>쿠 드 뷔에</td><td>굽기 초반 오븐에 스팀 넣기</td></tr>
+    <tr data-t="d"><td>cuisson à blanc</td><td>퀴종 아 블랑</td><td>속을 비우고 타르트지만 먼저 굽는 공(빈) 굽기</td></tr>
+    <tr data-t="d"><td>dorage</td><td>도라주</td><td>계란물 칠하기</td></tr>
+    <tr data-t="c"><td>fondant</td><td>퐁당</td><td>설탕·포도당을 반죽한 코팅. 페티푸르·에클레르</td></tr>
+    <tr data-t="c"><td>glaçage royal</td><td>글라사주 로얄</td><td>로열 아이싱. 흰자+슈가파우더 장식</td></tr>
+    <tr data-t="d"><td>pochage</td><td>포사주</td><td>짤주머니로 짜기</td></tr>
+    <tr data-t="e"><td>dressage</td><td>드레사주</td><td>완성된 디저트를 담기·플레이팅</td></tr>
+    <tr data-t="e"><td>brigade</td><td>브리가드</td><td>주방 조직. 셰프 드 파르티로 업무 분담</td></tr>
+    <tr data-t="e"><td>tourier</td><td>투리에</td><td>퍼프·비에누아즈리 담당 파티시에</td></tr>
+    <tr data-t="e"><td>glacier</td><td>글라시에</td><td>아이스크림·셔벳 담당</td></tr>
+    <tr data-t="e"><td>confiseur</td><td>콩피죄르</td><td>사탕·젤리·초콜릿 과자 담당</td></tr>
   </table>
   `,
   tips: ['발음은 현장 표기 기준입니다. 원어 철자로도 검색됩니다.'],
@@ -6569,108 +6582,108 @@ DB.push({
   <p>일본 제과학교·업장에서 쓰는 표현과 한국 현장에서 그대로 쓰는 말을 함께 담았습니다. 용어를 누르면 뜻이 펼쳐집니다. 각 용어 옆 <b>🔊</b>를 누르면 일본어 발음을 들을 수 있습니다.</p>
   <table class="wTbl termTbl">
     <tr><th>원어</th><th>한국어 발음</th><th>뜻 · 현장 쓰임</th></tr>
-    <tr><td>仕込み (しこみ)</td><td>시코미</td><td>작업 준비·반죽 시작. "시코미 들어간다"</td></tr>
-    <tr><td>生地 (きじ)</td><td>키지</td><td>반죽·시트. "키지가 좋다"</td></tr>
-    <tr><td>麺棒 (めんぼう)</td><td>멘보</td><td>밀대</td></tr>
-    <tr><td>天板 (てんぱん)</td><td>텐판</td><td>오븐 철판</td></tr>
-    <tr><td>泡立て (あわだて)</td><td>아와다테</td><td>휘핑·거품 내기</td></tr>
-    <tr><td>混ぜる (まぜる)</td><td>마제루</td><td>섞기</td></tr>
-    <tr><td>捏ね (こね)</td><td>코네</td><td>반죽 치기</td></tr>
-    <tr><td>発酵 (はっこう)</td><td>핫코</td><td>발효</td></tr>
-    <tr><td>焼成 (しょうせい)</td><td>쇼세이</td><td>굽기</td></tr>
-    <tr><td>冷却 (れいきゃく)</td><td>레이쿠</td><td>냉각</td></tr>
-    <tr><td>型 (かた)</td><td>카타</td><td>틀</td></tr>
-    <tr><td>生クリーム (なまクリーム)</td><td>나마크림</td><td>생크림</td></tr>
-    <tr><td>生菓子 (なまがし)</td><td>나마가시</td><td>생과자(냉장 디저트)</td></tr>
-    <tr><td>焼き菓子 (やきがし)</td><td>야키가시</td><td>구운 과자</td></tr>
-    <tr><td>洋菓子 (ようがし)</td><td>요가시</td><td>양과자</td></tr>
-    <tr><td>和菓子 (わがし)</td><td>와가시</td><td>화과자</td></tr>
-    <tr><td>餡子 (あんこ)</td><td>앙코</td><td>팥앙금</td></tr>
-    <tr><td>求肥 (ぎゅうひ)</td><td>규히</td><td>찹쌀로 만든 부드러운 떡</td></tr>
-    <tr><td>白玉粉 (しらたまこ)</td><td>시라타마코</td><td>찹쌀가루</td></tr>
-    <tr><td>上新粉 (じょうしんこ)</td><td>조신코</td><td>멥쌀가루</td></tr>
-    <tr><td>粉糖 (こなとう)</td><td>코나토</td><td>슈가파우더</td></tr>
-    <tr><td>強力粉 (きょうりきこ)</td><td>쿄리키코</td><td>강력분</td></tr>
-    <tr><td>薄力粉 (はくりきこ)</td><td>하쿠리키코</td><td>박력분</td></tr>
-    <tr><td>中力粉 (ちゅうりきこ)</td><td>추리키코</td><td>중력분</td></tr>
-    <tr><td>卵白 (らんぱく)</td><td>란파쿠</td><td>흰자</td></tr>
-    <tr><td>卵黄 (らんおう)</td><td>란오</td><td>노른자</td></tr>
-    <tr><td>蜂蜜 (はちみつ)</td><td>하치미츠</td><td>꿀</td></tr>
-    <tr><td>膨張剤 (ぼうちょうざい)</td><td>보초자이</td><td>팽창제</td></tr>
-    <tr><td>重曹 (じゅうそう)</td><td>주소</td><td>베이킹소다</td></tr>
-    <tr><td>絞り袋 (しぼりぶくろ)</td><td>시보리부쿠로</td><td>짤주머니</td></tr>
-    <tr><td>口金 (くちがね)</td><td>쿠치가네</td><td>깍지</td></tr>
-    <tr><td>ゴムベラ</td><td>고무베라</td><td>고무 주걱</td></tr>
-    <tr><td>ヘラ</td><td>헤라</td><td>주걱·스크래퍼</td></tr>
-    <tr><td>泡立て器 (あわだてき)</td><td>아와다테키</td><td>거품기</td></tr>
-    <tr><td>計量器 (けいりょうき)</td><td>케이료키</td><td>계량기</td></tr>
-    <tr><td>温度計 (おんどけい)</td><td>온도케이</td><td>온도계</td></tr>
-    <tr><td>冷却台 (れいきゃくだい)</td><td>레이쿠다이</td><td>식힘망</td></tr>
-    <tr><td>焼き色 (やきいろ)</td><td>야키이로</td><td>굽기 색</td></tr>
-    <tr><td>艶 (つや)</td><td>츠야</td><td>윤기</td></tr>
-    <tr><td>口当たり (くちあたり)</td><td>쿠치아타리</td><td>입에 닿는 느낌</td></tr>
-    <tr><td>しっとり</td><td>싯토리</td><td>촉촉한 식감</td></tr>
-    <tr><td>さっくり</td><td>삿쿠리</td><td>바삭·사르르한 식감</td></tr>
-    <tr><td>もっちり</td><td>못치리</td><td>쫀득한 식감</td></tr>
-    <tr><td>食感 (しょっかん)</td><td>쇼쿠칸</td><td>식감</td></tr>
-    <tr><td>日持ち (ひもち)</td><td>히모치</td><td>보관·유통 기간</td></tr>
-    <tr><td>粗熱 (あらねつ)</td><td>아라네쯔</td><td>한김(뜨거운 김)</td></tr>
-    <tr><td>湯煎 (ゆせん)</td><td>유센</td><td>중탕</td></tr>
-    <tr><td>氷水 (こおりみず)</td><td>코리미즈</td><td>얼음물</td></tr>
-    <tr><td>ホイロ</td><td>호이로</td><td>발효기</td></tr>
-    <tr><td>予熱 (よねつ)</td><td>요네츠</td><td>오븐 예열</td></tr>
-    <tr><td>蒸気 (じょうき)</td><td>조키</td><td>스팀. 굽기 초반에 넣어 껍질·볼륨 확보</td></tr>
-    <tr><td>霧吹き (きりふき)</td><td>키리후키</td><td>분무기. 물·이스트물 뿌리기</td></tr>
-    <tr><td>型離れ (かたはなれ)</td><td>카타하나레</td><td>틀에서 잘 떨어지는 성질</td></tr>
-    <tr><td>焼き縮み (やきちぢみ)</td><td>야키치지미</td><td>굽고 나서 줄어드는 현상</td></tr>
-    <tr><td>湯煎焼き (ゆせんやき)</td><td>유센야키</td><td>중탕 굽기. 바스크 치즈케이크·푸딩</td></tr>
-    <tr><td>絞り (しぼり)</td><td>시보리</td><td>짜기. 짤주머니로 짜 넣기</td></tr>
-    <tr><td>星口金 (ほしくちがね)</td><td>호시쿠치가네</td><td>별깍지. 크림·슈 장식</td></tr>
-    <tr><td>丸口金 (まるくちがね)</td><td>마루쿠치가네</td><td>원형 깍지. 마카롱·에클레르</td></tr>
-    <tr><td>スケッパー</td><td>스켑파</td><td>스크래퍼(반죽 자르기)</td></tr>
-    <tr><td>パレットナイフ</td><td>파렛토나이후</td><td>팔레트 나이프. 아이싱 펴기</td></tr>
-    <tr><td>回転台 (かいてんだい)</td><td>카이텐다이</td><td>턴테이블. 케이크 아이싱</td></tr>
-    <tr><td>抜き型 (ぬきがた)</td><td>누키가타</td><td>쿠키 커터</td></tr>
-    <tr><td>セルクル</td><td>세루쿠루</td><td>무스 링</td></tr>
-    <tr><td>デコ型 (デコがた)</td><td>데코가타</td><td>스펀지케이크 데코 틀</td></tr>
-    <tr><td>パウンド型 (ぱうんどがた)</td><td>파운드가타</td><td>파운드케이크 틀</td></tr>
-    <tr><td>食パン型 (しょくぱんがた)</td><td>쇼쿠판가타</td><td>식빵 틀</td></tr>
-    <tr><td>オーブンシート</td><td>오분시토</td><td>유산지(베이킹페이퍼)</td></tr>
-    <tr><td>ホイッパー</td><td>호잇파</td><td>거품기</td></tr>
-    <tr><td>上白糖 (じょうはくとう)</td><td>조하쿠토</td><td>상백당. 습기가 많아 촉촉한 단맛</td></tr>
-    <tr><td>グラニュー糖 (ぐらにゅーとう)</td><td>구라뉴토</td><td>그래뉴당. 깔끔한 단맛</td></tr>
-    <tr><td>三温糖 (さんおんとう)</td><td>산온토</td><td>삼온당. 가열로 갈색·깊은 단맛</td></tr>
-    <tr><td>黒糖 (くろとう)</td><td>쿠로토</td><td>흑설탕</td></tr>
-    <tr><td>水あめ (みずあめ)</td><td>미즈아메</td><td>물엿</td></tr>
-    <tr><td>転化糖 (てんかとう)</td><td>텐카토</td><td>전화당. 결정 방지·보습</td></tr>
-    <tr><td>板ゼラチン (いたゼラチン)</td><td>이타제라틴</td><td>판젤라틴</td></tr>
-    <tr><td>粉ゼラチン (こなゼラチン)</td><td>코나제라틴</td><td>가루젤라틴</td></tr>
-    <tr><td>寒天 (かんてん)</td><td>칸텐</td><td>한천. 실온에서 굳는 젤화제</td></tr>
-    <tr><td>ペクチン</td><td>페쿠친</td><td>펙틴</td></tr>
-    <tr><td>ベーキングパウダー</td><td>베킹구파우다</td><td>베이킹파우더</td></tr>
-    <tr><td>イースト</td><td>이스토</td><td>이스트</td></tr>
-    <tr><td>生イースト (なまイースト)</td><td>나마이스토</td><td>생이스트</td></tr>
-    <tr><td>中種 (ちゅうしゅ)</td><td>추슈</td><td>중종. 반죽 일부를 먼저 발효</td></tr>
-    <tr><td>液種 (えきしゅ)</td><td>에키슈</td><td>액종. 물 100%로 만든 발효 반죽</td></tr>
-    <tr><td>元種 (もとだね)</td><td>모토다네</td><td>천연발효종</td></tr>
-    <tr><td>捏ね上げ温度 (こねあげおんど)</td><td>코네아게온도</td><td>반죽 최종 온도(DDP)</td></tr>
-    <tr><td>フロアタイム</td><td>후로아타이무</td><td>벤치타임. 둥글리기 후 이완</td></tr>
-    <tr><td>パンチ</td><td>판치</td><td>펀칭. 발효 중 가스 빼기</td></tr>
-    <tr><td>ガス抜き (がすぬき)</td><td>가스누키</td><td>가스 빼기</td></tr>
-    <tr><td>分割 (ぶんかつ)</td><td>분카츠</td><td>분할</td></tr>
-    <tr><td>丸め (まるめ)</td><td>마루메</td><td>둥글리기</td></tr>
-    <tr><td>成形 (せいけい)</td><td>세이케이</td><td>성형</td></tr>
-    <tr><td>型詰め (かたづめ)</td><td>카타즈메</td><td>팬닝. 반죽을 틀에 담기</td></tr>
-    <tr><td>窯伸び (かまのび)</td><td>카마노비</td><td>오븐 스프링</td></tr>
-    <tr><td>クラスト</td><td>쿠라스토</td><td>빵 껍질</td></tr>
-    <tr><td>クラム</td><td>쿠라무</td><td>빵 속(기공 조직)</td></tr>
-    <tr><td>気泡 (きほう)</td><td>키호</td><td>기공</td></tr>
-    <tr><td>老化 (ろうか)</td><td>로카</td><td>노화. 딱딱해지고 향이 빠지는 것</td></tr>
-    <tr><td>解凍 (かいとう)</td><td>카이토</td><td>해동</td></tr>
-    <tr><td>離水 (りすい)</td><td>리스이</td><td>물 분리(시너리시스)</td></tr>
-    <tr><td>つや出し (つやだし)</td><td>츠야다시</td><td>윤내기. 계란물·시럽 칠하기</td></tr>
-    <tr><td>手ごね (てごね)</td><td>테고네</td><td>손반죽</td></tr>
-    <tr><td>低速・高速 (ていそく・こうそく)</td><td>테이소쿠·코소쿠</td><td>믹서 저속·고속</td></tr>
+    <tr data-t="d"><td>仕込み (しこみ)</td><td>시코미</td><td>작업 준비·반죽 시작. "시코미 들어간다"</td></tr>
+    <tr data-t="d"><td>生地 (きじ)</td><td>키지</td><td>반죽·시트. "키지가 좋다"</td></tr>
+    <tr data-t="t"><td>麺棒 (めんぼう)</td><td>멘보</td><td>밀대</td></tr>
+    <tr data-t="t"><td>天板 (てんぱん)</td><td>텐판</td><td>오븐 철판</td></tr>
+    <tr data-t="c"><td>泡立て (あわだて)</td><td>아와다테</td><td>휘핑·거품 내기</td></tr>
+    <tr data-t="d"><td>混ぜる (まぜる)</td><td>마제루</td><td>섞기</td></tr>
+    <tr data-t="d"><td>捏ね (こね)</td><td>코네</td><td>반죽 치기</td></tr>
+    <tr data-t="d"><td>発酵 (はっこう)</td><td>핫코</td><td>발효</td></tr>
+    <tr data-t="d"><td>焼成 (しょうせい)</td><td>쇼세이</td><td>굽기</td></tr>
+    <tr data-t="t"><td>冷却 (れいきゃく)</td><td>레이쿠</td><td>냉각</td></tr>
+    <tr data-t="t"><td>型 (かた)</td><td>카타</td><td>틀</td></tr>
+    <tr data-t="c"><td>生クリーム (なまクリーム)</td><td>나마크림</td><td>생크림</td></tr>
+    <tr data-t="e"><td>生菓子 (なまがし)</td><td>나마가시</td><td>생과자(냉장 디저트)</td></tr>
+    <tr data-t="e"><td>焼き菓子 (やきがし)</td><td>야키가시</td><td>구운 과자</td></tr>
+    <tr data-t="e"><td>洋菓子 (ようがし)</td><td>요가시</td><td>양과자</td></tr>
+    <tr data-t="e"><td>和菓子 (わがし)</td><td>와가시</td><td>화과자</td></tr>
+    <tr data-t="e"><td>餡子 (あんこ)</td><td>앙코</td><td>팥앙금</td></tr>
+    <tr data-t="e"><td>求肥 (ぎゅうひ)</td><td>규히</td><td>찹쌀로 만든 부드러운 떡</td></tr>
+    <tr data-t="e"><td>白玉粉 (しらたまこ)</td><td>시라타마코</td><td>찹쌀가루</td></tr>
+    <tr data-t="e"><td>上新粉 (じょうしんこ)</td><td>조신코</td><td>멥쌀가루</td></tr>
+    <tr data-t="c"><td>粉糖 (こなとう)</td><td>코나토</td><td>슈가파우더</td></tr>
+    <tr data-t="e"><td>強力粉 (きょうりきこ)</td><td>쿄리키코</td><td>강력분</td></tr>
+    <tr data-t="e"><td>薄力粉 (はくりきこ)</td><td>하쿠리키코</td><td>박력분</td></tr>
+    <tr data-t="e"><td>中力粉 (ちゅうりきこ)</td><td>추리키코</td><td>중력분</td></tr>
+    <tr data-t="e"><td>卵白 (らんぱく)</td><td>란파쿠</td><td>흰자</td></tr>
+    <tr data-t="e"><td>卵黄 (らんおう)</td><td>란오</td><td>노른자</td></tr>
+    <tr data-t="e"><td>蜂蜜 (はちみつ)</td><td>하치미츠</td><td>꿀</td></tr>
+    <tr data-t="d"><td>膨張剤 (ぼうちょうざい)</td><td>보초자이</td><td>팽창제</td></tr>
+    <tr data-t="d"><td>重曹 (じゅうそう)</td><td>주소</td><td>베이킹소다</td></tr>
+    <tr data-t="t"><td>絞り袋 (しぼりぶくろ)</td><td>시보리부쿠로</td><td>짤주머니</td></tr>
+    <tr data-t="t"><td>口金 (くちがね)</td><td>쿠치가네</td><td>깍지</td></tr>
+    <tr data-t="t"><td>ゴムベラ</td><td>고무베라</td><td>고무 주걱</td></tr>
+    <tr data-t="t"><td>ヘラ</td><td>헤라</td><td>주걱·스크래퍼</td></tr>
+    <tr data-t="t"><td>泡立て器 (あわだてき)</td><td>아와다테키</td><td>거품기</td></tr>
+    <tr data-t="t"><td>計量器 (けいりょうき)</td><td>케이료키</td><td>계량기</td></tr>
+    <tr data-t="t"><td>温度計 (おんどけい)</td><td>온도케이</td><td>온도계</td></tr>
+    <tr data-t="t"><td>冷却台 (れいきゃくだい)</td><td>레이쿠다이</td><td>식힘망</td></tr>
+    <tr data-t="d"><td>焼き色 (やきいろ)</td><td>야키이로</td><td>굽기 색</td></tr>
+    <tr data-t="e"><td>艶 (つや)</td><td>츠야</td><td>윤기</td></tr>
+    <tr data-t="e"><td>口当たり (くちあたり)</td><td>쿠치아타리</td><td>입에 닿는 느낌</td></tr>
+    <tr data-t="e"><td>しっとり</td><td>싯토리</td><td>촉촉한 식감</td></tr>
+    <tr data-t="e"><td>さっくり</td><td>삿쿠리</td><td>바삭·사르르한 식감</td></tr>
+    <tr data-t="e"><td>もっちり</td><td>못치리</td><td>쫀득한 식감</td></tr>
+    <tr data-t="e"><td>食感 (しょっかん)</td><td>쇼쿠칸</td><td>식감</td></tr>
+    <tr data-t="e"><td>日持ち (ひもち)</td><td>히모치</td><td>보관·유통 기간</td></tr>
+    <tr data-t="d"><td>粗熱 (あらねつ)</td><td>아라네쯔</td><td>한김(뜨거운 김)</td></tr>
+    <tr data-t="d"><td>湯煎 (ゆせん)</td><td>유센</td><td>중탕</td></tr>
+    <tr data-t="e"><td>氷水 (こおりみず)</td><td>코리미즈</td><td>얼음물</td></tr>
+    <tr data-t="t"><td>ホイロ</td><td>호이로</td><td>발효기</td></tr>
+    <tr data-t="t"><td>予熱 (よねつ)</td><td>요네츠</td><td>오븐 예열</td></tr>
+    <tr data-t="d"><td>蒸気 (じょうき)</td><td>조키</td><td>스팀. 굽기 초반에 넣어 껍질·볼륨 확보</td></tr>
+    <tr data-t="t"><td>霧吹き (きりふき)</td><td>키리후키</td><td>분무기. 물·이스트물 뿌리기</td></tr>
+    <tr data-t="t"><td>型離れ (かたはなれ)</td><td>카타하나레</td><td>틀에서 잘 떨어지는 성질</td></tr>
+    <tr data-t="d"><td>焼き縮み (やきちぢみ)</td><td>야키치지미</td><td>굽고 나서 줄어드는 현상</td></tr>
+    <tr data-t="d"><td>湯煎焼き (ゆせんやき)</td><td>유센야키</td><td>중탕 굽기. 바스크 치즈케이크·푸딩</td></tr>
+    <tr data-t="d"><td>絞り (しぼり)</td><td>시보리</td><td>짜기. 짤주머니로 짜 넣기</td></tr>
+    <tr data-t="t"><td>星口金 (ほしくちがね)</td><td>호시쿠치가네</td><td>별깍지. 크림·슈 장식</td></tr>
+    <tr data-t="t"><td>丸口金 (まるくちがね)</td><td>마루쿠치가네</td><td>원형 깍지. 마카롱·에클레르</td></tr>
+    <tr data-t="t"><td>スケッパー</td><td>스켑파</td><td>스크래퍼(반죽 자르기)</td></tr>
+    <tr data-t="t"><td>パレットナイフ</td><td>파렛토나이후</td><td>팔레트 나이프. 아이싱 펴기</td></tr>
+    <tr data-t="t"><td>回転台 (かいてんだい)</td><td>카이텐다이</td><td>턴테이블. 케이크 아이싱</td></tr>
+    <tr data-t="t"><td>抜き型 (ぬきがた)</td><td>누키가타</td><td>쿠키 커터</td></tr>
+    <tr data-t="t"><td>セルクル</td><td>세루쿠루</td><td>무스 링</td></tr>
+    <tr data-t="t"><td>デコ型 (デコがた)</td><td>데코가타</td><td>스펀지케이크 데코 틀</td></tr>
+    <tr data-t="t"><td>パウンド型 (ぱうんどがた)</td><td>파운드가타</td><td>파운드케이크 틀</td></tr>
+    <tr data-t="t"><td>食パン型 (しょくぱんがた)</td><td>쇼쿠판가타</td><td>식빵 틀</td></tr>
+    <tr data-t="t"><td>オーブンシート</td><td>오분시토</td><td>유산지(베이킹페이퍼)</td></tr>
+    <tr data-t="t"><td>ホイッパー</td><td>호잇파</td><td>거품기</td></tr>
+    <tr data-t="c"><td>上白糖 (じょうはくとう)</td><td>조하쿠토</td><td>상백당. 습기가 많아 촉촉한 단맛</td></tr>
+    <tr data-t="c"><td>グラニュー糖 (ぐらにゅーとう)</td><td>구라뉴토</td><td>그래뉴당. 깔끔한 단맛</td></tr>
+    <tr data-t="c"><td>三温糖 (さんおんとう)</td><td>산온토</td><td>삼온당. 가열로 갈색·깊은 단맛</td></tr>
+    <tr data-t="c"><td>黒糖 (くろとう)</td><td>쿠로토</td><td>흑설탕</td></tr>
+    <tr data-t="c"><td>水あめ (みずあめ)</td><td>미즈아메</td><td>물엿</td></tr>
+    <tr data-t="c"><td>転化糖 (てんかとう)</td><td>텐카토</td><td>전화당. 결정 방지·보습</td></tr>
+    <tr data-t="c"><td>板ゼラチン (いたゼラチン)</td><td>이타제라틴</td><td>판젤라틴</td></tr>
+    <tr data-t="c"><td>粉ゼラチン (こなゼラチン)</td><td>코나제라틴</td><td>가루젤라틴</td></tr>
+    <tr data-t="c"><td>寒天 (かんてん)</td><td>칸텐</td><td>한천. 실온에서 굳는 젤화제</td></tr>
+    <tr data-t="c"><td>ペクチン</td><td>페쿠친</td><td>펙틴</td></tr>
+    <tr data-t="d"><td>ベーキングパウダー</td><td>베킹구파우다</td><td>베이킹파우더</td></tr>
+    <tr data-t="d"><td>イースト</td><td>이스토</td><td>이스트</td></tr>
+    <tr data-t="d"><td>生イースト (なまイースト)</td><td>나마이스토</td><td>생이스트</td></tr>
+    <tr data-t="d"><td>中種 (ちゅうしゅ)</td><td>추슈</td><td>중종. 반죽 일부를 먼저 발효</td></tr>
+    <tr data-t="d"><td>液種 (えきしゅ)</td><td>에키슈</td><td>액종. 물 100%로 만든 발효 반죽</td></tr>
+    <tr data-t="d"><td>元種 (もとだね)</td><td>모토다네</td><td>천연발효종</td></tr>
+    <tr data-t="t"><td>捏ね上げ温度 (こねあげおんど)</td><td>코네아게온도</td><td>반죽 최종 온도(DDP)</td></tr>
+    <tr data-t="d"><td>フロアタイム</td><td>후로아타이무</td><td>벤치타임. 둥글리기 후 이완</td></tr>
+    <tr data-t="d"><td>パンチ</td><td>판치</td><td>펀칭. 발효 중 가스 빼기</td></tr>
+    <tr data-t="d"><td>ガス抜き (がすぬき)</td><td>가스누키</td><td>가스 빼기</td></tr>
+    <tr data-t="d"><td>分割 (ぶんかつ)</td><td>분카츠</td><td>분할</td></tr>
+    <tr data-t="d"><td>丸め (まるめ)</td><td>마루메</td><td>둥글리기</td></tr>
+    <tr data-t="d"><td>成形 (せいけい)</td><td>세이케이</td><td>성형</td></tr>
+    <tr data-t="d"><td>型詰め (かたづめ)</td><td>카타즈메</td><td>팬닝. 반죽을 틀에 담기</td></tr>
+    <tr data-t="d"><td>窯伸び (かまのび)</td><td>카마노비</td><td>오븐 스프링</td></tr>
+    <tr data-t="d"><td>クラスト</td><td>쿠라스토</td><td>빵 껍질</td></tr>
+    <tr data-t="d"><td>クラム</td><td>쿠라무</td><td>빵 속(기공 조직)</td></tr>
+    <tr data-t="d"><td>気泡 (きほう)</td><td>키호</td><td>기공</td></tr>
+    <tr data-t="d"><td>老化 (ろうか)</td><td>로카</td><td>노화. 딱딱해지고 향이 빠지는 것</td></tr>
+    <tr data-t="e"><td>解凍 (かいとう)</td><td>카이토</td><td>해동</td></tr>
+    <tr data-t="c"><td>離水 (りすい)</td><td>리스이</td><td>물 분리(시너리시스)</td></tr>
+    <tr data-t="e"><td>つや出し (つやだし)</td><td>츠야다시</td><td>윤내기. 계란물·시럽 칠하기</td></tr>
+    <tr data-t="d"><td>手ごね (てごね)</td><td>테고네</td><td>손반죽</td></tr>
+    <tr data-t="t"><td>低速・高速 (ていそく・こうそく)</td><td>테이소쿠·코소쿠</td><td>믹서 저속·고속</td></tr>
   </table>
   `,
   tips: ['"호이로에 넣어" = 발효기에 넣어. "아라네쯔 빼고" = 한김 식힌 뒤.'],
@@ -6686,78 +6699,78 @@ DB.push({
   <p>자격증·현장에서 쓰는 표준 용어입니다. 용어를 누르면 뜻과 현장 쓰임이 펼쳐집니다.</p>
   <table class="wTbl termTbl">
     <tr><th>용어</th><th>뜻 · 현장 쓰임</th></tr>
-    <tr><td>펀칭 (punching)</td><td>1차 발효 중 반죽의 가스를 빼고 다시 부풀리는 작업. 글루텐을 강화하고 온도를 균일하게</td></tr>
-    <tr><td>둥글리기 (rounding)</td><td>분할한 반죽을 표면을 팽팽하게 둥글게 정리하는 것</td></tr>
-    <tr><td>벤치타임 (bench time)</td><td>둥글리기 후 반죽을 실온에서 이완시키는 시간</td></tr>
-    <tr><td>완효</td><td>냉장·저온에서 천천히 발효를 진행시키는 것(숙성)</td></tr>
-    <tr><td>오븐 스프링</td><td>굽는 초반 반죽이 급격히 부풀어 오르는 현상</td></tr>
-    <tr><td>비중 (specific gravity)</td><td>반죽·크림의 부피 대비 무게. 케이크·마카롱 기포 상태 판단</td></tr>
-    <tr><td>수화 (hydration)</td><td>가루가 물을 흡수하는 것. 오토리즈로 촉진</td></tr>
-    <tr><td>폴딩 (folding)</td><td>휘핑 크림·머랭을 반죽에 가볍게 섞는 것</td></tr>
-    <tr><td>접기 (fold)</td><td>발효 반죽을 늘였다 접어 글루텐을 강화하는 작업</td></tr>
-    <tr><td>분할 (dividing)</td><td>반죽을 목표 중량으로 나누는 것</td></tr>
-    <tr><td>중간발효</td><td>성형 전 반죽을 잠시 쉬게 하는 단계(벤치타임과 유사)</td></tr>
-    <tr><td>정형 (shaping)</td><td>반죽을 목적하는 모양으로 만드는 것</td></tr>
-    <tr><td>팬닝 (panning)</td><td>반죽·케이크를 팬·틀에 담는 것</td></tr>
-    <tr><td>스팀 (steam)</td><td>오븐에 수증기를 넣어 껍질 형성과 볼륨을 돕는 것</td></tr>
-    <tr><td>살수</td><td>오븐·빵 표면에 물을 뿌리는 것(스팀 대용)</td></tr>
-    <tr><td>크림화 (creaming)</td><td>버터와 설탕을 하얗게 될 때까지 휘핑하는 것</td></tr>
-    <tr><td>마블링 (marbling)</td><td>두 가지 반죽·크림을 흐르는 무늬로 섞는 것</td></tr>
-    <tr><td>아이싱 (icing)</td><td>설탕·물·색소로 표면에 입히는 코팅</td></tr>
-    <tr><td>코팅 (coating)</td><td>초콜릿·글라사주로 표면을 덮는 것</td></tr>
-    <tr><td>템퍼링 (tempering)</td><td>초콜릿을 45→27→31°C로 조절해 결정을 안정화</td></tr>
-    <tr><td>유화 (emulsification)</td><td>물과 기름을 균일하게 섞는 것(가나슈·마요네즈)</td></tr>
-    <tr><td>호화 (gelatinization)</td><td>전분이 물과 열로 팽윤해 점도가 오르는 것(슈·커스터드)</td></tr>
-    <tr><td>글루텐</td><td>밀가루 단백질이 물과 반죽으로 형성하는 탄력 구조</td></tr>
-    <tr><td>DDP (Desired Dough Temperature)</td><td>목표 반죽 온도. 물 온도로 조절</td></tr>
-    <tr><td>스트레이트법 (straight dough)</td><td>가루·물·이스트를 한 번에 반죽하는 기본법. 식빵·단과자빵</td></tr>
-    <tr><td>스펀지법 (sponge and dough)</td><td>반죽의 70%를 먼저 발효시킨 뒤 나머지를 넣는 2단계법</td></tr>
-    <tr><td>액종법 (poolish)</td><td>물 100% 액종을 먼저 발효시켜 본반죽에 넣는 방법</td></tr>
-    <tr><td>비상법 (중종법)</td><td>반죽 일부를 하루 숙성해 넣는 방법. 사워도우 대용으로도</td></tr>
-    <tr><td>냉동반죽법</td><td>성형 후 급속 냉동해 두었다가 필요할 때 해동해 굽는 방식</td></tr>
-    <tr><td>오버나이트 발효</td><td>저온에서 밤새 발효. 풍미가 깊어지고 노화가 늦춰짐</td></tr>
-    <tr><td>흡수율 (absorption)</td><td>가루 대비 물의 비율. 단백질·입자·습도에 따라 달라짐</td></tr>
-    <tr><td>글루텐 인덱스</td><td>밀가루 글루텐의 질과 양을 나타내는 지표</td></tr>
-    <tr><td>단백질 함량</td><td>강력분 11.5~13%, 중력분 9~11%, 박력분 8~9%</td></tr>
-    <tr><td>이스트푸드</td><td>이스트 영양원(칼슘·암모늄염). 반죽을 강하게</td></tr>
-    <tr><td>개량제 (bread improver)</td><td>산화제·유화제 복합제. 볼륨·노화 개선</td></tr>
-    <tr><td>산화제</td><td>글루텐 결합을 촉진해 반죽을 팽팽하게(아스코르브산)</td></tr>
-    <tr><td>환원제</td><td>반죽을 부드럽게 하는 반대 작용. 소량 사용</td></tr>
-    <tr><td>유화제</td><td>물과 기름을 결합시키는 재료. 보습·노화 억제</td></tr>
-    <tr><td>보습제</td><td>글리세린·소르비톨 등으로 촉촉함을 유지하는 재료</td></tr>
-    <tr><td>수분활성도 (Aw)</td><td>미생물이 이용할 수 있는 물의 양. 유통기한 판단 지표</td></tr>
-    <tr><td>당도 (Brix)</td><td>시럽·잼의 가용성 고형분 농도</td></tr>
-    <tr><td>보메 (Baumé)</td><td>시럽 농도 단위. 30°Bé 시럽처럼 사용</td></tr>
-    <tr><td>산도 · pH</td><td>잼·과일 필링의 산미와 색 유지 관리</td></tr>
-    <tr><td>시너리시스</td><td>젤·크림에서 물이 빠져나오는 현상</td></tr>
-    <tr><td>노화 (staling)</td><td>전분이 재결합해 딱딱해지고 향이 빠지는 현상</td></tr>
-    <tr><td>전분의 호화와 노화</td><td>열로 풀어진 전분이 식으면서 다시 굳는 것. 노화 억제가 보관 비결</td></tr>
-    <tr><td>유지 (油脂)</td><td>버터·마가린·쇼트닝 등 지방 재료의 총칭</td></tr>
-    <tr><td>쇼트닝</td><td>100% 유지. 층·바삭함을 내는 데 유리</td></tr>
-    <tr><td>가염버터 · 무염버터</td><td>소금 1.5~2% 차이. 단맛 반주에는 무염버터</td></tr>
-    <tr><td>발효버터</td><td>유산균으로 발효해 향이 깊은 버터</td></tr>
-    <tr><td>유지방</td><td>생크림 35~40%, 버터 80% 등 지방 함량</td></tr>
-    <tr><td>머랭 (meringue) 3종</td><td>프랑스·이탈리안·스위스. 제조법에 따라 안정성·용도가 다름</td></tr>
-    <tr><td>거품 안정성</td><td>머랭·휘핑크림 기포가 시간이 지나도 유지되는 정도</td></tr>
-    <tr><td>휘핑 (whipping)</td><td>공기를 넣어 부풀리기. 온도가 낮을수록 안정</td></tr>
-    <tr><td>꼬끄 (coque)</td><td>마카롱 껍질. 표면을 건조시킨 뒤 구워야 매끈</td></tr>
-    <tr><td>필링 (filling)</td><td>마카롱·케이크 사이에 넣는 크림·잼</td></tr>
-    <tr><td>β결정 (베타 결정)</td><td>템퍼링으로 만드는 안정한 초콜릿 결정. 광택·스냅</td></tr>
-    <tr><td>블루밍 (bloom)</td><td>초콜릿 표면의 지방·설탕 백화 현상</td></tr>
-    <tr><td>캐러멜화</td><td>설탕이 160~180°C에서 갈변하는 반응</td></tr>
-    <tr><td>마이야르 반응</td><td>아미노산과 당의 갈변. 빵 껍질 향·색의 핵심</td></tr>
-    <tr><td>젤화 (gelation)</td><td>젤라틴·펙틴이 그물 구조를 만드는 것</td></tr>
-    <tr><td>로열 아이싱</td><td>흰자+슈가파우더. 쿠키·진저브레드 장식</td></tr>
-    <tr><td>슈거크래프트</td><td>설탕 공예. 당인형·설탕꽃</td></tr>
-    <tr><td>HACCP</td><td>식품안전관리인증. 공정별 온도·위생 기록 관리</td></tr>
-    <tr><td>선입선출 (FIFO)</td><td>먼저 들어온 재료를 먼저 쓰는 재고 관리</td></tr>
-    <tr><td>소비기한</td><td>먹어도 안전한 최종 기한. 유통기한과 구분</td></tr>
-    <tr><td>로스율 (loss rate)</td><td>작업 중 손실 비율. 원가 계산에 반영</td></tr>
-    <tr><td>수율 (yield)</td><td>재료·반죽에서 얻는 완제품의 비율</td></tr>
-    <tr><td>베이킹 퍼센트</td><td>가루를 100으로 두고 다른 재료를 비율로 표시한 배합</td></tr>
-    <tr><td>계량 (scaling)</td><td>g 단위로 무게를 재는 것. 부피 계량보다 정확</td></tr>
-    <tr><td>반죽 온도계</td><td>침투식 온도계로 반죽 심부 온도를 측정</td></tr>
-    <tr><td>데크 오븐 · 컨벡션 오븐</td><td>바닥판 직접 가열 vs 팬 열풍 순환. 굽기 특성이 다름</td></tr>
+    <tr data-t="d"><td>펀칭 (punching)</td><td>1차 발효 중 반죽의 가스를 빼고 다시 부풀리는 작업. 글루텐을 강화하고 온도를 균일하게</td></tr>
+    <tr data-t="d"><td>둥글리기 (rounding)</td><td>분할한 반죽을 표면을 팽팽하게 둥글게 정리하는 것</td></tr>
+    <tr data-t="d"><td>벤치타임 (bench time)</td><td>둥글리기 후 반죽을 실온에서 이완시키는 시간</td></tr>
+    <tr data-t="d"><td>완효</td><td>냉장·저온에서 천천히 발효를 진행시키는 것(숙성)</td></tr>
+    <tr data-t="d"><td>오븐 스프링</td><td>굽는 초반 반죽이 급격히 부풀어 오르는 현상</td></tr>
+    <tr data-t="t"><td>비중 (specific gravity)</td><td>반죽·크림의 부피 대비 무게. 케이크·마카롱 기포 상태 판단</td></tr>
+    <tr data-t="d"><td>수화 (hydration)</td><td>가루가 물을 흡수하는 것. 오토리즈로 촉진</td></tr>
+    <tr data-t="d"><td>폴딩 (folding)</td><td>휘핑 크림·머랭을 반죽에 가볍게 섞는 것</td></tr>
+    <tr data-t="d"><td>접기 (fold)</td><td>발효 반죽을 늘였다 접어 글루텐을 강화하는 작업</td></tr>
+    <tr data-t="d"><td>분할 (dividing)</td><td>반죽을 목표 중량으로 나누는 것</td></tr>
+    <tr data-t="d"><td>중간발효</td><td>성형 전 반죽을 잠시 쉬게 하는 단계(벤치타임과 유사)</td></tr>
+    <tr data-t="d"><td>정형 (shaping)</td><td>반죽을 목적하는 모양으로 만드는 것</td></tr>
+    <tr data-t="d"><td>팬닝 (panning)</td><td>반죽·케이크를 팬·틀에 담는 것</td></tr>
+    <tr data-t="d"><td>스팀 (steam)</td><td>오븐에 수증기를 넣어 껍질 형성과 볼륨을 돕는 것</td></tr>
+    <tr data-t="d"><td>살수</td><td>오븐·빵 표면에 물을 뿌리는 것(스팀 대용)</td></tr>
+    <tr data-t="c"><td>크림화 (creaming)</td><td>버터와 설탕을 하얗게 될 때까지 휘핑하는 것</td></tr>
+    <tr data-t="d"><td>마블링 (marbling)</td><td>두 가지 반죽·크림을 흐르는 무늬로 섞는 것</td></tr>
+    <tr data-t="c"><td>아이싱 (icing)</td><td>설탕·물·색소로 표면에 입히는 코팅</td></tr>
+    <tr data-t="c"><td>코팅 (coating)</td><td>초콜릿·글라사주로 표면을 덮는 것</td></tr>
+    <tr data-t="c"><td>템퍼링 (tempering)</td><td>초콜릿을 45→27→31°C로 조절해 결정을 안정화</td></tr>
+    <tr data-t="c"><td>유화 (emulsification)</td><td>물과 기름을 균일하게 섞는 것(가나슈·마요네즈)</td></tr>
+    <tr data-t="d"><td>호화 (gelatinization)</td><td>전분이 물과 열로 팽윤해 점도가 오르는 것(슈·커스터드)</td></tr>
+    <tr data-t="d"><td>글루텐</td><td>밀가루 단백질이 물과 반죽으로 형성하는 탄력 구조</td></tr>
+    <tr data-t="t"><td>DDP (Desired Dough Temperature)</td><td>목표 반죽 온도. 물 온도로 조절</td></tr>
+    <tr data-t="d"><td>스트레이트법 (straight dough)</td><td>가루·물·이스트를 한 번에 반죽하는 기본법. 식빵·단과자빵</td></tr>
+    <tr data-t="d"><td>스펀지법 (sponge and dough)</td><td>반죽의 70%를 먼저 발효시킨 뒤 나머지를 넣는 2단계법</td></tr>
+    <tr data-t="d"><td>액종법 (poolish)</td><td>물 100% 액종을 먼저 발효시켜 본반죽에 넣는 방법</td></tr>
+    <tr data-t="d"><td>비상법 (중종법)</td><td>반죽 일부를 하루 숙성해 넣는 방법. 사워도우 대용으로도</td></tr>
+    <tr data-t="d"><td>냉동반죽법</td><td>성형 후 급속 냉동해 두었다가 필요할 때 해동해 굽는 방식</td></tr>
+    <tr data-t="d"><td>오버나이트 발효</td><td>저온에서 밤새 발효. 풍미가 깊어지고 노화가 늦춰짐</td></tr>
+    <tr data-t="d"><td>흡수율 (absorption)</td><td>가루 대비 물의 비율. 단백질·입자·습도에 따라 달라짐</td></tr>
+    <tr data-t="d"><td>글루텐 인덱스</td><td>밀가루 글루텐의 질과 양을 나타내는 지표</td></tr>
+    <tr data-t="e"><td>단백질 함량</td><td>강력분 11.5~13%, 중력분 9~11%, 박력분 8~9%</td></tr>
+    <tr data-t="d"><td>이스트푸드</td><td>이스트 영양원(칼슘·암모늄염). 반죽을 강하게</td></tr>
+    <tr data-t="d"><td>개량제 (bread improver)</td><td>산화제·유화제 복합제. 볼륨·노화 개선</td></tr>
+    <tr data-t="d"><td>산화제</td><td>글루텐 결합을 촉진해 반죽을 팽팽하게(아스코르브산)</td></tr>
+    <tr data-t="d"><td>환원제</td><td>반죽을 부드럽게 하는 반대 작용. 소량 사용</td></tr>
+    <tr data-t="d"><td>유화제</td><td>물과 기름을 결합시키는 재료. 보습·노화 억제</td></tr>
+    <tr data-t="d"><td>보습제</td><td>글리세린·소르비톨 등으로 촉촉함을 유지하는 재료</td></tr>
+    <tr data-t="t"><td>수분활성도 (Aw)</td><td>미생물이 이용할 수 있는 물의 양. 유통기한 판단 지표</td></tr>
+    <tr data-t="t"><td>당도 (Brix)</td><td>시럽·잼의 가용성 고형분 농도</td></tr>
+    <tr data-t="t"><td>보메 (Baumé)</td><td>시럽 농도 단위. 30°Bé 시럽처럼 사용</td></tr>
+    <tr data-t="t"><td>산도 · pH</td><td>잼·과일 필링의 산미와 색 유지 관리</td></tr>
+    <tr data-t="c"><td>시너리시스</td><td>젤·크림에서 물이 빠져나오는 현상</td></tr>
+    <tr data-t="d"><td>노화 (staling)</td><td>전분이 재결합해 딱딱해지고 향이 빠지는 현상</td></tr>
+    <tr data-t="d"><td>전분의 호화와 노화</td><td>열로 풀어진 전분이 식으면서 다시 굳는 것. 노화 억제가 보관 비결</td></tr>
+    <tr data-t="e"><td>유지 (油脂)</td><td>버터·마가린·쇼트닝 등 지방 재료의 총칭</td></tr>
+    <tr data-t="e"><td>쇼트닝</td><td>100% 유지. 층·바삭함을 내는 데 유리</td></tr>
+    <tr data-t="e"><td>가염버터 · 무염버터</td><td>소금 1.5~2% 차이. 단맛 반주에는 무염버터</td></tr>
+    <tr data-t="e"><td>발효버터</td><td>유산균으로 발효해 향이 깊은 버터</td></tr>
+    <tr data-t="e"><td>유지방</td><td>생크림 35~40%, 버터 80% 등 지방 함량</td></tr>
+    <tr data-t="c"><td>머랭 (meringue) 3종</td><td>프랑스·이탈리안·스위스. 제조법에 따라 안정성·용도가 다름</td></tr>
+    <tr data-t="c"><td>거품 안정성</td><td>머랭·휘핑크림 기포가 시간이 지나도 유지되는 정도</td></tr>
+    <tr data-t="c"><td>휘핑 (whipping)</td><td>공기를 넣어 부풀리기. 온도가 낮을수록 안정</td></tr>
+    <tr data-t="d"><td>꼬끄 (coque)</td><td>마카롱 껍질. 표면을 건조시킨 뒤 구워야 매끈</td></tr>
+    <tr data-t="c"><td>필링 (filling)</td><td>마카롱·케이크 사이에 넣는 크림·잼</td></tr>
+    <tr data-t="c"><td>β결정 (베타 결정)</td><td>템퍼링으로 만드는 안정한 초콜릿 결정. 광택·스냅</td></tr>
+    <tr data-t="c"><td>블루밍 (bloom)</td><td>초콜릿 표면의 지방·설탕 백화 현상</td></tr>
+    <tr data-t="c"><td>캐러멜화</td><td>설탕이 160~180°C에서 갈변하는 반응</td></tr>
+    <tr data-t="d"><td>마이야르 반응</td><td>아미노산과 당의 갈변. 빵 껍질 향·색의 핵심</td></tr>
+    <tr data-t="c"><td>젤화 (gelation)</td><td>젤라틴·펙틴이 그물 구조를 만드는 것</td></tr>
+    <tr data-t="c"><td>로열 아이싱</td><td>흰자+슈가파우더. 쿠키·진저브레드 장식</td></tr>
+    <tr data-t="e"><td>슈거크래프트</td><td>설탕 공예. 당인형·설탕꽃</td></tr>
+    <tr data-t="e"><td>HACCP</td><td>식품안전관리인증. 공정별 온도·위생 기록 관리</td></tr>
+    <tr data-t="e"><td>선입선출 (FIFO)</td><td>먼저 들어온 재료를 먼저 쓰는 재고 관리</td></tr>
+    <tr data-t="e"><td>소비기한</td><td>먹어도 안전한 최종 기한. 유통기한과 구분</td></tr>
+    <tr data-t="e"><td>로스율 (loss rate)</td><td>작업 중 손실 비율. 원가 계산에 반영</td></tr>
+    <tr data-t="e"><td>수율 (yield)</td><td>재료·반죽에서 얻는 완제품의 비율</td></tr>
+    <tr data-t="t"><td>베이킹 퍼센트</td><td>가루를 100으로 두고 다른 재료를 비율로 표시한 배합</td></tr>
+    <tr data-t="t"><td>계량 (scaling)</td><td>g 단위로 무게를 재는 것. 부피 계량보다 정확</td></tr>
+    <tr data-t="t"><td>반죽 온도계</td><td>침투식 온도계로 반죽 심부 온도를 측정</td></tr>
+    <tr data-t="t"><td>데크 오븐 · 컨벡션 오븐</td><td>바닥판 직접 가열 vs 팬 열풍 순환. 굽기 특성이 다름</td></tr>
   </table>
   `,
   tips: ['자격증 실기에서 "완효·중간발효·벤치타임"을 구분해 쓰입니다.'],
@@ -7796,7 +7809,9 @@ DB.push({
     limit: 0,         /* 대량 목록 점진 렌더: 지금까지 그린 개수(0이면 기본 PAGE개) */
     page: 1,          /* 페이지네이션: 현재 페이지(한 페이지 PS개) */
     myg: 'all',       /* 🍓 레시피 분류 칩 (세계 제과·제빵에서는 나라 칩) */
-    wk: 'all'         /* 🌍 세계 제과·제빵 구분 칩: ov(개요)·pastry(제과)·bread(제빵) */
+    wk: 'all',        /* 🌍 세계 제과·제빵 구분 칩: ov(개요)·pastry(제과)·bread(제빵) */
+    tml: 'all',       /* 📖 용어 사전 언어 칩 */
+    tmt: 'all'        /* 📖 용어 사전 주제 칩 */
   };
   var PAGE = 48;      /* 한 번에 DOM으로 그리는 최대 항목 수 (모바일 렉 방지) */
   var PS = 10;        /* 목록 페이지네이션: 한 페이지 10개 */
@@ -7834,6 +7849,7 @@ DB.push({
     return {
       k: 0,
       q: state.q, cat: state.cat, tag: state.tag, matcat: state.matcat, myg: state.myg, wk: state.wk,
+      tml: state.tml, tmt: state.tmt,
       bm: state.bmOnly, view: state.view,
       group: state.group ? state.group.k : null,
       modal: state.openId || null,
@@ -7866,6 +7882,8 @@ DB.push({
     state.cat = s.cat || 'all'; state.tag = s.tag || ''; state.matcat = s.matcat || '';
     state.myg = s.myg || 'all';
     state.wk = s.wk || 'all';
+    state.tml = s.tml || 'all';
+    state.tmt = s.tmt || 'all';
     state.bmOnly = !!s.bm;
     state.view = (s.view === 'card') ? 'card' : 'toc';
     state.group = null;
@@ -7874,6 +7892,8 @@ DB.push({
     }
     resetLimit();
     if (s.page) state.page = s.page;
+    var tw = document.getElementById('termWrap');
+    if (tw) tw.innerHTML = '';   /* 용어 탐색기는 상태로 다시 그린다(칩 선택 복원) */
     renderTabs(); renderChips();
     if (s.modal) openModal(s.modal, false); else closeModal(false);
     render();
@@ -8120,6 +8140,11 @@ DB.push({
       { k: 'deco', n: '깍지·데코', ic: '🍦' },
       { k: 'pan', n: '철판·모양틀·팬·매트', ic: '🍳' },
       { k: 'measure', n: '계량·소도구·칼', ic: '📏' }
+    ],
+    practical: [
+      { k: 'season', n: '계절·공정·복구', ic: '🌡️' },
+      { k: 'keep', n: '보관·포장·소비기한', ic: '🧊' },
+      { k: 'ops', n: '위생·생산·운영', ic: '🧼' }
     ]
   };
   var ID_GROUP = {
@@ -8191,6 +8216,11 @@ DB.push({
       deco: ['tl03', 'tl09'],
       pan: ['tl01', 'tl02', 'tl10'],
       measure: ['tl04', 'tl05']
+    },
+    practical: {
+      season: ['pr01a', 'pr01b'],
+      keep: ['pr01c', 'pr01d', 'pr08'],
+      ops: ['pr01e', 'pr01f']
     }
   };
   var ID2GRP = {};
@@ -8328,6 +8358,7 @@ DB.push({
   function countFor(k) {
     if (k === 'all') return DBCOUNT;
     if (k === 'material') return MATTOTAL;
+    if (k === 'term') return termTotal();
     return DB.filter(function (e) { return e.cat === k; }).length;
   }
   function renderTabs() {
@@ -8346,6 +8377,7 @@ DB.push({
     navDo(function () {
       state.cat = k;
       state.tag = ''; state.matcat = ''; state.group = null; state.myg = 'all'; state.wk = 'all';
+      state.tml = 'all'; state.tmt = 'all';
       state.q = ''; qEl.value = '';
       resetLimit();
       renderTabs(); renderChips(); render();
@@ -8363,6 +8395,11 @@ DB.push({
   function worldMode() {
     return state.cat === 'world' ||
       !!(state.group && state.group.cats && state.group.cats.length === 1 && state.group.cats[0] === 'world');
+  }
+  /* 📖 용어 사전도 탭·홈분류 어느 쪽으로 들어와도 칩이 붙은 통합 목록을 보여 준다 */
+  function termMode() {
+    return state.cat === 'term' ||
+      !!(state.group && state.group.cats && state.group.cats.length === 1 && state.group.cats[0] === 'term');
   }
   function worldCount(mgK, wkK) {
     var n = 0;
@@ -8570,19 +8607,27 @@ DB.push({
     var list = filtered();
     var q = state.q.trim();
     var matMode = state.cat === 'material';
+    var termOn = termMode() && !q && !state.bmOnly && !state.tag;
     if (state.group) {
       list = list.filter(function (e) {
         return state.group.cats.indexOf(e.cat) >= 0;
       });
     }
-    var tocMode = state.view === 'toc' && !q && !matMode;
+    var tocMode = state.view === 'toc' && !q && !matMode && !termOn;
     var homeMode = tocMode && !state.group && state.cat === 'all' && !state.tag && !state.bmOnly;
-    var showToc = tocMode || (!!state.group && !q);
+    var showToc = tocMode || (!!state.group && !q && !termOn);
 
     $('#matWrap').hidden = !matMode;
-    if (matMode) { $('#toc').innerHTML = ''; $('#grid').innerHTML = ''; renderMatTable(list, tks); }
+    $('#termWrap').hidden = !termOn;
+    if (matMode) { $('#toc').innerHTML = ''; $('#grid').innerHTML = ''; $('#termWrap').innerHTML = ''; renderMatTable(list, tks); }
+    else if (termOn) {
+      $('#matWrap').innerHTML = '';
+      $('#toc').innerHTML = ''; $('#grid').innerHTML = '';
+      renderTermExplorer();
+    }
     else {
       $('#matWrap').innerHTML = '';
+      $('#termWrap').innerHTML = '';
       if (showToc) renderTOC(list, tks);
       else $('#toc').innerHTML = '';
       if (!showToc) {
@@ -8592,7 +8637,7 @@ DB.push({
       }
     }
     $('#toc').hidden = !showToc;
-    $('#grid').hidden = showToc || matMode;
+    $('#grid').hidden = showToc || matMode || termOn;
 
     var m;
     if (q) {
@@ -8602,6 +8647,8 @@ DB.push({
       m = '즐겨찾기 ' + list.length + '개';
     } else if (matMode) {
       m = '전재료 <b>' + list.length + '</b>품목' + (state.matcat ? ' · ' + esc(state.matcat) : ' · ' + MATCATS.length + '분류');
+    } else if (termOn) {
+      m = '용어 사전 <b>' + termTotal() + '</b>개 · 언어·주제 칩으로 바로 걸러 보기';
     } else if (state.group) {
       m = esc(state.group.n) + ' · ' + list.length + '개';
     } else if (homeMode) {
@@ -8613,22 +8660,22 @@ DB.push({
       if (state.tag) m += ' · ' + esc(state.tag);
     }
     $('#meta').innerHTML = m;
-    $('#empty').hidden = list.length !== 0;
+    $('#empty').hidden = termOn ? true : list.length !== 0;
     $('#calcPanel').hidden = !(state.cat === 'formula');
     $('#bmToggle').classList.toggle('on', state.bmOnly);
     $('#bmToggle').setAttribute('aria-pressed', String(state.bmOnly));
     $('#clearBtn').hidden = !state.q;
 
     /* 2단계(목차·전재료·계산기)에서는 태그 대신 ‘← 이전으로 (목차)’ 줄을 같은 높이에 보여 준다 */
-    var crumbOn = !homeMode && (showToc || matMode);
+    var crumbOn = !homeMode && (showToc || matMode || (termOn && !!state.group));
     $('#crumb').hidden = !crumbOn;
     if (crumbOn) {
       var where = matMode ? '전재료' : (state.group ? state.group.n : (state.cat === 'all' ? '' : CATNAME[state.cat] || ''));
       $('#crumbPath').textContent = where ? ' · ' + where : '';
     }
-    $('#chips').style.display = (matMode || crumbOn) ? 'none' : '';
+    $('#chips').style.display = (matMode || crumbOn || termOn) ? 'none' : '';
 
-    $('#viewSeg').hidden = !!q || matMode || homeMode;
+    $('#viewSeg').hidden = !!q || matMode || homeMode || termOn;
     var segBtns = $('#viewSeg').querySelectorAll('button');
     for (var i = 0; i < segBtns.length; i++) {
       segBtns[i].classList.toggle('on', segBtns[i].getAttribute('data-view') === (tocMode ? 'toc' : 'card'));
@@ -9421,18 +9468,36 @@ DB.push({
     return { speak: speak, stop: stop, supported: supported, say: say, clean: clean, voiceFor: pick, cfg: CFG };
   })();
 
-  /* ---------- 용어 사전: 용어를 누르면 뜻이 펼쳐진다 ---------- */
-  /* data-term.js 의 표(원어·발음·뜻)를 클릭형 목록으로 바꾼다. */
-  var TERM_SPEAK = {
-    tm01: { lang: 'fr-FR', name: '프랑스어' },
-    tm02: { lang: 'ja-JP', name: '일본어' }
+  /* ---------- 📖 용어 사전: 언어·주제 칩 + 용어를 누르면 뜻이 펼쳐진다 ---------- */
+  /* data-term.js 의 표(원어·발음·뜻)를 클릭형 목록으로 바꾸고, 행의 data-t(주제)로 거른다. */
+  var TERM_LANG = {
+    tm01: { k: 'fr', n: '프랑스어', ic: '🇫🇷', lang: 'fr-FR' },
+    tm02: { k: 'jp', n: '일본어', ic: '🇯🇵', lang: 'ja-JP' },
+    tm03: { k: 'kr', n: '한국어', ic: '🇰🇷' }
   };
-  function initTermUI(root, tks, entry) {
-    var spk = (entry && TERM_SPEAK[entry.id]) ? TERM_SPEAK[entry.id] : null;
-    var tbl = root.querySelector('table.termTbl');
-    if (!tbl || tbl.getAttribute('data-term-ui')) return;
-    var headCells = tbl.rows.length ? tbl.rows[0].cells : [];
-    var three = headCells.length >= 3;
+  var TERM_LANG_CHIPS = [
+    { k: 'all', n: '전체', ic: '📖' },
+    { k: 'fr', n: '프랑스어', ic: '🇫🇷' },
+    { k: 'jp', n: '일본어', ic: '🇯🇵' },
+    { k: 'kr', n: '한국어', ic: '🇰🇷' }
+  ];
+  var TERM_TOPIC_CHIPS = [
+    { k: 'all', n: '전체 주제', ic: '📖' },
+    { k: 'd', n: '반죽·발효·공정', ic: '🫧' },
+    { k: 'c', n: '크림·시럽·초콜릿', ic: '🥣' },
+    { k: 't', n: '도구·계량·온도', ic: '📏' },
+    { k: 'e', n: '재료·품목·기타', ic: '📦' }
+  ];
+  var TERM_TOPIC_NAME = {}, TERM_LANG_NAME = {};
+  TERM_TOPIC_CHIPS.forEach(function (g) { TERM_TOPIC_NAME[g.k] = g.n; });
+  TERM_LANG_CHIPS.forEach(function (g) { TERM_LANG_NAME[g.k] = g.n; });
+  var TPS_TERM = 10, TERM_UID = 0;
+
+  /* 표 한 개 → 용어 배열 (원어·발음·뜻·주제·언어) */
+  function termItemsFrom(host, meta) {
+    var tbl = host.querySelector ? host.querySelector('table.termTbl') : null;
+    if (!tbl || !tbl.rows.length) return [];
+    var three = tbl.rows[0].cells.length >= 3;
     var items = [];
     for (var i = 1; i < tbl.rows.length; i++) {
       var r = tbl.rows[i];
@@ -9454,26 +9519,40 @@ DB.push({
       }
       if (!mean) continue;
       items.push({
-        orig: orig, pron: pron, mean: mean, sub: sub, roman: roman,
-        say: (spk && TTS.say(orig, spk.lang)) || orig,
+        orig: orig, pron: pron, mean: mean, sub: sub, roman: roman, three: three,
+        lang: meta ? meta.k : '', langName: meta ? meta.n : '', langIc: meta ? meta.ic : '',
+        speak: meta && meta.lang ? meta.lang : '',
+        say: (meta && meta.lang && TTS.say(orig, meta.lang)) || orig,
+        topic: r.getAttribute('data-t') || 'e',
         key: norm([orig, pron, mean, sub].join(' '))
       });
     }
-    if (!items.length) return;
+    return items;
+  }
+  function termItemsOf(entry) {
+    var box = document.createElement('div');
+    box.innerHTML = entry.body || '';
+    return termItemsFrom(box, TERM_LANG[entry.id] || null);
+  }
 
-    function metaHTML(it) {
-      var rows = [];
-      if (three) { rows.push(['원어', it.orig]); rows.push(['발음', it.pron]); }
-      else if (it.roman) rows.push(['영어', it.roman]);
-      if (!rows.length) return '';
-      return '<div class="tmMeta">' + rows.map(function (x) {
-        return '<span><em>' + x[0] + '</em><b>' + esc(x[1]) + '</b></span>';
-      }).join('') + '</div>';
-    }
-
+  /* 용어 목록 UI: 칩(언어·주제) + 사전 안 검색 + 펼침 + 페이지 */
+  function buildTermUI(items, opts) {
+    opts = opts || {};
+    var uid = 'tm' + (++TERM_UID) + '_';
+    var curLang = opts.lang || 'all';
+    var curTopic = opts.topic || 'all';
+    var page = 1, matched = [];
     var wrap = document.createElement('div');
-    wrap.className = 'termUI';
-    var h = '<div class="tmTools">' +
+    wrap.className = 'termUI' + (opts.explorer ? ' termExplorer' : '');
+
+    var h = '';
+    if (opts.langChips) {
+      h += '<div class="chips tmChips" data-tmchips="lang" role="group" aria-label="용어 언어별 분류"></div>';
+    }
+    if (opts.chips) {
+      h += '<div class="chips tmChips" data-tmchips="topic" role="group" aria-label="용어 주제별 분류"></div>';
+    }
+    h += '<div class="tmTools">' +
       '<label class="tmSearchWrap"><span class="tmSearchIcon" aria-hidden="true">🔍</span>' +
       '<input type="search" class="tmSearch" placeholder="용어·발음·뜻으로 찾기" ' +
       'aria-label="용어 사전 안에서 찾기" autocomplete="off" enterkeyhint="search"></label>' +
@@ -9481,22 +9560,23 @@ DB.push({
       '<p class="tmCount" role="status" aria-live="polite"></p><ul class="tmList">';
     for (var k = 0; k < items.length; k++) {
       var it = items[k];
-      h += '<li class="tmItem" data-k="' + esc(it.key) + '">' +
+      h += '<li class="tmItem" data-k="' + esc(it.key) + '" data-t="' + it.topic + '" data-l="' + (it.lang || '') + '">' +
         '<div class="tmHead">' +
-        '<button type="button" class="tmRow" aria-expanded="false" aria-controls="tmD' + k + '">' +
-        '<span class="tmTxt"><b>' + esc(it.pron) + '</b>' +
+        '<button type="button" class="tmRow" aria-expanded="false" aria-controls="' + uid + 'D' + k + '">' +
+        '<span class="tmTxt">' +
+        (opts.showLang && it.langIc ? '<em class="tmLang" aria-hidden="true">' + it.langIc + '</em>' : '') +
+        '<b>' + esc(it.pron) + '</b>' +
         (it.sub ? '<i>' + esc(it.sub) + '</i>' : '') + '</span>' +
         '<span class="tmCaret" aria-hidden="true">▾</span></button>' +
-        (spk ? '<button type="button" class="tmSpk" data-say="' + esc(it.say) + '" data-lang="' + spk.lang + '"' +
-          ' title="' + spk.name + ' 발음 듣기" aria-label="' + esc(it.orig) + ' ' + spk.name + ' 발음 듣기"' +
+        (it.speak ? '<button type="button" class="tmSpk" data-say="' + esc(it.say) + '" data-lang="' + it.speak + '"' +
+          ' title="' + it.langName + ' 발음 듣기" aria-label="' + esc(it.orig) + ' ' + it.langName + ' 발음 듣기"' +
           ' aria-pressed="false">🔊</button>' : '') +
         '</div>' +
-        '<div class="tmDetail" id="tmD' + k + '" hidden>' +
-        '<p class="tmDef">' + esc(it.mean) + '</p>' + metaHTML(it) + '</div></li>';
+        '<div class="tmDetail" id="' + uid + 'D' + k + '" hidden>' +
+        '<p class="tmDef">' + esc(it.mean) + '</p>' + termMetaHTML(it) + '</div></li>';
     }
-    h += '</ul><p class="tmNone" hidden>찾는 용어가 없습니다. 발음이나 뜻의 일부로 다시 찾아보세요.</p><div class="tmPager"></div>';
+    h += '</ul><p class="tmNone" hidden>찾는 용어가 없습니다. 발음이나 뜻의 일부로 다시 찾거나 다른 주제를 골라 보세요.</p><div class="tmPager"></div>';
     wrap.innerHTML = h;
-    tbl.parentNode.replaceChild(wrap, tbl);
 
     var listEl = wrap.querySelector('.tmList');
     var rows = Array.prototype.slice.call(wrap.querySelectorAll('.tmItem'));
@@ -9505,8 +9585,9 @@ DB.push({
     var allBtn = wrap.querySelector('.tmAll');
     var noneEl = wrap.querySelector('.tmNone');
     var pagerEl = wrap.querySelector('.tmPager');
-
-    var TPS = 10, page = 1, matched = rows.slice();
+    var langBox = wrap.querySelector('[data-tmchips="lang"]');
+    var topicBox = wrap.querySelector('[data-tmchips="topic"]');
+    matched = rows.slice();
 
     function setOpen(li, open) {
       var btn = li.querySelector('.tmRow'), det = li.querySelector('.tmDetail');
@@ -9514,93 +9595,213 @@ DB.push({
       det.hidden = !open;
     }
     function isOpen(li) { return li.querySelector('.tmRow').getAttribute('aria-expanded') === 'true'; }
-    /* 한 페이지에 보이는 용어만 다룬다 */
-    function visibles() { return matched.slice((page - 1) * TPS, page * TPS); }
-
+    function visibles() { return matched.slice((page - 1) * TPS_TERM, page * TPS_TERM); }
+    function byLang(li) { return curLang === 'all' || li.getAttribute('data-l') === curLang; }
+    function byTopic(li) { return curTopic === 'all' || li.getAttribute('data-t') === curTopic; }
+    function searchParts() { return norm(searchEl.value).split(' ').filter(Boolean); }
+    function bySearch(li, ps) {
+      var key = li.getAttribute('data-k') || '';
+      return ps.every(function (t) { return key.indexOf(t) >= 0; });
+    }
+    function chipHTML(attr, g, n, on) {
+      return '<button type="button" class="mchip' + (on ? ' on' : '') + '" ' + attr + '="' + g.k + '"' +
+        ' aria-pressed="' + (on ? 'true' : 'false') + '">' +
+        (g.ic ? '<b class="ic" aria-hidden="true">' + g.ic + '</b>' : '') + esc(g.n) +
+        '<span class="cnt">' + n + '</span></button>';
+    }
+    function renderChips() {
+      if (langBox) {
+        langBox.innerHTML = TERM_LANG_CHIPS.map(function (g) {
+          var n = 0;
+          rows.forEach(function (li) {
+            if (!byTopic(li)) return;
+            if (g.k === 'all' || li.getAttribute('data-l') === g.k) n++;
+          });
+          if (g.k !== 'all' && n === 0) return '';
+          return chipHTML('data-tml', g, n, curLang === g.k);
+        }).join('');
+      }
+      if (topicBox) {
+        topicBox.innerHTML = TERM_TOPIC_CHIPS.map(function (g) {
+          var n = 0;
+          rows.forEach(function (li) {
+            if (!byLang(li)) return;
+            if (g.k === 'all' || li.getAttribute('data-t') === g.k) n++;
+          });
+          if (g.k !== 'all' && n === 0) return '';
+          return chipHTML('data-tmt', g, n, curTopic === g.k);
+        }).join('');
+      }
+    }
     function applyView() {
-      var pc = Math.max(1, Math.ceil(matched.length / TPS));
+      var pc = Math.max(1, Math.ceil(matched.length / TPS_TERM));
       if (page > pc) page = pc;
       if (page < 1) page = 1;
-      var show = matched.slice((page - 1) * TPS, page * TPS);
+      var show = matched.slice((page - 1) * TPS_TERM, page * TPS_TERM);
       rows.forEach(function (li) { li.hidden = true; });
       show.forEach(function (li) { li.hidden = false; });
       listEl.hidden = show.length === 0;
       noneEl.hidden = matched.length !== 0;
       var pgTxt = pc > 1 ? ' · ' + page + '/' + pc + '쪽' : '';
-      countEl.textContent = ((matched.length === rows.length)
-        ? '용어 ' + rows.length + '개' + pgTxt + ' · 용어를 누르면 뜻과 쓰임이 펼쳐집니다'
-        : '검색 ' + matched.length + ' / ' + rows.length + '개' + pgTxt + ' · 용어를 누르면 뜻이 펼쳐집니다')
-        + (spk ? ' · 🔊 발음 듣기' : '');
+      var langTxt = curLang === 'all' ? '' : ' · ' + (TERM_LANG_NAME[curLang] || '');
+      var topicTxt = curTopic === 'all' ? '' : ' · ' + (TERM_TOPIC_NAME[curTopic] || '');
+      countEl.textContent = (searchParts().length
+        ? '검색 ' + matched.length + ' / ' + rows.length + '개'
+        : (matched.length === rows.length ? '용어 ' + rows.length + '개'
+          : '용어 ' + matched.length + ' / ' + rows.length + '개'))
+        + langTxt + topicTxt + pgTxt + ' · 용어를 누르면 뜻과 쓰임이 펼쳐집니다'
+        + (items.length && items[0].speak ? ' · 🔊 발음 듣기' : '');
       pagerEl.innerHTML = pagerHTML(page, pc, matched.length);
       var all = show.length > 0 && show.every(isOpen);
       allBtn.setAttribute('aria-pressed', String(all));
       allBtn.textContent = all ? '전체 접기' : '전체 펼치기';
+      renderChips();
     }
-
-    function scrollListTopInModal() {
-      var sc = root.closest('.modal');
-      if (!sc) return;
-      var lr = listEl.getBoundingClientRect(), sr = sc.getBoundingClientRect();
-      sc.scrollTo({ top: Math.max(0, sc.scrollTop + (lr.top - sr.top) - 8), behavior: 'smooth' });
+    function refilter() {
+      var ps = searchParts();
+      matched = rows.filter(function (li) { return byLang(li) && byTopic(li) && bySearch(li, ps); });
+      page = 1;
+      if (ps.length === 1 && matched.length === 1) setOpen(matched[0], true);
+      applyView();
     }
 
     wrap.addEventListener('click', function (ev) {
+      var t = ev.target;
+      if (!t || !t.closest) return;
       /* 🔊 발음 듣기: 아코디언(펼침) 클릭으로 번지지 않게 막는다 */
-      var spkBtn = ev.target.closest ? ev.target.closest('.tmSpk') : null;
+      var spkBtn = t.closest('.tmSpk');
       if (spkBtn) {
-        ev.preventDefault();
-        ev.stopPropagation();
+        ev.preventDefault(); ev.stopPropagation();
         TTS.speak(spkBtn.getAttribute('data-say'), spkBtn.getAttribute('data-lang'), spkBtn);
         return;
       }
-      var pg = ev.target.closest('[data-page]');
+      var lg = t.closest('[data-tml]');
+      if (lg) {
+        var v = lg.getAttribute('data-tml');
+        if (v !== curLang) {
+          curLang = v; refilter();
+          if (opts.onChip) opts.onChip(curLang, curTopic);
+        }
+        return;
+      }
+      var tp = t.closest('[data-tmt]');
+      if (tp) {
+        var v2 = tp.getAttribute('data-tmt');
+        if (v2 !== curTopic) {
+          curTopic = v2; refilter();
+          if (opts.onChip) opts.onChip(curLang, curTopic);
+        }
+        return;
+      }
+      var pg = t.closest('[data-page]');
       if (pg && !pg.disabled) {
         page = parseInt(pg.getAttribute('data-page'), 10) || 1;
         applyView();
-        scrollListTopInModal();
+        if (opts.scrollTop) opts.scrollTop(listEl);
         return;
       }
-      var btn = ev.target.closest('.tmRow');
+      var btn = t.closest('.tmRow');
       if (btn) {
         var li = btn.closest('.tmItem');
         setOpen(li, !isOpen(li));
         applyView();
         return;
       }
-      if (ev.target.closest('.tmAll')) {
+      if (t.closest('.tmAll')) {
         var openAll = !(visibles().length > 0 && visibles().every(isOpen));
-        visibles().forEach(function (li) { setOpen(li, openAll); });
+        visibles().forEach(function (x) { setOpen(x, openAll); });
         applyView();
       }
     });
 
-    searchEl.addEventListener('input', function () {
-      var parts = norm(searchEl.value).split(' ').filter(Boolean);
-      matched = rows.filter(function (li) {
-        var key = li.getAttribute('data-k') || '';
-        return parts.every(function (t) { return key.indexOf(t) >= 0; });
-      });
-      page = 1;
-      if (parts.length === 1 && matched.length === 1) setOpen(matched[0], true);
-      applyView();
-    });
+    searchEl.addEventListener('input', function () { refilter(); });
     searchEl.addEventListener('keydown', function (ev) {
       if (ev.key === 'Enter') ev.preventDefault();
     });
 
     /* 통합 검색으로 들어온 경우: 검색어와 맞는 용어는 펼친 채로 보여 준다 */
-    if (tks && tks.length) {
+    if (opts.tks && opts.tks.length) {
+      var tks = opts.tks;
       var hits = rows.filter(function (li) {
         var key = li.getAttribute('data-k') || '';
-        return tks.every(function (t) { return key.indexOf(t) >= 0; });
+        return tks.every(function (x) { return key.indexOf(x) >= 0; });
       });
       if (hits.length) { matched = hits; page = 1; }
       hits.slice(0, 8).forEach(function (li) { setOpen(li, true); });
       applyView();
       if (hits.length) { try { hits[0].scrollIntoView({ block: 'center' }); } catch (e) {} }
-      return;
+      return wrap;
     }
-    applyView();
+    refilter();
+    return wrap;
+  }
+
+  function termMetaHTML(it) {
+    var rows2 = [];
+    if (it.three) { rows2.push(['원어', it.orig]); rows2.push(['발음', it.pron]); }
+    else if (it.roman) rows2.push(['영어', it.roman]);
+    if (!rows2.length) return '';
+    return '<div class="tmMeta">' + rows2.map(function (x) {
+      return '<span><em>' + x[0] + '</em><b>' + esc(x[1]) + '</b></span>';
+    }).join('') + '</div>';
+  }
+
+  /* 본문(모달) 안의 용어 표를 목록 UI로 바꾼다 — 주제 칩 포함 */
+  function initTermUI(root, tks, entry) {
+    var tbl = root.querySelector('table.termTbl');
+    if (!tbl || root.querySelector('.termUI')) return;
+    var items = termItemsFrom(tbl.parentNode, TERM_LANG[entry.id] || null);
+    if (!items.length) return;
+    var ui = buildTermUI(items, {
+      chips: true, tks: tks,
+      scrollTop: function () {
+        var sc = root.closest('.modal');
+        if (!sc) return;
+        var lr = root.querySelector('.tmList').getBoundingClientRect(), sr = sc.getBoundingClientRect();
+        sc.scrollTo({ top: Math.max(0, sc.scrollTop + (lr.top - sr.top) - 8), behavior: 'smooth' });
+      }
+    });
+    tbl.parentNode.replaceChild(ui, tbl);
+  }
+
+  /* ---------- 용어 사전 탭: 언어·주제 칩이 붙은 통합 목록 ---------- */
+  var TERMX = { items: null };
+  function termEntries() {
+    var out = [];
+    DB.forEach(function (e) { if (e.cat === 'term' && TERM_LANG[e.id]) out.push(e); });
+    return out;
+  }
+  function allTermItems() {
+    if (TERMX.items) return TERMX.items;
+    var out = [];
+    termEntries().forEach(function (e) { out = out.concat(termItemsOf(e)); });
+    TERMX.items = out;
+    return out;
+  }
+  function termTotal() { return allTermItems().length; }
+  function renderTermExplorer() {
+    var host = $('#termWrap');
+    if (!host || host.querySelector('.termExplorer')) return;
+    host.innerHTML = '';
+    var items = allTermItems();
+    var intro = document.createElement('p');
+    intro.className = 'tmIntro';
+    var nFr = 0, nJp = 0, nKr = 0;
+    items.forEach(function (it) {
+      if (it.lang === 'fr') nFr++; else if (it.lang === 'jp') nJp++; else if (it.lang === 'kr') nKr++;
+    });
+    intro.innerHTML = '<b>' + items.length + '</b>개 용어 — 프랑스어 <b>' + nFr + '</b> · 일본어 <b>' + nJp +
+      '</b> · 한국어 <b>' + nKr + '</b>. 칩으로 <b>언어</b>와 <b>주제</b>를 좁히고, 용어를 누르면 뜻·현장 쓰임이 펼쳐집니다. ' +
+      '프랑스어·일본어는 <b>🔊</b>로 발음을 들을 수 있습니다.';
+    host.appendChild(intro);
+    host.appendChild(buildTermUI(items, {
+      explorer: true, chips: true, langChips: true, showLang: true,
+      lang: state.tml || 'all', topic: state.tmt || 'all',
+      scrollTop: function () { scrollListTop(host); },
+      onChip: function (lg, tp) {
+        navDo(function () { state.tml = lg; state.tmt = tp; });
+      }
+    }));
   }
 
   function closeModal(nav) {
