@@ -8593,6 +8593,82 @@ DB.push({
     { k: 'cream', n: '크림·커드·시럽' },
     { k: 'etc', n: '전통떡·기타' }
   ];
+  /* ---------- 이론·재료·카페 하위 분류 (id 기준) ---------- */
+  var CAT_GROUPS = {
+    pastry: [
+      { k: 'dough', n: '반죽법·머랭', ic: '🥣' },
+      { k: 'cake', n: '케이크·구움과자', ic: '🍰' },
+      { k: 'cream', n: '크림·유화', ic: '🥛' },
+      { k: 'choco', n: '초콜릿·템퍼링', ic: '🍫' },
+      { k: 'mousse', n: '무스·앙트르메', ic: '🧁' },
+      { k: 'pdr', n: '타르트·페이스트리', ic: '🥐' },
+      { k: 'gel', n: '젤·설탕공예', ic: '🧪' },
+      { k: 'icing', n: '아이싱·마무리', ic: '🎂' }
+    ],
+    bread: [
+      { k: 'flour', n: '밀가루·글루텐', ic: '🌾' },
+      { k: 'dough', n: '반죽·발효', ic: '🫧' },
+      { k: 'method', n: '공법(종법)', ic: '🔁' },
+      { k: 'bake', n: '굽기·노화', ic: '🔥' },
+      { k: 'shape', n: '성형·배합설계', ic: '🥖' }
+    ],
+    ingredient: [
+      { k: 'fat', n: '유지', ic: '🧈' },
+      { k: 'sugar', n: '당류', ic: '🍯' },
+      { k: 'egg', n: '계란', ic: '🥚' },
+      { k: 'dairy', n: '유제품', ic: '🥛' },
+      { k: 'leaven', n: '팽창제·전분', ic: '🫧' },
+      { k: 'acid', n: '소금·산', ic: '🧂' },
+      { k: 'nutchoco', n: '견과·초콜릿', ic: '🍫' },
+      { k: 'flavor', n: '향료·첨가물', ic: '🌸' },
+      { k: 'water', n: '물', ic: '💧' }
+    ],
+    cafe: [
+      { k: 'caf', n: '카페인', ic: '☕' },
+      { k: 'decaf', n: '논카페인', ic: '🍵' }
+    ]
+  };
+  var ID_GROUP = {
+    pastry: {
+      dough: ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p07', 'p34'],
+      cake: ['p08', 'p09', 'p10', 'p11', 'p12', 'p13', 'p14', 'p15'],
+      cream: ['p19', 'p20', 'p21', 'p22', 'p23', 'ms90'],
+      choco: ['p24', 'p25'],
+      mousse: ['p30', 'ms01', 'ms02'],
+      pdr: ['p16', 'p17', 'p18'],
+      gel: ['p26', 'p27', 'p28', 'p29', 'p31', 'p32'],
+      icing: ['p33', 'p35']
+    },
+    bread: {
+      flour: ['b01', 'b02', 'b03'],
+      dough: ['b04', 'b05', 'b06', 'b15', 'b19'],
+      method: ['b07', 'b08', 'b09', 'b10', 'b11', 'b12', 'b13', 'b14'],
+      bake: ['b16', 'b17'],
+      shape: ['b18', 'b20', 'b21']
+    },
+    ingredient: {
+      fat: ['i01', 'i02'],
+      sugar: ['i03'],
+      egg: ['i04'],
+      dairy: ['i05'],
+      leaven: ['i06', 'i08'],
+      acid: ['i07'],
+      nutchoco: ['i09', 'i10'],
+      flavor: ['i11', 'i12', 'i13'],
+      water: ['i14']
+    },
+    cafe: {
+      caf: ['c01', 'c02', 'c03', 'c04', 'c05', 'c06', 'c07', 'c08', 'c09', 'c10', 'c13'],
+      decaf: ['c11', 'c12', 'c14', 'c15', 'c16', 'c17', 'c18', 'c19', 'c20', 'c21']
+    }
+  };
+  var ID2GRP = {};
+  Object.keys(ID_GROUP).forEach(function (cat) {
+    Object.keys(ID_GROUP[cat]).forEach(function (g) {
+      ID_GROUP[cat][g].forEach(function (id) { ID2GRP[cat + ':' + id] = g; });
+    });
+  });
+
   /* 레시피 사전 하위 분류 */
   var RECIPE_GROUPS = [
     { k: 'all', n: '전체', ic: '📖' },
@@ -8618,6 +8694,11 @@ DB.push({
   /* 기능사 실기: 데이터는 cat 'exam' 하나로 두고, id 접두어로 제과/제빵을 나눈다 */
   DB.forEach(function (e) {
     if (e.cat === 'exam') e.cat = /^bz/.test(e.id) ? 'exam_b' : 'exam_p';
+  });
+  DB.forEach(function (e) {
+    if (!CAT_GROUPS[e.cat]) return;
+    if (e.mg && e.mg !== 'etc') return;
+    e.mg = ID2GRP[e.cat + ':' + e.id] || 'etc';
   });
   DB.forEach(function (e) {
     if (e.cat !== 'my') return;
@@ -8759,7 +8840,7 @@ DB.push({
     renderMyChips();
   }
   function myCount(k) {
-    var cat = (state.cat === 'recipe') ? 'recipe' : 'my';
+    var cat = state.cat;
     var n = 0;
     DB.forEach(function (e) {
       if (e.cat !== cat) return;
@@ -8768,12 +8849,14 @@ DB.push({
     return n;
   }
   function myGroupsNow() {
-    return state.cat === 'recipe' ? RECIPE_GROUPS : MY_GROUPS;
+    if (state.cat === 'recipe') return RECIPE_GROUPS;
+    if (CAT_GROUPS[state.cat]) return [{ k: 'all', n: '전체' }].concat(CAT_GROUPS[state.cat]);
+    return MY_GROUPS;
   }
   function renderMyChips() {
     var el = $('#myChips');
     if (!el) return;
-    if ((SHARE && state.cat === 'my') || (state.cat !== 'my' && state.cat !== 'recipe')) {
+    if ((SHARE && state.cat === 'my') || (state.cat !== 'my' && state.cat !== 'recipe' && !CAT_GROUPS[state.cat])) {
       el.hidden = true; el.innerHTML = ''; return;
     }
     el.hidden = false;
@@ -8838,7 +8921,7 @@ DB.push({
         return matches(e, tks);
       }
       if (state.cat !== 'all' && e.cat !== state.cat) return false;
-      if ((state.cat === 'my' || state.cat === 'recipe') && state.myg !== 'all' && e.mg !== state.myg) return false;
+      if ((state.cat === 'my' || state.cat === 'recipe' || CAT_GROUPS[state.cat]) && state.myg !== 'all' && e.mg !== state.myg) return false;
       if (state.tag && e.tags.indexOf(state.tag) < 0) return false;
       if (state.bmOnly && !state.bm.has(e.id)) return false;
       return matches(e, tks);
