@@ -8151,7 +8151,7 @@ var SHOP_GENERAL = [{"c":"가루·분말","n":"박력분","b":"곰표·큐원(�
     '배송비는 품목별로 다르므로 <b>합배송 가능한 한 발주처</b>에서 묶어 사는 편이 총액이 낮습니다.</p>';
 
   DB.push({
-    id: 'shop01', cat: 'shop', title: '🛒 원부재료·소모품 최저가 비교',
+    id: 'shop01', cat: 'shop', mg: 'price', title: '🛒 원부재료·소모품 최저가 비교',
     en: 'Ingredient & supply price comparison', exam: false,
     tags: ['최저가', '가격비교', '구매', '발주처', '원부재료', '소모품', '네이버', '쿠팡', '베이킹몬', '이홈베이커리'],
     summary: SRC.length + '품목 — 브랜드·규격·확인 시세와 네이버/쿠팡 낮은가격순 검색 링크.',
@@ -8513,7 +8513,7 @@ DB.push({
     { k: 'video', n: '참고 영상', ic: '🎥' },
     { k: 'world', n: '세계 제과·제빵', ic: '🌍' },
     { k: 'study', n: '베이킹 공부', ic: '🎓' },
-    { k: 'shop', n: '원부재료 최저가', ic: '🛒' },
+    { k: 'shop', n: '판매처·원부재료', ic: '🛒' },
     { k: 'exam_p', n: '제과기능사 실기', ic: '🍰' },
     { k: 'exam_b', n: '제빵기능사 실기', ic: '🍞' },
     { k: 'practical', n: '실무 꿀팁', ic: '🏭' },
@@ -8764,7 +8764,7 @@ DB.push({
 
   if (typeof BRD !== 'undefined') BRD.forEach(function (b) {
     DB.push({
-      id: b.id, cat: 'brand', title: b.title, en: b.en,
+      id: b.id, cat: 'brand', title: b.title, en: b.en, mg: b.mg,
       tags: b.tags, summary: b.summary, body: brandBody(b),
       tips: b.notes, related: b.related, exam: false
     });
@@ -8902,6 +8902,13 @@ DB.push({
       { k: 'flour', n: '가루·당류·젤라틴·팽창제', ic: '🌾' },
       { k: 'fruit', n: '퓨레·향료·시럽·음료', ic: '🍓' },
       { k: 'gear', n: '오븐·믹서 장비', ic: '⚙️' }
+    ],
+    /* 🏪 판매처·발주처 — 업체 유형별 분류(업체 카드가 있을 때만 쓰인다) */
+    shop: [
+      { k: 'b2b', n: 'B2B 발주·제조사', ic: '🏢' },
+      { k: 'mall', n: '베이킹 전문몰', ic: '🛒' },
+      { k: 'mart', n: '마트·온라인몰', ic: '🏬' },
+      { k: 'price', n: '최저가 비교표', ic: '💰' }
     ]
   };
   var ID_GROUP = {
@@ -9026,6 +9033,8 @@ DB.push({
     if (e.mg && e.mg !== 'etc') return;
     e.mg = ID2GRP[e.cat + ':' + e.id] || 'etc';
   });
+  /* 판매처 업체 카드(data-vendor.js)가 없는 공유용 빌드에서는 판매처 칩을 쓰지 않는다 */
+  if (typeof BAKERY_VENDORS === 'undefined') delete CAT_GROUPS.shop;
   DB.forEach(function (e) {
     if (e.cat !== 'my') return;
     /* 데이터 파일에서 mg를 지정한 항목(도구·기계 / 사용 재료)은 그대로 존중한다 */
@@ -9572,7 +9581,7 @@ DB.push({
     { k:'g8', n:'실무 계산기', s:'원가·변형·배합·비건·음료·R&D 등 8종', cats:['formula'], ic:'🧮' },
     { k:'g9', n:'참고 영상 · 세미나', s:'명장·크리에이터·기업 테크닉 영상', cats:['video'], ic:'🎥' },
     { k:'g10', n:'세계 제과·제빵', s:'프랑스·이탈리아·독일·영미·일본·한국', cats:['world'], ic:'🌍' },
-    { k:'gshop', n:'원부재료 최저가', s:'전재료 260품목+장비 · 확인 시세 · 네이버/쿠팡 최저가 링크', cats:['shop'], ic:'🛒' },
+    { k:'gshop', n:'판매처·원부재료', s:'B2B 발주·제조사 4 · 전문몰 6 · 마트/온라인 · 전재료 260 시세', cats:['shop'], ic:'🛒' },
     { k:'gstudy', n:'베이킹 공부', s:'장별 핵심 정리 · 도해', cats:['study'], ic:'🎓' },
     { k:'gexamp', n:'제과기능사 실기', s:'제과 20과제 · 배합·분할·굽기·감점 포인트', cats:['exam_p'], ic:'🍰' },
     { k:'gexamb', n:'제빵기능사 실기', s:'제빵 20과제 · 배합·발효·굽기·감점 포인트', cats:['exam_b'], ic:'🍞' },
