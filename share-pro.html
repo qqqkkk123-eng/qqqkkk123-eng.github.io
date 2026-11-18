@@ -8895,6 +8895,13 @@ DB.push({
       { k: 'season', n: '계절·공정·복구', ic: '🌡️' },
       { k: 'keep', n: '보관·포장·소비기한', ic: '🧊' },
       { k: 'ops', n: '위생·생산·운영', ic: '🧼' }
+    ],
+    brand: [
+      { k: 'dairy', n: '유제품·버터·치즈', ic: '🧈' },
+      { k: 'choco', n: '초콜릿·코코아', ic: '🍫' },
+      { k: 'flour', n: '가루·당류·젤라틴·팽창제', ic: '🌾' },
+      { k: 'fruit', n: '퓨레·향료·시럽·음료', ic: '🍓' },
+      { k: 'gear', n: '오븐·믹서 장비', ic: '⚙️' }
     ]
   };
   var ID_GROUP = {
@@ -8971,6 +8978,14 @@ DB.push({
       season: ['pr01a', 'pr01b'],
       keep: ['pr01c', 'pr01d', 'pr08'],
       ops: ['pr01e', 'pr01f']
+    },
+    brand: {
+      /* 재료 비교 br01~br17 · 장비 비교 br18~br20 · 카페 재료 비교 br21~br25 */
+      dairy: ['br01', 'br02', 'br07', 'br08', 'br16', 'br23'],          /* 버터·생크림·크림치즈·마스카포네·마가린·우유 */
+      choco: ['br03', 'br04', 'br09', 'br22'],                          /* 다크 / 밀크·화이트 커버춰 / 코코아파우더 / 카페 초코소스 */
+      flour: ['br05', 'br06', 'br13', 'br14', 'br15', 'br12'],          /* 밀가루 국내·해외 / 아몬드가루 / 당류 / 팽창제·전분 / 젤라틴 */
+      fruit: ['br10', 'br11', 'br17', 'br21', 'br24', 'br25'],          /* 퓨레 / 바닐라 / 주류·리큐어 / 카페 시럽·티·원두 */
+      gear: ['br18', 'br19', 'br20']                                    /* 컨벡션 오븐 / 데크 오븐 / 믹서 */
     }
   };
   var ID2GRP = {};
@@ -9228,6 +9243,7 @@ DB.push({
     }
     if (worldMode()) { renderWorldChips(); return; }
     el.hidden = false;
+    el.setAttribute('aria-label', (CATNAME[state.cat] || '항목') + ' 분류');
     el.innerHTML = myGroupsNow().filter(function (g) { return g.k === 'all' || myCount(g.k) > 0; }).map(function (g) {
       var on = state.myg === g.k;
       return '<button type="button" class="mchip' + (on ? ' on' : '') + '" data-myg="' + g.k + '"' +
@@ -9655,6 +9671,11 @@ DB.push({
         extra = '<button type="button" class="contLink" data-mattable="1">📦 전재료 ' + MATTOTAL +
           '품목 표 열기 — 기준가·g당 단가·대체 재료</button>';
       }
+      /* 🏷️ 브랜드 비교 & 장비: 비교표 25개를 주제 칩으로 바로 거를 수 있게 */
+      if (state.group.k === 'g4' && !SHARE && !catHidden('brand')) {
+        extra = '<button type="button" class="contLink" data-gotocat="brand">🏷️ 브랜드 비교 주제별로 보기 — ' +
+          '유제품·버터·치즈 / 초콜릿·코코아 / 가루·당류 / 퓨레·향료 / 오븐·믹서</button>';
+      }
       renderContents(state.group.n, state.group.s, items, extra, tks);
       return;
     }
@@ -9688,6 +9709,18 @@ DB.push({
     var hh = head ? head.getBoundingClientRect().height : 0;
     var y = el.getBoundingClientRect().top + (window.pageYOffset || 0) - hh - 10;
     window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+  }
+
+  function gotoTab(k) {
+    navDo(function () {
+      state.cat = k;
+      state.tag = ''; state.matcat = ''; state.group = null; state.myg = 'all'; state.wk = 'all';
+      state.tml = 'all'; state.tmt = 'all';
+      state.q = ''; if (qEl) qEl.value = '';
+      resetLimit();
+      renderTabs(); renderChips(); render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
   function gotoCalc() {
@@ -9754,6 +9787,8 @@ DB.push({
     if (im) { var gi = document.getElementById('globalImport'); if (gi) gi.click(); return; }
     var mt = ev.target.closest('[data-mattable]');
     if (mt) { gotoMat(''); return; }
+    var gc = ev.target.closest('[data-gotocat]');
+    if (gc) { gotoTab(gc.getAttribute('data-gotocat')); return; }
     var mc = ev.target.closest('[data-matcat]');
     if (mc) { gotoMat(mc.getAttribute('data-matcat')); return; }
     var row = ev.target.closest('.tocRow');
