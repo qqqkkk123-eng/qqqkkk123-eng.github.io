@@ -648,6 +648,39 @@ html[data-theme="dark"] .out .warn{color:#f0a08a}
 .out .tipBox li{margin:2px 0;display:list-item;font-size:11.5px}
 .rdTypes{grid-template-columns:1fr 1fr}
 @media (min-width:700px){.rdTypes{grid-template-columns:repeat(3,1fr)}}
+/* R&D — g ↔ 베이커스% 양방향 · 제품 프리셋 */
+.rdParts{display:flex;gap:6px;margin:0 0 8px;max-width:520px}
+.rdPartBtn{flex:1;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:10px;padding:8px 6px;font-size:12.5px;font-weight:750}
+.rdPartBtn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.rdProd{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 8px}
+.rdProdBtn{border:1px solid var(--line);background:var(--surface2);color:var(--ink2);border-radius:999px;padding:5px 10px;font-size:11.5px;font-weight:650;white-space:nowrap}
+.rdProdBtn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.rdPrNote{font-size:11px;color:var(--muted);line-height:1.65;margin:0 0 10px}
+.rdPrNote b{color:var(--ink2)}
+.rdHead,.rdItem{display:grid;grid-template-columns:minmax(0,1fr) 62px 62px 22px;gap:5px;align-items:center}
+.rdHead{margin:12px 0 5px;font-size:10px;font-weight:750;color:var(--muted);text-align:right}
+.rdHead span:first-child{text-align:left}
+.rdHead i{font-style:normal;font-weight:500;font-size:9.5px;display:block;color:var(--muted)}
+.rdTable{display:grid;gap:5px;max-width:760px}
+.rdHead{max-width:760px}
+.rdItem{padding:2px 0}
+.rdNm{min-width:0}
+.rdNm input{width:100%;min-width:0;height:31px;border:1px solid var(--line);border-radius:8px;background:var(--bg2);padding:0 7px;font-size:12.5px;font-weight:700}
+.rdNm i{display:block;font-style:normal;font-size:9.5px;color:var(--muted);margin-top:2px;padding-left:2px}
+.rdNm i.rdBaseTag{color:var(--accent);font-weight:700}
+.rdItem input.rdPctIn,.rdItem input.rdGIn{width:100%;min-width:0;height:31px;border:1px solid var(--line);border-radius:8px;background:var(--bg2);padding:0 5px;font-size:12px;font-weight:700;text-align:right}
+.rdItem input.rdPctIn[readonly]{background:var(--surface2);color:var(--muted)}
+.rdDel{border:1px solid var(--line);background:var(--surface2);color:var(--muted);border-radius:7px;width:22px;height:26px;font-size:13px;line-height:1;padding:0}
+.rdKpi{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:9px 0}
+.rdKpi div{background:var(--surface2);border:1px solid var(--line);border-radius:9px;padding:6px 8px}
+.rdKpi span{display:block;font-size:10px;color:var(--muted);font-weight:650}
+.rdKpi b{display:block;font-size:15px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+.rdKpi i{display:block;font-style:normal;font-size:9.5px;color:var(--muted)}
+.rdKpi .lo b{color:#a0641f}
+.rdKpi .hi b{color:#b4452b}
+.rdTbl i.rdRg{display:block;font-style:normal;font-size:9.5px;color:var(--muted)}
+.rdTbl tr.rdOut td:first-child{color:#b4452b}
+.bigNum em{font-style:normal;font-size:11px;font-weight:700;color:var(--muted);margin-left:2px}
 .rdSliders{display:grid;gap:7px;margin:10px 0}
 .rdRow{display:grid;grid-template-columns:56px minmax(0,1fr) 54px 14px;gap:6px;align-items:center}
 .rdRow label{font-size:11px;font-weight:700;color:var(--muted);line-height:1.2}
@@ -1704,16 +1737,23 @@ table.icTbl th,table.icTbl td{padding:6px 8px}
     </article>
 
     <article class="calc calcView" id="calc-rnd" role="tabpanel" aria-labelledby="ctab-rnd" data-calcview="rnd" hidden>
-      <h3>🧪 신메뉴 R&D 개발 계산기 <span class="calcSub">비율 → g → 원가 → 진단</span></h3>
-      <p class="hint">품목 유형을 고르고 핵심 성분 비율을 조절하면 재료 g수·예상 원재료비·배합 균형 진단이 실시간으로 계산됩니다.</p>
-      <div class="typeGrid rdTypes" id="rdTypes" role="group" aria-label="품목 유형"></div>
-      <div class="rdBaseRow" id="rdBaseRow" role="group" aria-label="무스 베이스" hidden></div>
-      <div class="fields">
-        <div class="field"><label for="rdTotal" id="rdTotalLabel">목표 총 배합 중량 (g)</label><input id="rdTotal" type="number" inputmode="decimal" min="10" step="10" value="1000"></div>
-        <div class="field"><label for="rdCount">목표 개수 (선택)</label><input id="rdCount" type="number" inputmode="numeric" min="0" step="1" placeholder="예: 12"></div>
-        <div class="field"><label for="rdPiece" id="rdPieceLabel">개당 중량 (g)</label><input id="rdPiece" type="number" inputmode="decimal" min="0" step="5" value="60"></div>
+      <h3>🧪 신메뉴 R&D 개발 계산기 <span class="calcSub">g ↔ 베이커스% · 제과/제빵 프리셋 · 진단</span></h3>
+      <p class="hint">제과·제빵을 고르고 <b>제품 프리셋</b>을 누르면 표준 배합이 <b>g과 %</b>로 들어옵니다. g을 고치면 %와 총량이, %를 고치면 g이 다시 계산되고, <b>목표 총 중량·개수</b>를 넣으면 전 재료가 같은 비율로 스케일됩니다.</p>
+      <div class="rdParts" id="rdPart" role="group" aria-label="제과·제빵 구분">
+        <button type="button" class="rdPartBtn on" data-rdpart="p">🍰 제과</button>
+        <button type="button" class="rdPartBtn" data-rdpart="b">🥖 제빵</button>
       </div>
-      <div id="rdSliders" class="rdSliders"></div>
+      <div class="rdProd" id="rdProd" role="group" aria-label="제품 프리셋"></div>
+      <p class="rdPrNote" id="rdPrNote"></p>
+      <div class="fields">
+        <div class="field"><label for="rdTotal" id="rdTotalLabel">목표 총 배합 중량 (g)</label><input id="rdTotal" type="number" inputmode="decimal" min="10" step="10" value="600"></div>
+        <div class="field"><label for="rdCount">목표 개수 (선택)</label><input id="rdCount" type="number" inputmode="numeric" min="0" step="1" placeholder="예: 12"></div>
+        <div class="field"><label for="rdPiece" id="rdPieceLabel">개당 중량 (g)</label><input id="rdPiece" type="number" inputmode="decimal" min="0" step="5" value="50"></div>
+        <div class="field"><label for="rdBase">기준 재료 합계 (g)</label><input id="rdBase" type="number" inputmode="decimal" min="1" step="10"></div>
+      </div>
+      <div class="rdHead"><span>재료 <i>권장 %는 기준 재료 100 기준</i></span><span>베이커스%</span><span>g</span><span></span></div>
+      <div id="rdRows" class="rdTable"></div>
+      <button type="button" class="addBtn" id="rdAddRow">＋ 재료 행 추가</button>
       <button type="button" class="addBtn" id="rdSave">💾 이 배합을 레시피로 저장</button>
       <div class="out" id="rdOut"></div>
     </article>
@@ -1777,7 +1817,7 @@ table.icTbl th,table.icTbl td{padding:6px 8px}
 
   <footer>
     <b>제과제빵 이론 백과</b> v2.7 · 실무·자격증·제품개발용 개인 참고 자료<br>
-    레시피 185종(엑셀·사진·메모)·클래식 18종·세계 제과제빵 6개국 54품목(품목별 사진·레시피)·용어 사전 307개(🔊 발음)·참고 영상 23개·계산기 8종(원가·레시피 변형·반죽배합·비건 변환·카페 음료·R&D·DDP·오븐 환산)은 배합·팬·단가를 입력하면 바로 계산됩니다. 기준가는 2026-11 시세입니다.<br>
+    레시피 185종(엑셀·사진·메모)·클래식 18종·세계 제과제빵 6개국 54품목(품목별 사진·레시피)·용어 사전 307개(🔊 발음)·참고 영상 23개·계산기 9종(원가·레시피 변형·반죽배합·비건 변환·카페 음료·R&D·DDP·오븐 환산)은 배합·팬·단가를 입력하면 바로 계산됩니다. 기준가는 2026-11 시세입니다.<br>
     클래식 레시피·장비 스펙·구매처 정보는 제조사 기술자료와 유통사 표시가(2026-11)를 교차 확인해 정리했습니다.<br>
     수치는 교재·제조사 기술자료·학술 자료의 범위를 정리한 것으로, 설비·배합·원료·제품 로트에 따라 달라질 수 있습니다. 최종 판단은 실측과 시험 배합으로 확인하세요.<br>
     즐겨찾기와 테마는 이 브라우저에만 저장됩니다(localStorage). 오프라인에서도 열립니다.
@@ -5541,6 +5581,406 @@ const VEGAN_DEFAULT = {
     { cat: 'flour', g: 200 },
     { cat: 'sugar', g: 180 }
   ]
+};
+
+/* ===== R&D 개발계산기 제품 프리셋 (제과 16 · 제빵 10) =====
+   rows: n 이름 · k 성분(flour/fat/sugar/egg/liquid/salt/leaven/other/gel) · g 기준 배합(g)
+         w 수분% · r 권장 범위(기준 재료 100 기준 %)
+   base: 기준 재료 이름 배열(합계 = 100%) · m: 지표 권장 범위(%) · points: R&D 포인트 */
+const RD_PRESETS = [
+  { id:'genoise-g', part:'p', n:'제누와즈 (공립)', batch:'18cm 1대', base:['박력분'],
+    rows:[
+      {n:'계란', k:'egg', g:150, w:75, r:[140, 165]},
+      {n:'백설탕', k:'sugar', g:100, w:0, r:[90, 110]},
+      {n:'박력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'무염버터', k:'fat', g:20, w:16, r:[15, 30]},
+      {n:'우유', k:'liquid', g:10, w:88, r:[5, 20]}
+    ],
+    m:{water:[7.9,9.7], sugar:[80.0,120.0], fat:[16.0,24.0], egg:[135.0,165.0]},
+    points:['전란을 40℃ 중탕에서 37~40℃로 데운 뒤 고속 5~7분, 떨어뜨린 반죽이 2초 남는 리본 상태까지 휘핑한다.',
+      '박력분은 체 2회 후 3~4회 나눠 자르듯 섞는다. 20회 넘기면 기포가 빠져 높이가 1cm 이상 줄어든다.',
+      '버터·우유는 50~60℃로 데워 반죽 일부와 먼저 섞은 뒤 되넣는다.',
+      '비중 0.45~0.50. 같은 컵에 반죽을 채워 무게를 재면 관리된다.'],
+    bake:'170℃ 30~35분 (중앙 95℃ 이상)', note:'공립은 계란을 전란으로 휘핑한다.' },
+  { id:'genoise-s', part:'p', n:'제누와즈 (별립)', batch:'18cm 1대', base:['박력분'],
+    rows:[
+      {n:'계란 노른자', k:'egg', g:55, w:50, r:[45, 65]},
+      {n:'백설탕', k:'sugar', g:25, w:0, r:[70, 90]},
+      {n:'계란 흰자', k:'egg', g:120, w:88, r:[105, 135]},
+      {n:'백설탕', k:'sugar', g:55, w:0, r:[70, 90]},
+      {n:'박력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'무염버터', k:'fat', g:25, w:16, r:[20, 32]}
+    ],
+    m:{water:[0.0,0.0], sugar:[64.0,96.0], fat:[20.0,30.0], egg:[157.5,192.5]},
+    points:['노른자 반죽은 설탕과 함께 흰색이 돌 때까지 휘핑한다(시럽 없이).',
+      '머랭은 뿔이 서고 끝이 살짝 꺾이는 단단한 상태. 과하면 섞을 때 덩어리진다.',
+      '노른자 반죽 → 머랭 1/3 → 가루 → 남은 머랭 순서로 폴딩한다.',
+      '별립은 공립보다 기포가 가늘어 시트가 촉촉하고 롤케이크에 적합하다.'],
+    bake:'170℃ 28~32분', note:'별립은 노른자 반죽과 머랭을 따로 만든다.' },
+  { id:'chiffon', part:'p', n:'쉬폰', batch:'17cm 1대', base:['박력분'],
+    rows:[
+      {n:'박력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'계란 흰자', k:'egg', g:130, w:88, r:[115, 145]},
+      {n:'백설탕', k:'sugar', g:80, w:0, r:[70, 95]},
+      {n:'계란 노른자', k:'egg', g:55, w:50, r:[49.5, 60.5]},
+      {n:'포도씨유', k:'fat', g:42, w:0, r:[35, 50]},
+      {n:'우유', k:'liquid', g:45, w:88, r:[38, 55]}
+    ],
+    m:{water:[35.6,43.6], sugar:[64.0,96.0], fat:[33.6,50.4], egg:[166.5,203.5]},
+    points:['머랭은 60% 정도(부드러운 뿔)에서 멈춘다. 단단하면 표면이 갈라진다.',
+      '오일과 우유를 먼저 유화(휘핑)한 뒤 가루를 넣으면 글루텐이 덜 생긴다.',
+      '틀에 기름을 바르지 않는다. 기둥에 붙어야 뜬다. 구운 즉시 뒤집어 식힌다.',
+      '오븐 170℃ 35~40분, 중앙 온도 95℃ 이상.'],
+    bake:'170℃ 35~40분', note:'기름을 바르지 않는 분리형 틀을 쓴다.' },
+  { id:'pound', part:'p', n:'파운드', batch:'파운드팬 1대', base:['박력분'],
+    rows:[
+      {n:'박력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'무염버터', k:'fat', g:100, w:16, r:[90, 110]},
+      {n:'백설탕', k:'sugar', g:100, w:0, r:[90, 110]},
+      {n:'계란', k:'egg', g:100, w:75, r:[90, 110]},
+      {n:'베이킹파우더', k:'leaven', g:1, w:0, r:[0.6, 1.4]}
+    ],
+    m:{water:[0.0,0.0], sugar:[80.0,120.0], fat:[80.0,120.0], egg:[90.0,110.0]},
+    points:['버터 18~21℃ 크림화 5분 → 설탕 3회 나눠 → 계란 소량씩(분리 방지) → 가루.',
+      '비중 0.85~0.95. 계란을 한 번에 넣으면 분리된다.',
+      '팬 2/3까지 채우고 중앙을 홈처럼 만들어 굽는다(균열 방지).',
+      '170℃ 45~50분, 중앙 92~96℃.'],
+    bake:'170℃ 45~50분', note:'같은 중량 배합(1:1:1:1)이 파운드의 기본.' },
+  { id:'financier', part:'p', n:'휘낭시에', batch:'휘낭시에 틀 1판', base:['아몬드가루'],
+    rows:[
+      {n:'아몬드가루', k:'flour', g:100, w:5, r:[90.0, 110.0]},
+      {n:'슈가파우더', k:'sugar', g:100, w:0, r:[90, 110]},
+      {n:'박력분', k:'flour', g:35, w:14, r:[25, 45]},
+      {n:'계란 흰자', k:'egg', g:100, w:88, r:[90, 115]},
+      {n:'무염버터', k:'fat', g:100, w:16, r:[90, 110]},
+      {n:'꿀(아카시아)', k:'sugar', g:10, w:17, r:[7.5, 12.5]}
+    ],
+    m:{water:[0.0,0.0], sugar:[88.0,132.0], fat:[80.0,120.0], egg:[90.0,110.0]},
+    points:['버터는 100% 갈색버터(noisette)로 태워 향을 낸다. 50~55℃에서 여과해 쓴다.',
+      '아몬드가루·슈가파우더·박력분을 체 치고 흰자와 섞은 뒤 갈색버터를 넣는다.',
+      '반죽은 냉장 3~12시간 숙성해야 꼬리가 덜 생기고 풍미가 깊어진다.',
+      '틀 90%까지 채우고 180℃ 12~15분, 가장자리 갈색·중앙 금색.'],
+    bake:'180℃ 12~15분', note:'기준 재료는 아몬드가루. 갈색버터가 향의 핵심.' },
+  { id:'madeleine', part:'p', n:'마들렌', batch:'마들렌 틀 1판', base:['박력분'],
+    rows:[
+      {n:'박력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'무염버터', k:'fat', g:100, w:16, r:[90, 110]},
+      {n:'백설탕', k:'sugar', g:100, w:0, r:[90, 110]},
+      {n:'계란', k:'egg', g:100, w:75, r:[90, 110]},
+      {n:'꿀(아카시아)', k:'sugar', g:10, w:17, r:[7.5, 12.5]},
+      {n:'베이킹파우더', k:'leaven', g:2, w:0, r:[1, 3]}
+    ],
+    m:{water:[0.0,0.0], sugar:[88.0,132.0], fat:[80.0,120.0], egg:[90.0,110.0]},
+    points:['반죽 냉장 3시간 이상(하룻밤 권장). 차가운 반죽을 뜨거운 틀에 넣어야 배꼽이 생긴다.',
+      '틀 예열·버터 코팅 후 냉장 10분, 210℃ 4분 → 180℃ 6~8분.',
+      '레몬 제스트·꿀은 풍미와 보습 담당. 꿀이 15%를 넘으면 배꼽이 약해진다.',
+      '껍질이 마르면 배꼽이 안 생긴다. 반죽은 밀봉 냉장.'],
+    bake:'210℃ 4분 → 180℃ 6~8분', note:'팬 예열과 냉장 반죽이 배꼽의 조건.' },
+  { id:'sable', part:'p', n:'사블레·버터쿠키', batch:'1판(약 30개)', base:['박력분'],
+    rows:[
+      {n:'박력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'무염버터', k:'fat', g:70, w:16, r:[60, 80]},
+      {n:'슈가파우더', k:'sugar', g:45, w:0, r:[38, 55]},
+      {n:'계란', k:'egg', g:20, w:75, r:[12, 28]},
+      {n:'아몬드가루', k:'flour', g:15, w:5, r:[11.2, 18.8]},
+      {n:'꽃소금', k:'salt', g:1, w:0, r:[0.6, 1.4]}
+    ],
+    m:{water:[0.0,0.0], sugar:[36.0,54.0], fat:[56.0,84.0], egg:[18.0,22.0]},
+    points:['버터 16~18℃로 가루와 샌드(sablonnage)한다. 손바닥으로 밀어 펴면 글루텐이 생긴다.',
+      '설탕은 슈가파우더를 쓴다. 그래뉴당은 결정이 남아 표면이 거칠어진다.',
+      '3mm 밀기 → 냉장 30분 → 커터. 구운 뒤 5분 두고 옮긴다.',
+      '아몬드가루 15%가 결을 부서지게 하고 향을 올린다.'],
+    bake:'170℃ 12~15분', note:'반죽 온도 20℃ 이하 유지가 포인트.' },
+  { id:'american', part:'p', n:'아메리칸 쿠키', batch:'1판(약 12개)', base:['박력분'],
+    rows:[
+      {n:'박력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'무염버터', k:'fat', g:60, w:16, r:[50, 70]},
+      {n:'황설탕', k:'sugar', g:40, w:0, r:[30, 50]},
+      {n:'백설탕', k:'sugar', g:30, w:0, r:[20, 40]},
+      {n:'계란', k:'egg', g:25, w:75, r:[18, 32]},
+      {n:'베이킹소다', k:'leaven', g:1, w:0, r:[0.6, 1.4]},
+      {n:'꽃소금', k:'salt', g:1, w:0, r:[0.6, 1.4]},
+      {n:'다크커버춰', k:'other', g:60, w:1, r:[54.0, 66.0]}
+    ],
+    m:{water:[0.0,0.0], sugar:[56.0,84.0], fat:[48.0,72.0], egg:[22.5,27.5]},
+    points:['황설탕:백설탕 = 6:4가 쫀득함과 퍼짐의 균형. 전부 황설탕이면 퍼지고 갈색이 진하다.',
+      '버터를 녹이지 말고 18~20℃ 크림법. 녹인 버터는 퍼짐이 커진다.',
+      '반죽 냉장 30분 이상 → 60g씩 스쿠프. 170℃ 11~13분.',
+      '베이킹소다는 황설탕의 산과 반응해 갈변·퍼짐을 만든다.'],
+    bake:'170℃ 11~13분', note:'초콜릿칩 60%는 취향대로 40~80% 조절.' },
+  { id:'sucree', part:'p', n:'브리제·쉬크레 (타르트지)', batch:'18cm 타르트 1대', base:['박력분'],
+    rows:[
+      {n:'박력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'무염버터', k:'fat', g:55, w:16, r:[45, 65]},
+      {n:'슈가파우더', k:'sugar', g:35, w:0, r:[28, 42]},
+      {n:'계란', k:'egg', g:18, w:75, r:[12, 24]},
+      {n:'아몬드가루', k:'flour', g:10, w:5, r:[7.5, 12.5]},
+      {n:'꽃소금', k:'salt', g:1, w:0, r:[0.6, 1.4]}
+    ],
+    m:{water:[0.0,0.0], sugar:[28.0,42.0], fat:[44.0,66.0], egg:[16.2,19.8]},
+    points:['쉬크레(단 타르트지)는 슈가파우더·아몬드가루로 결이 부서지기 쉽다. 브리제는 설탕을 빼고 물 25~30%를 넣는다.',
+      '버터를 가루와 모래알처럼 섞은 뒤 계란은 최소로. 한 덩어리로 모이면 그만.',
+      '3mm 밀기 → 30분 냉장 → 블라인드 베이킹 170℃ 15분 + 5분.',
+      '남은 반죽은 냉동 1개월. 구운 뒤 밀폐 보관 3일.'],
+    bake:'블라인드 베이킹 170℃ 15분', note:'쉬크레 기준. 브리제는 설탕 없이 물 28%.' },
+  { id:'basque', part:'p', n:'바스크 치즈케이크', batch:'15cm 1대', base:['크림치즈(필라델피아)'],
+    rows:[
+      {n:'크림치즈(필라델피아)', k:'fat', g:100, w:55, r:[90.0, 110.0]},
+      {n:'백설탕', k:'sugar', g:28, w:0, r:[22, 34]},
+      {n:'계란', k:'egg', g:55, w:75, r:[45, 65]},
+      {n:'생크림(국산 38%)', k:'liquid', g:42, w:60, r:[32, 50]},
+      {n:'박력분', k:'flour', g:5, w:14, r:[3.0, 7.0]}
+    ],
+    m:{water:[22.7,27.7], sugar:[22.4,33.6], fat:[80.0,120.0], egg:[49.5,60.5]},
+    points:['크림치즈는 실온 20℃로 30분 이상 말랑하게. 차가우면 덩어리가 남는다.',
+      '고온 230~240℃에서 25~30분, 표면이 검게 탄 정도까지. 중앙은 흔들려야 한다.',
+      '냉장 6시간 이상 숙성해야 맛이 잡힌다. 바로 먹으면 계란 비린 맛이 남는다.',
+      '박력분 5%는 유화 안정용. 넣지 않으면 물러진다.'],
+    bake:'230℃ 25~30분', note:'기준 재료는 크림치즈. 고온에서 한 번에 굽는다.' },
+  { id:'choux', part:'p', n:'슈', batch:'1판(약 20개)', base:['박력분'],
+    rows:[
+      {n:'물', k:'liquid', g:100, w:100, r:[115, 145]},
+      {n:'무염버터', k:'fat', g:55, w:16, r:[65, 85]},
+      {n:'박력분', k:'flour', g:75, w:14, r:[90.0, 110.0]},
+      {n:'계란', k:'egg', g:110, w:75, r:[125, 170]},
+      {n:'꽃소금', k:'salt', g:1, w:0, r:[0.8, 1.8]}
+    ],
+    m:{water:[120.0,146.6], sugar:[0.0,0.0], fat:[58.6,88.0], egg:[132.0,161.4]},
+    points:['호화: 물·버터·소금을 끓인 뒤 가루를 한 번에 넣고 1~2분, 바닥에 막이 생길 때까지 볶는다.',
+      '계란은 50~60℃로 식힌 뒤 소량씩. 반죽이 V자로 3cm 늘어지는 상태에서 멈춘다.',
+      '190~200℃ 20분 → 170℃ 15분. 중간에 문을 열면 꺼진다.',
+      '계란 과다 시 퍼지고, 부족하면 갈라진다.'],
+    bake:'190~200℃ 20분 → 170℃ 15분', note:'호화와 계란 양이 성패를 가른다.' },
+  { id:'macaron', part:'p', n:'마카롱', batch:'약 30개(꼬끄 60장)', base:['아몬드가루'],
+    rows:[
+      {n:'아몬드가루', k:'flour', g:100, w:5, r:[90.0, 110.0]},
+      {n:'슈가파우더', k:'sugar', g:100, w:0, r:[90, 110]},
+      {n:'계란 흰자', k:'egg', g:76, w:88, r:[65, 85]},
+      {n:'백설탕', k:'sugar', g:46, w:0, r:[38, 54]},
+      {n:'물', k:'liquid', g:15, w:100, r:[10, 20]}
+    ],
+    m:{water:[13.5,16.5], sugar:[116.8,175.2], fat:[0.0,0.0], egg:[68.4,83.6]},
+    points:['아몬드가루·슈가파우더는 함께 2회 체. 흰자는 3~5일 노화(수분 증발) 후 사용한다.',
+      '이탈리안 시럽 118℃를 머랭에 천천히 부어 40℃까지 휘핑한다.',
+      '마카로나주는 주걱으로 20~30회, 리본이 20초에 끊어지는 정도.',
+      '건조 30~60분(표면에 손대도 안 묻힘) → 150℃ 13~15분.'],
+    bake:'150℃ 13~15분', note:'기준 재료는 아몬드가루. TPT 1:1이 기본.' },
+  { id:'dacquoise', part:'p', n:'다쿠아즈', batch:'1판(약 12장)', base:['아몬드가루'],
+    rows:[
+      {n:'아몬드가루', k:'flour', g:100, w:5, r:[90.0, 110.0]},
+      {n:'슈가파우더', k:'sugar', g:70, w:0, r:[60, 80]},
+      {n:'계란 흰자', k:'egg', g:110, w:88, r:[95, 125]},
+      {n:'백설탕', k:'sugar', g:35, w:0, r:[28, 45]},
+      {n:'박력분', k:'flour', g:10, w:14, r:[7.5, 12.5]}
+    ],
+    m:{water:[0.0,0.0], sugar:[84.0,126.0], fat:[0.0,0.0], egg:[99.0,121.0]},
+    points:['아몬드가루·슈가파우더를 체 쳐 섞고, 단단한 머랭을 3회 나눠 폴딩한다.',
+      '짜기 후 15분 건조 → 170℃ 15~18분. 표면에 슈가파우더를 뿌리면 크러스트가 생긴다.',
+      '식힌 뒤 크림을 넣고 냉장 12시간 두면 촉촉해진다.',
+      '박력분 10%는 조직을 잡아 준다. 없으면 부서지기 쉽다.'],
+    bake:'170℃ 15~18분', note:'기준 재료는 아몬드가루.' },
+  { id:'ganache', part:'p', n:'가나슈', batch:'1배합(약 400g)', base:['다크커버춰'],
+    rows:[
+      {n:'다크커버춰', k:'other', g:100, w:1, r:[90.0, 110.0]},
+      {n:'생크림(국산 38%)', k:'liquid', g:100, w:60, r:[75, 130]},
+      {n:'무염버터', k:'fat', g:10, w:16, r:[0, 20]},
+      {n:'물엿', k:'sugar', g:5, w:20, r:[0, 12]}
+    ],
+    m:{water:[54.0,66.0], sugar:[4.0,6.0], fat:[8.0,12.0], egg:[0.0,0.0]},
+    points:['생크림 85℃까지 가열 → 초콜릿에 3회 나눠 부어 중앙부터 유화. 35~40℃에서 버터 추가.',
+      '생크림/초콜릿 100%가 기본. 50%면 코팅(글라사주), 100%는 트러플, 150% 이상은 소스.',
+      '유화 후 냉장 6시간 안정화. 휘핑 가나슈는 20℃에서 한다.',
+      '물엿은 광택과 점도. 5% 넘으면 흐른다.'],
+    bake:'85℃까지 가열 후 유화 → 냉장 6시간', note:'기준 재료는 초콜릿. 비율이 용도를 정한다.' },
+  { id:'custard', part:'p', n:'커스터드', batch:'1배합(약 500g)', base:['우유'],
+    rows:[
+      {n:'우유', k:'liquid', g:100, w:88, r:[90.0, 110.0]},
+      {n:'계란 노른자', k:'egg', g:18, w:50, r:[14, 22]},
+      {n:'백설탕', k:'sugar', g:18, w:0, r:[14, 24]},
+      {n:'옥수수전분', k:'other', g:7, w:12, r:[5, 10]},
+      {n:'무염버터', k:'fat', g:5, w:16, r:[3.0, 7.0]}
+    ],
+    m:{water:[79.2,96.8], sugar:[14.4,21.6], fat:[4.0,6.0], egg:[16.2,19.8]},
+    points:['우유 80% 데우고, 노른자+설탕+전분을 섞어 템퍼링 후 다시 냄비로.',
+      '82~85℃까지 저으며 익힌다. 90℃를 넘으면 계란이 응고된다.',
+      '불에서 내려 버터를 넣고 체에 거른 뒤 랩을 붙여 냉장한다(표면 막 방지).',
+      '전분 7%는 슈 크림용, 4~5%는 타르트 필링용으로 묽다.'],
+    bake:'82~85℃까지 가열', note:'기준 재료는 우유. 전분량으로 점도를 조절.' },
+  { id:'mousse', part:'p', n:'무스·앙트르메', batch:'15cm 링 1대', base:['생크림(국산 38%)'],
+    rows:[
+      {n:'생크림(국산 38%)', k:'liquid', g:100, w:60, r:[90.0, 110.0]},
+      {n:'우유', k:'liquid', g:40, w:88, r:[32, 48]},
+      {n:'계란 노른자', k:'egg', g:14, w:50, r:[10, 18]},
+      {n:'백설탕', k:'sugar', g:20, w:0, r:[16, 26]},
+      {n:'판젤라틴', k:'gel', g:2.8, w:10, r:[2.2, 3.4]}
+    ],
+    m:{water:[85.7,104.7], sugar:[16.0,24.0], fat:[0.0,0.0], egg:[12.6,15.4]},
+    points:['앙글레즈는 82~85℃까지 익혀 40℃ 이하로 식힌 뒤 젤라틴을 넣는다.',
+      '휘핑 생크림 60~70%를 2회 나눠 폴딩. 25℃를 넘으면 분리된다.',
+      '판젤라틴은 얼음물에 10분 불려 물기를 짜고 40℃ 이하에서 녹인다.',
+      '5단 구성 배분: 시트 18 · 무스 30 · 필링 12 · 무스 30 · 글라사주 10(%).'],
+    bake:'냉동 -18℃ 4시간 이상 → 냉장 해동', note:'기준 재료는 생크림. 젤라틴 200블룸 기준.' },
+  { id:'pullman', part:'b', n:'풀먼 식빵', batch:'1.5斤 1대', base:['강력분'],
+    rows:[
+      {n:'강력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'물', k:'liquid', g:65, w:100, r:[62, 68]},
+      {n:'백설탕', k:'sugar', g:6, w:0, r:[4, 8]},
+      {n:'꽃소금', k:'salt', g:2, w:0, r:[1.8, 2.2]},
+      {n:'생이스트', k:'leaven', g:2, w:68, r:[1.5, 2.5]},
+      {n:'무염버터', k:'fat', g:4, w:16, r:[2, 6]},
+      {n:'전지분유', k:'other', g:2, w:3, r:[1.2, 2.8]}
+    ],
+    m:{water:[58.5,71.5], sugar:[4.8,7.2], fat:[3.2,4.8], egg:[0.0,0.0]},
+    points:['수분 65%·설탕 6%·버터 4%가 풀먼 기본. 뚜껑은 8~9부 발효 후 닫는다.',
+      '반죽 온도 26~27℃, 1차 60분 → 분할 220g×3 → 2차 40분(형틀 8부).',
+      '200℃ 15분 → 190℃ 20~25분. 뚜껑을 닫고 굽는다.',
+      '식힌 뒤(2시간) 썰어야 결이 살아 있다.'],
+    bake:'200℃ 15분 → 190℃ 20~25분', note:'뚜껑 있는 풀먼 팬. 사각 식빵.' },
+  { id:'milkbread', part:'b', n:'우유식빵', batch:'1斤 1대', base:['강력분'],
+    rows:[
+      {n:'강력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'우유', k:'liquid', g:55, w:88, r:[48, 62]},
+      {n:'물', k:'liquid', g:12, w:100, r:[9.0, 15.0]},
+      {n:'백설탕', k:'sugar', g:8, w:0, r:[6, 10]},
+      {n:'꽃소금', k:'salt', g:1.8, w:0, r:[1.1, 2.5]},
+      {n:'생이스트', k:'leaven', g:2, w:68, r:[1.2, 2.8]},
+      {n:'무염버터', k:'fat', g:8, w:16, r:[6, 10]},
+      {n:'계란', k:'egg', g:8, w:75, r:[4, 12]},
+      {n:'전지분유', k:'other', g:2, w:3, r:[1.2, 2.8]}
+    ],
+    m:{water:[54.4,66.4], sugar:[6.4,9.6], fat:[6.4,9.6], egg:[7.2,8.8]},
+    points:['우유 55%+물 12%로 유지방·유당이 많아 갈변이 빠르다. 180~190℃로 낮춰 굽는다.',
+      '버터 8%는 후반 투입. 계란 8%는 풍미와 부드러움을 만든다.',
+      '2차 발효 32℃·습도 75%, 40~50분.',
+      '총 수분 67%가 부드러운 식감의 기준. 70%를 넘으면 처진다.'],
+    bake:'180~190℃ 30~35분', note:'물 대신 우유 비중이 높은 식빵.' },
+  { id:'baguette', part:'b', n:'바게트', batch:'3개', base:['강력분'],
+    rows:[
+      {n:'강력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'물', k:'liquid', g:72, w:100, r:[66, 78]},
+      {n:'꽃소금', k:'salt', g:2, w:0, r:[1.8, 2.2]},
+      {n:'생이스트', k:'leaven', g:0.8, w:68, r:[0.4, 1.2]}
+    ],
+    m:{water:[64.8,79.2], sugar:[0.0,0.0], fat:[0.0,0.0], egg:[0.0,0.0]},
+    points:['수분 72%·소금 2%·이스트 0.8%가 기본. 이스트가 많으면 향이 없다.',
+      '오토리즈 30분 → 2~3회 접기(스트레치앤폴드) → 냉장 12~18시간 저온숙성.',
+      '성형 후 250℃ 스팀 10초 2회, 230℃ 20~25분. 쿠프 3~4개 45°.',
+      '구운 뒤 1시간은 껍질이 딱딱하다. 2시간 뒤가 가장 좋다.'],
+    bake:'250℃ 스팀 → 230℃ 20~25분', note:'물·소금·이스트만. 재료가 적을수록 기술이 드러난다.' },
+  { id:'ciabatta', part:'b', n:'치아바타', batch:'4개', base:['강력분'],
+    rows:[
+      {n:'강력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'물', k:'liquid', g:78, w:100, r:[72, 85]},
+      {n:'꽃소금', k:'salt', g:2, w:0, r:[1.8, 2.2]},
+      {n:'생이스트', k:'leaven', g:0.5, w:68, r:[0.3, 0.7]},
+      {n:'올리브오일', k:'fat', g:3, w:0, r:[1, 5]}
+    ],
+    m:{water:[70.2,85.8], sugar:[0.0,0.0], fat:[2.4,3.6], egg:[0.0,0.0]},
+    points:['수분 78%는 흐물흐물한 상태가 정상. 접기로 힘을 넣는다.',
+      '분할은 밀가루를 뿌린 채 스크레이퍼로. 손으로 누르면 기포가 죽는다.',
+      '250℃ 스팀 15분 → 220℃ 10분.',
+      '구멍(기포)은 저온숙성과 접기 횟수가 만든다.'],
+    bake:'250℃ 스팀 15분 → 220℃ 10분', note:'고수분 반죽. 물을 줄이면 치아바타가 아니다.' },
+  { id:'saltbread', part:'b', n:'소금빵', batch:'8개', base:['강력분'],
+    rows:[
+      {n:'강력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'우유', k:'liquid', g:42, w:88, r:[36, 48]},
+      {n:'물', k:'liquid', g:18, w:100, r:[13.5, 22.5]},
+      {n:'백설탕', k:'sugar', g:6, w:0, r:[4, 8]},
+      {n:'꽃소금', k:'salt', g:1.8, w:0, r:[1.1, 2.5]},
+      {n:'생이스트', k:'leaven', g:2, w:68, r:[1.2, 2.8]},
+      {n:'무염버터', k:'fat', g:8, w:16, r:[5, 10]},
+      {n:'가염버터', k:'fat', g:30, w:16, r:[25, 35]}
+    ],
+    m:{water:[49.5,60.5], sugar:[4.8,7.2], fat:[30.4,45.6], egg:[0.0,0.0]},
+    points:['속 가염버터 30%는 5℃로 차갑게 유지해야 층이 산다. 반죽 24℃와 맞춘다.',
+      '성형 후 2차 32℃ 40분. 버터가 새면 200℃에서 빠르게 굽는다.',
+      '표면 소금은 굽기 직전에 뿌린다(간수가 흐르지 않게).',
+      '가염버터는 소금 1.5~2% 포함이므로 배합 소금을 그만큼 줄인다.'],
+    bake:'200℃ 12~15분', note:'속 가염버터 30%가 소금빵의 정체성.' },
+  { id:'danpan', part:'b', n:'단과자빵', batch:'8개', base:['강력분'],
+    rows:[
+      {n:'강력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'물', k:'liquid', g:52, w:100, r:[46, 58]},
+      {n:'백설탕', k:'sugar', g:15, w:0, r:[12, 18]},
+      {n:'꽃소금', k:'salt', g:1.5, w:0, r:[0.9, 2.1]},
+      {n:'생이스트', k:'leaven', g:2.5, w:68, r:[1.5, 3.5]},
+      {n:'무염버터', k:'fat', g:12, w:16, r:[8, 16]},
+      {n:'계란', k:'egg', g:10, w:75, r:[6, 14]},
+      {n:'전지분유', k:'other', g:3, w:3, r:[1.8, 4.2]}
+    ],
+    m:{water:[46.8,57.2], sugar:[12.0,18.0], fat:[9.6,14.4], egg:[9.0,11.0]},
+    points:['수분 52%·설탕 15%·버터 12%가 단과자 기본. 고당이므로 고당 이스트를 쓴다.',
+      '1차 27℃ 60분, 2차 35℃ 40분, 180℃ 12~15분.',
+      '설탕이 18%를 넘으면 발효가 늦고 껍질이 진하게 탄다.',
+      '성형은 밀어 펴 말기. 충전물은 20~30%까지.'],
+    bake:'180℃ 12~15분', note:'고당 반죽. 고당 이스트 사용.' },
+  { id:'brioche', part:'b', n:'브리오슈', batch:'1대(6구)', base:['강력분'],
+    rows:[
+      {n:'강력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'계란', k:'egg', g:50, w:75, r:[42, 58]},
+      {n:'우유', k:'liquid', g:15, w:88, r:[11.2, 18.8]},
+      {n:'백설탕', k:'sugar', g:12, w:0, r:[10, 15]},
+      {n:'꽃소금', k:'salt', g:2, w:0, r:[1.2, 2.8]},
+      {n:'생이스트', k:'leaven', g:1.5, w:68, r:[0.9, 2.1]},
+      {n:'무염버터', k:'fat', g:45, w:16, r:[35, 55]}
+    ],
+    m:{water:[11.9,14.5], sugar:[9.6,14.4], fat:[36.0,54.0], egg:[45.0,55.0]},
+    points:['버터 45%는 반죽이 어느 정도 잡힌 뒤 3~4회 나눠 넣는다. 처음 넣으면 글루텐이 안 선다.',
+      '반죽 온도 22~24℃ 유지. 냉장 12시간 숙성하면 작업성과 향이 좋아진다.',
+      '170℃ 20~25분, 표면에 계란물 2회.',
+      '버터가 많아 발효는 느리게(28℃ 60~90분).'],
+    bake:'170℃ 20~25분', note:'버터 45%. 고지방 반죽의 대표.' },
+  { id:'croissant', part:'b', n:'크루아상', batch:'8개', base:['강력분'],
+    rows:[
+      {n:'강력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'물', k:'liquid', g:50, w:100, r:[45, 55]},
+      {n:'백설탕', k:'sugar', g:8, w:0, r:[6, 10]},
+      {n:'꽃소금', k:'salt', g:2, w:0, r:[1.2, 2.8]},
+      {n:'생이스트', k:'leaven', g:1.5, w:68, r:[0.9, 2.1]},
+      {n:'무염버터', k:'fat', g:5, w:16, r:[3, 7]},
+      {n:'시트마가린', k:'fat', g:30, w:16, r:[25, 35]}
+    ],
+    m:{water:[45.0,55.0], sugar:[6.4,9.6], fat:[28.0,42.0], egg:[0.0,0.0]},
+    points:['반죽과 시트유지를 같은 단단함(5~10℃)으로 맞춘다. 3-fold 3회, 매 회 냉장 30분.',
+      '발효는 26~28℃. 30℃를 넘으면 버터가 녹아 층이 붙는다.',
+      '200℃ 8분 → 180℃ 10~12분.',
+      '압연 두께 3.5~4mm, 삼각형 밑변 9cm·높이 28cm가 표준.'],
+    bake:'200℃ 8분 → 180℃ 10~12분', note:'시트유지 30%. 라미네이션 온도 관리가 전부.' },
+  { id:'bagel', part:'b', n:'베이글', batch:'6개', base:['강력분'],
+    rows:[
+      {n:'강력분', k:'flour', g:100, w:14, r:[90.0, 110.0]},
+      {n:'물', k:'liquid', g:55, w:100, r:[50, 60]},
+      {n:'백설탕', k:'sugar', g:4, w:0, r:[2, 6]},
+      {n:'꽃소금', k:'salt', g:2, w:0, r:[1.8, 2.2]},
+      {n:'생이스트', k:'leaven', g:1, w:68, r:[0.6, 1.5]}
+    ],
+    m:{water:[49.5,60.5], sugar:[3.2,4.8], fat:[0.0,0.0], egg:[0.0,0.0]},
+    points:['수분 55%·저당·저이스트로 단단한 반죽. 1차 냉장 12~24시간(지연 발효).',
+      '끓는 물(설탕 1%)에 앞뒤 30초씩 데친 뒤 바로 굽는다. 데침이 껍질을 만든다.',
+      '210℃ 15~18분. 데친 반죽은 바로 구워야 주름이 안 진다.',
+      '모양은 링 성형 후 30분 두고 데친다.'],
+    bake:'210℃ 15~18분', note:'데침 공정이 베이글과 빵을 가른다.' },
+  { id:'rye', part:'b', n:'호밀·통밀빵', batch:'1대', base:['강력분', '통밀가루'],
+    rows:[
+      {n:'강력분', k:'flour', g:60, w:14, r:[54.0, 66.0]},
+      {n:'통밀가루', k:'flour', g:40, w:13, r:[25, 50]},
+      {n:'물', k:'liquid', g:68, w:100, r:[62, 76]},
+      {n:'꽃소금', k:'salt', g:2, w:0, r:[1.2, 2.8]},
+      {n:'생이스트', k:'leaven', g:1.2, w:68, r:[0.7, 1.7]},
+      {n:'천연발효종(르방·스타터)', k:'leaven', g:20, w:50, r:[10, 30]}
+    ],
+    m:{water:[61.2,74.8], sugar:[0.0,0.0], fat:[0.0,0.0], egg:[0.0,0.0]},
+    points:['통밀 40%까지가 기본. 넘으면 글루텐이 약해져 부피가 줄어 물을 5~10% 늘린다.',
+      '르방 20%를 넣으면 산미와 보습이 좋아진다. 1차 3시간(24~26℃).',
+      '220℃ 스팀 10분 → 200℃ 25분.',
+      '통밀은 흡수가 늦어 오토리즈 40분을 권장한다.'],
+    bake:'220℃ 스팀 10분 → 200℃ 25분', note:'기준은 분말 합계(강력분+통밀). 통밀 40%.' },
+];
+
+/* 재료별 수분% — 수분율 계산용 (RD_PRESETS 밖 재료는 WATER_PCT 표를 따른다) */
+const RD_WATER = {
+'박력분':14, '강력분':14, '중력분':14, '통밀가루':13, '아몬드가루':5, '슈가파우더':0, '백설탕':0, '황설탕':0, '무염버터':16, '가염버터':16, '시트마가린':16, '계란':75, '계란 흰자':88, '계란 노른자':50, '우유':88, '생크림(국산 38%)':60, '크림치즈(필라델피아)':55, '물':100, '꿀(아카시아)':17, '물엿':20, '다크커버춰':1, '옥수수전분':12, '판젤라틴':10, '베이킹파우더':0, '베이킹소다':0, '꽃소금':0, '생이스트':68, '전지분유':3, '올리브오일':0, '포도씨유':0, '천연발효종(르방·스타터)':50
 };
 var BRD = { push: function () {}, forEach: function () {} };  /* 공유용: 브랜드 비교표 데이터는 포함하지 않음 */
 var MAT = { push: function () {}, forEach: function () {} };  /* 공유용: 사용자 엑셀 유래 전재료 품목 제외 */
@@ -11042,11 +11482,11 @@ DB.push({
   var HOME_GROUPS = [
     { k:'g1', n:'제과 이론', s:'반죽·케이크·쿠키·초콜릿·구움과자', cats:['pastry'], ic:'🍰' },
     { k:'g2', n:'제빵 이론', s:'발효·스트레이트·사워도우·하드계열', cats:['bread'], ic:'🍞' },
-    { k:'ghotel', n:'호텔 제과제빵 재료', s:'실무 원부재료 134 · 색소·허브·장식 · 브랜드 비교', cats:['hotel'], ic:'🏨' },
+    { k:'ghotel', n:'호텔 제과제빵 재료', s:'실무 원부재료 172 · 색소·허브·장식 · 브랜드 비교', cats:['hotel'], ic:'🏨' },
     { k:'gpan', n:'틀·팬 (제누와즈·쉬폰·무스링·타르트)', s:'틀 25종 · 수입 vs 국산 비교 · 구매처', cats:['pan'], ic:'🍳' },
     { k:'goven', n:'오븐·오븐 도구', s:'우녹스·에카·우성·EGS·LK 비교 · 오븐 도구 4', cats:['oven'], ic:'🔥' },
     { k:'g3', n:'재료학 & 전재료 DB', s:'재료 이론 14 · 품목 260 · g당 단가', cats:['ingredient','material'], ic:'📦' },
-    { k:'g4', n:'브랜드 비교 & 장비', s:'재료·오븐·믹서·카페 27표 · 장비 5', cats:['brand','equip'], ic:'🏷️' },
+    { k:'g4', n:'브랜드 비교 & 장비', s:'재료·오븐·믹서·카페·냉장고 29표 · 장비 5', cats:['brand','equip'], ic:'🏷️' },
     { k:'g5', n:'트러블슈팅 & 실패·R&D', s:'원인·보완·대체·레시피 설계 17항목', cats:['trouble'], ic:'🧪' },
     { k:'g6', n:'레시피 사전', s:'클래식·기본 레시피 · 만드는 방법·편집·사진', cats:['recipe'], ic:'📖' },
     { k:'g7', n:'카페 음료', s:'레시피 21 · 음료 원가 계산', cats:['cafe'], ic:'☕' },
@@ -13711,339 +14151,348 @@ DB.push({
 
   /* =========================================================
      6.5) 신메뉴 R&D 개발 계산기
+     — 제과/제빵 구분 · 제품별 표준 배합 프리셋(g + %) ·
+       g 입력 ↔ 베이커스% 양방향 · 목표 총량/개수 자동 스케일 · 진단
      ========================================================= */
-  var rdTypeId = 'pound';
-  var rdPct = {};
-  var rdBase = 'anglaise';
-  var RD_MOUSE_BASES = {
-    anglaise:  { n:'앙글레즈', ing:'생크림', pct:{ flour:32, liquid:60, sugar:6.4, gelatin:1.6 } },
-    puree:     { n:'과일 퓨레', ing:'망고퓨레', pct:{ flour:30, liquid:62, sugar:6.2, gelatin:1.8 } },
-    chocolate: { n:'초콜릿', ing:'다크커버춰', pct:{ flour:33, liquid:61, sugar:4.6, gelatin:1.4 } }
-  };
+  var rdPart = 'p';
+  var rdPr = null;
+  var rdRows = [];
+  var rdBound = false;
 
-  function rdDef() {
-    return RD_TYPES.filter(function (t) { return t.id === rdTypeId; })[0] || RD_TYPES[0];
+  function rdPresetList(part) {
+    return RD_PRESETS.filter(function (p) { return p.part === part; });
   }
-  function rdLabels(t) {
-    if (t.id === 'ganache') return { flour:'초콜릿', fat:'버터', sugar:'설탕', egg:'', liquid:'생크림', salt:'' };
-    if (t.id === 'bread') return { flour:'분말', fat:'유지', sugar:'설탕', egg:'계란', liquid:'액체(물)', salt:'소금' };
-    if (t.id === 'mousse') return { flour:'무스 베이스', fat:'', sugar:'설탕·머랭', egg:'', liquid:'휘핑 생크림', salt:'', gelatin:'젤라틴' };
-    return { flour:'분말', fat:'유지', sugar:'설탕', egg:'계란', liquid:'액체', salt:'' };
+  function rdBaseNames() { return (rdPr && rdPr.base) || []; }
+  function rdIsBase(n) { return rdBaseNames().indexOf(n) >= 0; }
+  function rdBaseG() {
+    var s = 0;
+    rdRows.forEach(function (r) { if (rdIsBase(r.n)) s += r.g; });
+    return s;
   }
-  function rdGroup(t) {
-    if (t.id === 'bread') return 'bread';
-    if (t.id === 'ganache') return 'ganache';
-    if (t.id === 'mousse') return 'mousse';
-    return 'pastry';
+  function rdTotalG() {
+    var s = 0; rdRows.forEach(function (r) { s += r.g; }); return s;
   }
-  /* 유형별로 실제 쓰는 성분 키만 (무스는 젤라틴 포함, 계란·유지 제외) */
-  function rdKeys(t) {
-    if (t.id === 'mousse') return ['flour', 'sugar', 'liquid', 'gelatin'];
-    var keys = ['flour', 'fat', 'sugar', 'egg', 'liquid'];
-    if (t.id === 'bread') keys.push('salt');
-    if (t.id === 'ganache') keys = keys.filter(function (k) { return k !== 'egg'; });
-    return keys;
+  function rdPct(r, baseG) { return baseG > 0 ? r.g / baseG * 100 : 0; }
+
+  function rdBuildProd() {
+    var box = $('#rdProd');
+    if (!box) return;
+    box.innerHTML = rdPresetList(rdPart).map(function (p) {
+      return '<button type="button" class="rdProdBtn' + (rdPr && rdPr.id === p.id ? ' on' : '') +
+        '" data-rdpr="' + p.id + '">' + esc(p.n) + '</button>';
+    }).join('');
   }
-  function rdIng(k, t) {
-    if (t.id === 'mousse' && k === 'flour') {
-      var bs = RD_MOUSE_BASES[rdBase] || RD_MOUSE_BASES.anglaise;
-      return bs.ing;
+
+  function rdRowHTML(r, i, baseG) {
+    var pc = rdPct(r, baseG), isB = rdIsBase(r.n);
+    var rg = r.r ? ('권장 ' + f(r.r[0], 1) + '~' + f(r.r[1], 1) + '%') : '권장 범위 없음';
+    return '<div class="rdItem" data-i="' + i + '">' +
+      '<div class="rdNm"><input class="rdName" type="text" value="' + esc(r.n) + '" aria-label="재료명" autocomplete="off" spellcheck="false">' +
+      '<i class="' + (isB ? 'rdBaseTag' : '') + '">' + (isB ? '기준 · ' : '') + rg + '</i></div>' +
+      '<input class="rdPctIn" type="number" inputmode="decimal" min="0" step="0.5" value="' + f(pc, 1) + '"' +
+      (isB ? ' readonly aria-label="기준 재료 %"' : ' aria-label="베이커스 %"') + '>' +
+      '<input class="rdGIn" type="number" inputmode="decimal" min="0" step="1" value="' + f(r.g, 1) + '" aria-label="g">' +
+      '<button type="button" class="rdDel" data-rddel="' + i + '" aria-label="이 재료 빼기"' + (isB ? ' hidden' : '') + '>×</button></div>';
+  }
+
+  function rdRenderRows() {
+    var baseG = rdBaseG();
+    $('#rdRows').innerHTML = rdRows.map(function (r, i) { return rdRowHTML(r, i, baseG); }).join('');
+  }
+
+  /* 화면 입력값을 상태에 맞춰 갱신 (편집 중인 칸은 건드리지 않는다) */
+  function rdSyncInputs(skip) {
+    var baseG = rdBaseG(), total = rdTotalG();
+    $$('#rdRows .rdItem').forEach(function (it, i) {
+      var r = rdRows[i]; if (!r) return;
+      var pEl = it.querySelector('.rdPctIn'), gEl = it.querySelector('.rdGIn');
+      var nameEl = it.querySelector('.rdName'), rgEl = it.querySelector('i');
+      if (pEl && document.activeElement !== pEl) pEl.value = f(rdPct(r, baseG), 1);
+      if (gEl && document.activeElement !== gEl) gEl.value = f(r.g, 1);
+      if (nameEl && document.activeElement !== nameEl && nameEl.value !== r.n) nameEl.value = r.n;
+      if (rgEl) {
+        var isB = rdIsBase(r.n);
+        rgEl.className = isB ? 'rdBaseTag' : '';
+        rgEl.textContent = (isB ? '기준 · ' : '') + (r.r ? '권장 ' + f(r.r[0], 1) + '~' + f(r.r[1], 1) + '%' : '권장 범위 없음');
+      }
+      var del = it.querySelector('.rdDel');
+      if (del) del.hidden = rdIsBase(r.n);
+    });
+    var bEl = $('#rdBase'), tEl = $('#rdTotal');
+    if (bEl && document.activeElement !== bEl) bEl.value = Math.round(baseG * 10) / 10;
+    if (tEl && document.activeElement !== tEl) tEl.value = Math.round(total);
+    if (skip !== 'total') { /* nothing */ }
+  }
+
+  function rdScaleRows(target) {
+    var total = rdTotalG();
+    if (!(target > 0) || !(total > 0)) return;
+    var fac = target / total;
+    rdRows.forEach(function (r) { r.g = Math.round(r.g * fac * 10) / 10; });
+  }
+
+  function rdSetG(i, val) {
+    var r = rdRows[i];
+    if (!r) return;
+    if (rdIsBase(r.n) && r.g > 0 && val > 0) {
+      /* 기준 재료 g을 바꾸면 %를 유지한 채 전 재료를 같은 배율로 */
+      var fac = val / r.g;
+      rdRows.forEach(function (x) { x.g = Math.round(x.g * fac * 10) / 10; });
+      r.g = val;
+    } else {
+      r.g = Math.max(0, val);
     }
-    var g = rdGroup(t), m = RD_ING[k] || {};
-    return m[g] || m.pastry || '';
-  }
-  function rdSetType(id) {
-    rdTypeId = id;
-    var t = rdDef();
-    rdPct = { flour:t.flour, fat:t.fat, sugar:t.sugar, egg:t.egg, liquid:t.liquid, salt:t.salt || 0, gelatin:t.gelatin || 0 };
-    if (id === 'mousse' && !RD_MOUSE_BASES[rdBase]) rdBase = 'anglaise';
-    $$('#rdTypes .typeBtn').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-rdtype') === id); });
-    var baseRow = $('#rdBaseRow');
-    if (baseRow) baseRow.hidden = (id !== 'mousse');
-    rdBaseChips();
-    var tl = document.getElementById('rdTotalLabel'), pl = document.getElementById('rdPieceLabel');
-    if (tl) tl.textContent = (id === 'mousse') ? '목표 무스 중량 (g)' : '목표 총 배합 중량 (g)';
-    if (pl) pl.textContent = (id === 'mousse') ? '링 1개 중량 (g)' : '개당 중량 (g)';
-    rdRenderSliders();
-  }
-  function rdBaseChips() {
-    var row = $('#rdBaseRow');
-    if (!row) return;
-    row.innerHTML = '<span class="rdBaseLab">무스 베이스</span>' + Object.keys(RD_MOUSE_BASES).map(function (k) {
-      return '<button type="button" class="basisBtn' + (rdBase === k ? ' on' : '') + '" data-rdbase="' + k + '">' +
-        esc(RD_MOUSE_BASES[k].n) + '</button>';
-    }).join('');
-  }
-  function rdSetBase(k) {
-    var bs = RD_MOUSE_BASES[k];
-    if (!bs) return;
-    rdBase = k;
-    Object.keys(bs.pct).forEach(function (key) { rdPct[key] = bs.pct[key]; });
-    rdBaseChips();
-    rdRenderSliders();
-  }
-  function rdRenderSliders() {
-    var t = rdDef(), lab = rdLabels(t);
-    var keys = rdKeys(t);
-    var max = { flour:100, fat:70, sugar:100, egg:100, liquid:120, salt:5, gelatin:3 };
-    if (t.id === 'mousse') { max.flour = 60; max.sugar = 30; max.liquid = 80; }
-    $('#rdSliders').innerHTML = keys.map(function (k) {
-      return '<div class="rdRow"><label>' + lab[k] + '</label>' +
-        '<input type="range" data-k="' + k + '" min="0" max="' + max[k] + '" step="' + (k === 'gelatin' ? '0.1' : '1') + '" value="' + (rdPct[k] || 0) + '">' +
-        '<input class="rdNum" type="number" data-k="' + k + '" min="0" max="' + max[k] + '" step="' + (k === 'gelatin' ? '0.1' : '0.5') + '" value="' + (rdPct[k] || 0) + '">' +
-        '<span>%</span></div>';
-    }).join('');
+    rdSyncInputs('g');
     rdCompute();
   }
-  function rdReadPct() {
-    $$('#rdSliders .rdRow').forEach(function (row) {
-      var k = row.querySelector('[data-k]').getAttribute('data-k');
-      var v = row.querySelector('.rdNum').value;
-      rdPct[k] = Math.max(0, parseFloat(v) || 0);
+  function rdSetPct(i, pc) {
+    var r = rdRows[i], baseG = rdBaseG();
+    if (!r) return;
+    r.g = Math.round(baseG * pc / 100 * 10) / 10;
+    rdSyncInputs('pct');
+    rdCompute();
+  }
+
+  function rdLoad(id) {
+    var p = RD_PRESETS.filter(function (x) { return x.id === id; })[0];
+    if (!p) return;
+    rdPr = p;
+    rdPart = p.part;
+    rdRows = p.rows.map(function (r) {
+      return { n: r.n, k: r.k, g: r.g, w: (r.w || 0), r: r.r ? r.r.slice() : null };
     });
+    var baseG = rdBaseG(), total = rdTotalG();
+    $$('#rdPart .rdPartBtn').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-rdpart') === rdPart); });
+    var tl = $('#rdTotalLabel'), pl = $('#rdPieceLabel');
+    if (tl) tl.textContent = '목표 총 배합 중량 (g)';
+    if (pl) pl.textContent = '개당 중량 (g)';
+    if ($('#rdTotal')) $('#rdTotal').value = Math.round(total);
+    if ($('#rdBase')) $('#rdBase').value = Math.round(baseG * 10) / 10;
+    if ($('#rdCount') && document.activeElement !== $('#rdCount')) $('#rdCount').value = '';
+    if ($('#rdPrNote')) {
+      $('#rdPrNote').innerHTML = '<b>' + esc(p.n) + '</b> · ' + esc(p.batch) +
+        ' · 기준 <b>' + esc(p.base.join(' + ')) + ' 100</b> · ' + esc(p.bake) +
+        '<br>' + esc(p.note);
+    }
+    rdBuildProd();
+    rdRenderRows();
+    rdCompute();
+  }
+
+  function rdStat() {
+    var baseG = rdBaseG(), total = 0, water = 0, sugar = 0, fat = 0, egg = 0;
+    rdRows.forEach(function (r) {
+      total += r.g;
+      if (r.k === 'liquid') water += r.g * (r.w || 0) / 100;
+      if (r.k === 'sugar') sugar += r.g;
+      if (r.k === 'fat') fat += r.g;
+      if (r.k === 'egg') egg += r.g;
+    });
+    return { baseG: baseG, total: total, water: water, sugar: sugar, fat: fat, egg: egg };
   }
 
   function rdCompute() {
-    rdReadPct();
-    var t = rdDef(), lab = rdLabels(t);
+    if (!rdPr) return;
+    var st = rdStat(), baseG = st.baseG, total = st.total;
     var count = Math.max(0, val($('#rdCount')));
     var piece = Math.max(0, val($('#rdPiece')));
-    var target = (count > 0 && piece > 0) ? count * piece : Math.max(0, val($('#rdTotal')));
-    var keys = rdKeys(t);
-    var sum = keys.reduce(function (s2, k) { return s2 + (rdPct[k] || 0); }, 0);
-    var grams = {};
-    var flourG = 0, totalG = 0;
-    if (t.baker) {
-      var others = sum - (rdPct.flour || 100);
-      flourG = target / (1 + others / 100);
-      keys.forEach(function (k) {
-        grams[k] = k === 'flour' ? flourG : flourG * (rdPct[k] || 0) / 100;
-      });
-      var s3 = 0; keys.forEach(function (k) { s3 += grams[k]; });
-      totalG = s3;
-    } else {
-      keys.forEach(function (k) { grams[k] = target * (rdPct[k] || 0) / 100; });
-      var used = 0; keys.forEach(function (k) { used += grams[k]; });
-      grams.__extra = Math.max(0, target - used);
-      var s4 = 0; keys.forEach(function (k) { s4 += grams[k]; });
-      totalG = s4 + grams.__extra;
-    }
-    var cost = 0, unpriced = 0;
-    var rows = [];
-    keys.forEach(function (k) {
-      var name = rdIng(k, t), g = grams[k] || 0;
-      var m = MATMAP[name], u = matUnit(m);
-      var c = u ? u * g : 0;
-      if (!u && g > 0 && name !== '물') unpriced++;
+    var target = (count > 0 && piece > 0) ? count * piece : total;
+    var cost = 0, unpriced = 0, rows = [];
+
+    rdRows.forEach(function (r) {
+      var m = MATMAP[r.n], u = matUnit(m);
+      var c = u ? u * r.g : 0;
+      if (!u && r.g > 0 && r.n !== '물') unpriced++;
       cost += c;
-      rows.push({ k:k, label:lab[k], name:name, pct:rdPct[k] || 0, g:g, cost:c });
+      rows.push({ n: r.n, k: r.k, g: r.g, pct: rdPct(r, baseG), cost: c, rg: r.r, w: r.w || 0 });
     });
-    var extraName = rdIng('extra', t), extraC = 0;
-    if (grams.__extra > 0) {
-      var em = MATMAP[extraName], eu = matUnit(em);
-      extraC = eu ? eu * grams.__extra : 0;
-      cost += extraC;
-      rows.push({ k:'extra', label:'기타', name:extraName + ' 등', pct:Math.max(0, 100 - sum), g:grams.__extra, cost:extraC });
-    }
 
     var out = '';
-    out += '<div class="bigNum"><strong>' + gn(totalG) + 'g</strong><span>총 배합</span></div>';
-    out += '<div class="noteLine">' + esc(t.n) + ' · ' +
-      (count > 0 && piece > 0 ? count + '개 × ' + gn(piece) + 'g = ' + gn(target) + 'g 기준' : '목표 ' + gn(target) + 'g 기준') +
-      ' · 예상 원재료비 <b>' + won(cost) + '원</b>' +
-      (totalG > 0 ? ' (100g당 ' + won(cost / totalG * 100) + '원)' : '') +
+    out += '<div class="bigNum"><strong>' + gn(total) + 'g</strong><span>총 배합</span>' +
+      '<em>' + esc(rdPr.n) + (count > 0 && piece > 0 ? ' · ' + count + '개 × ' + gn(piece) + 'g' : '') + '</em></div>';
+    out += '<div class="noteLine">기준 <b>' + esc(rdPr.base.join(' + ')) + '</b> ' + gn(baseG) + 'g · ' +
+      '베이커스% 합 ' + f(rows.reduce(function (s, x) { return s + x.pct; }, 0), 1) + '% · ' +
+      '예상 원재료비 <b>' + won(cost) + '원</b>' +
+      (total > 0 ? ' (100g당 ' + won(cost / total * 100) + '원)' : '') +
       (unpriced ? ' · 단가 미확인 ' + unpriced + '개' : '') + '</div>';
-    out += '<table class="tight"><tr><th>성분</th><th>' + (t.baker ? '베이커스%' : '비율') + '</th><th>g</th><th>원가</th></tr>';
+
+    /* 지표 */
+    var pctOf = function (g2) { return baseG > 0 ? g2 / baseG * 100 : 0; };
+    var kpi = [
+      ['수분율', pctOf(st.water), 'water'],
+      ['당분율', pctOf(st.sugar), 'sugar'],
+      ['유지율', pctOf(st.fat), 'fat'],
+      ['계란 비율', pctOf(st.egg), 'egg']
+    ];
+    out += '<div class="rdKpi">';
+    kpi.forEach(function (k) {
+      var rg = (rdPr.m && rdPr.m[k[2]]) || null;
+      var cls = '';
+      if (rg) {
+        if (k[1] < rg[0] * 0.95) cls = ' lo';
+        else if (k[1] > rg[1] * 1.05) cls = ' hi';
+      }
+      out += '<div class="' + cls + '"><span>' + k[0] + '</span><b>' + f(k[1], 1) + '%</b>' +
+        (rg ? '<i>권장 ' + f(rg[0], 0) + '~' + f(rg[1], 0) + '%</i>' : '<i>기준 없음</i>') + '</div>';
+    });
+    out += '</div>';
+
+    /* 재료 표 */
+    out += '<table class="tight rdTbl"><tr><th>재료</th><th>베이커스%</th><th>g</th><th>원가</th></tr>';
     rows.forEach(function (r) {
-      out += '<tr><td>' + esc(r.label) + ' <span style="font-size:9.5px;color:var(--muted)">' + esc(r.name) + '</span></td>' +
+      var over = r.rg && (r.pct < r.rg[0] * 0.95 || r.pct > r.rg[1] * 1.05);
+      out += '<tr' + (over ? ' class="rdOut"' : '') + '><td>' + esc(r.n) +
+        '<i class="rdRg">' + (r.rg ? f(r.rg[0], 1) + '~' + f(r.rg[1], 1) + '%' : '—') + '</i></td>' +
         '<td>' + f(r.pct, 1) + '%</td><td>' + gn(r.g) + '</td><td>' + won(r.cost) + '원</td></tr>';
     });
-    out += '<tr class="tot"><td>합계</td><td>' + f(sum, 1) + '%</td><td>' + gn(totalG) + '</td><td>' + won(cost) + '원</td></tr></table>';
+    out += '<tr class="tot"><td>합계</td><td>' + f(rows.reduce(function (s, x) { return s + x.pct; }, 0), 1) + '%</td>' +
+      '<td>' + gn(total) + '</td><td>' + won(cost) + '원</td></tr></table>';
 
-    var diag = rdDiagnose(t, rows, sum, totalG, grams);
+    /* 진단 */
+    var diag = [];
+    var m = rdPr.m || {};
+    function metric(k, label, cur, unit) {
+      var rg = m[k]; if (!rg) return;
+      if (cur < rg[0] * 0.95) diag.push({ level: 'warn', text: label + ' ' + f(cur, 1) + unit + ' — 권장 ' + f(rg[0], 0) + '~' + f(rg[1], 0) + unit + '보다 낮습니다. ' + (k === 'water' ? '액체를 조금 늘리세요.' : k === 'sugar' ? '설탕을 늘리면 보습·갈변이 좋아집니다.' : k === 'fat' ? '유지를 늘리면 결이 부드러워집니다.' : '계란을 늘리면 구조가 잡힙니다.') });
+      else if (cur > rg[1] * 1.05) diag.push({ level: 'warn', text: label + ' ' + f(cur, 1) + unit + ' — 권장 ' + f(rg[0], 0) + '~' + f(rg[1], 0) + unit + '보다 높습니다. ' + (k === 'water' ? '액체를 줄이거나 가루를 2~3% 늘리세요.' : k === 'sugar' ? '설탕을 줄이면 단맛·갈변이 잡힙니다.' : k === 'fat' ? '유지를 줄이면 무거움·기름 분리가 줄어듭니다.' : '계란을 줄이면 잡내·질겨짐이 줄어듭니다.') });
+      else diag.push({ level: 'ok', text: label + ' ' + f(cur, 1) + unit + ' — 권장 범위(' + f(rg[0], 0) + '~' + f(rg[1], 0) + unit + ') 안입니다.' });
+    }
+    metric('water', '수분율(액체 수분/기준)', pctOf(st.water), '%');
+    metric('sugar', '당분율', pctOf(st.sugar), '%');
+    metric('fat', '유지율', pctOf(st.fat), '%');
+    metric('egg', '계란 비율', pctOf(st.egg), '%');
+    rows.forEach(function (r) {
+      if (!r.rg || r.g <= 0) return;
+      if (r.pct < r.rg[0] * 0.95) diag.push({ level: 'warn', text: r.n + ' ' + f(r.pct, 1) + '% — 권장 ' + f(r.rg[0], 1) + '~' + f(r.rg[1], 1) + '%보다 적습니다.' });
+      else if (r.pct > r.rg[1] * 1.05) diag.push({ level: 'warn', text: r.n + ' ' + f(r.pct, 1) + '% — 권장 ' + f(r.rg[0], 1) + '~' + f(r.rg[1], 1) + '%보다 많습니다.' });
+    });
+    var warns = diag.filter(function (d) { return d.level === 'warn'; });
+    if (!warns.length) diag.unshift({ level: 'ok', text: '모든 재료와 지표가 권장 범위 안입니다. 시험 배합 후 비중·색·식감을 기록하세요.' });
     out += '<div class="diag">' + diag.map(function (d) {
-      return '<div class="' + d.level + '">' + (d.level === 'ok' ? '✓ ' : '⚠ ') + d.text + '</div>';
+      return '<div class="' + d.level + '">' + (d.level === 'ok' ? '✓ ' : '⚠ ') + esc(d.text) + '</div>';
     }).join('') + '</div>';
-    out += '<div class="noteLine">비율은 ' + (t.baker ? '밀가루=100 기준 베이커스%' : '총 배합 중량 대비 %') +
-      '입니다. 기타는 팽창제·향료·소금 등 남은 비율입니다.</div>';
+
+    /* R&D 포인트 */
+    if (rdPr.points && rdPr.points.length) {
+      out += '<div class="tipBox"><h5>R&D 포인트</h5><ul>' +
+        rdPr.points.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul></div>';
+    }
+    out += '<div class="noteLine">%는 기준 재료(' + esc(rdPr.base.join(' + ')) + ') 100 기준 베이커스%입니다. ' +
+      'g 칸을 고치면 %와 총량이, % 칸을 고치면 g이 바뀝니다. 기준 재료 g을 바꾸면 비율을 유지한 채 전 재료가 함께 늘고 줍니다.</div>';
     $('#rdOut').innerHTML = out;
   }
 
-  function rdDiagnose(t, rows, sum, totalG, grams) {
-    var out = [];
-    var r = t.range || {};
-    var get = function (k) { return rows.filter(function (x) { return x.k === k; })[0]; };
-    var flour = get('flour'), fat = get('fat'), sugar = get('sugar'), egg = get('egg'), liquid = get('liquid');
-    var p = {}; rows.forEach(function (x) { p[x.k] = x.pct; });
-
-    if (t.id === 'ganache') {
-      var ratio = p.flour > 0 ? (p.liquid / p.flour * 100) : 0;
-      var use = ratio < 50 ? '글라사주(코팅)' : (ratio < 75 ? '필링·가나슈' : (ratio < 110 ? '트러플' : '소스·무스 베이스'));
-      out.push({ level:'ok', text:'생크림/초콜릿 비율 ' + f(ratio, 0) + '% → ' + use + '에 적합합니다.' });
-      if (ratio >= 110) out.push({ level:'warn', text:'생크림이 110%를 넘으면 무스·소스에 가깝습니다. 무스는 젤라틴·한천을 추가하세요.' });
-      if (p.sugar > 20) out.push({ level:'warn', text:'설탕이 20%를 넘으면 단맛이 강하고 결정이 생길 수 있습니다.' });
-      return out;
-    }
-
-    if (t.id === 'mousse') {
-      var gelRow = get('gelatin');
-      var gel = p.gelatin || 0;
-      if (gel < 1.2) out.push({ level:'bad', text:'젤라틴 ' + f(gel, 2) + '% — 1.2% 미만이면 탈형할 때 무너지거나 층이 흐릅니다. 1.4~1.6%로 올리세요.' });
-      else if (gel > 1.8) out.push({ level:'warn', text:'젤라틴 ' + f(gel, 2) + '% — 1.8%를 넘으면 고무 같은 식감이 됩니다. 1.2~1.8% 안으로 낮추세요.' });
-      else out.push({ level:'ok', text:'젤라틴 ' + f(gel, 2) + '% — 200블룸 기준 적정 범위(1.2~1.8%)입니다.' });
-      if (gelRow && gelRow.g > 0) {
-        out.push({ level:'ok', text:'젤라틴 ' + gn(gelRow.g) + 'g — 200블룸 시트(약 2g/장)로 ' + f(gelRow.g / 2, 1) + '장. 얼음물 5배에 10분 불린 뒤 물기를 짜고 40°C 이하에서 녹이세요.' });
-      }
-      var cream = p.liquid || 0;
-      if (cream < 58) out.push({ level:'warn', text:'휘핑 생크림 ' + f(cream, 1) + '% — 58% 미만이면 무스가 묵직하고 기포가 적습니다. 60~65%를 권장합니다.' });
-      else if (cream > 75) out.push({ level:'bad', text:'휘핑 생크림 ' + f(cream, 1) + '% — 75%를 넘으면 모양이 잡히지 않고 흐를 수 있습니다. 생크림을 줄이거나 젤라틴을 1.6~1.8%로 올리세요.' });
-      else if (cream > 70) out.push({ level:'warn', text:'휘핑 생크림 ' + f(cream, 1) + '% — 70%를 넘으면 무스가 약해집니다. 젤라틴을 1.6~1.8%로 보강하세요.' });
-      else out.push({ level:'ok', text:'휘핑 생크림 ' + f(cream, 1) + '% — 권장 범위(60~70%)입니다. 생크림은 60~70% 휘핑해 2회 나눠 폴딩하세요.' });
-      if ((p.sugar || 0) > 15) out.push({ level:'warn', text:'설탕·머랭 ' + f(p.sugar, 1) + '% — 15%를 넘으면 단맛이 강하고 조직이 무거워집니다. 머랭은 이탈리안 시럽 118°C로 만드세요.' });
-      else if ((p.sugar || 0) > 0) out.push({ level:'ok', text:'설탕·머랭 ' + f(p.sugar, 1) + '% — 머랭을 넣으면 기포가 가벼워지고 냉동 탈형이 안정적입니다.' });
-      if (rdBase === 'anglaise') out.push({ level:'ok', text:'앙글레즈는 82~85°C까지 익혀 40°C 이하로 식힌 뒤 젤라틴을 섞으세요. 뜨거우면 젤라틴이 약해집니다.' });
-      if (rdBase === 'puree') out.push({ level:'warn', text:'산미·효소 과일(패션프루트·키위·파인애플·무화과·생강·파파야)은 젤라틴을 분해합니다. 퓨레를 85°C에서 5분 가열해 효소를 없앤 뒤 40°C 이하로 식혀 넣으세요.' });
-      if (rdBase === 'chocolate') out.push({ level:'ok', text:'커버춰는 45~50°C에서 유화하고 30~35°C로 식힌 뒤 생크림과 합칩니다. 초콜릿 지방이 젤라틴을 보강합니다.' });
-      if (sum > 100.5 || sum < 95) out.push({ level:'warn', text:'비율 합계 ' + f(sum, 1) + '% — 100%로 맞추면 목표 중량과 계산 g수가 정확히 일치합니다.' });
-      var layers = [['시트(다쿠아즈·조콩드)', 0.18], ['무스', 0.30], ['과일 콩포트·필링', 0.12], ['무스', 0.30], ['글라사주(미루아르)', 0.10]];
-      out.push({ level:'ok', text:'5단 레이어 권장 배분 — ' + layers.map(function (x, i) {
-        return (i + 1) + '층 ' + x[0] + ' ' + f(x[1] * 100, 0) + '%(' + gn(totalG * x[1]) + 'g)';
-      }).join(' · ') });
-      out.push({ level:'ok', text:'무스는 24~26°C에서 링에 채우고, 시트·필링을 넣은 뒤 남은 무스로 덮어 -18°C에서 4시간 이상 굳힙니다.' });
-      return out;
-    }
-
-    if (t.baker) {
-      var hyd = p.flour > 0 ? (p.liquid / p.flour * 100) : 0;
-      if (hyd < 58) out.push({ level:'warn', text:'수분율 ' + f(hyd, 0) + '% — 반죽이 단단합니다. 물 3~5%를 늘리세요.' });
-      else if (hyd > 82) out.push({ level:'bad', text:'수분율 ' + f(hyd, 0) + '% — 반죽이 흐를 수 있습니다. 물 3~5%를 줄이거나 접기로 보완하세요.' });
-      else out.push({ level:'ok', text:'수분율 ' + f(hyd, 0) + '% — 식빵·발효빵의 적정 범위(60~80%)입니다.' });
-      if (p.salt < 1.8) out.push({ level:'warn', text:'소금 ' + f(p.salt, 1) + '% — 1.8~2.2%가 적정입니다. 맛과 글루텐이 약해집니다.' });
-      else if (p.salt > 2.2) out.push({ level:'warn', text:'소금 ' + f(p.salt, 1) + '% — 2.2%를 넘으면 발효가 지연되고 짭니다.' });
-      else out.push({ level:'ok', text:'소금 ' + f(p.salt, 1) + '% — 적정 범위입니다.' });
-      if (p.sugar > 12) out.push({ level:'warn', text:'설탕 12% 초과 — 삼투압으로 발효가 느려집니다. 고당 이스트를 쓰세요.' });
-      if (p.fat > 15) out.push({ level:'warn', text:'유지 ' + f(p.fat, 1) + '% — 15% 초과 시 글루텐 형성 방해·기름 분리 위험이 있습니다. 버터는 후반에 넣으세요.' });
-      return out;
-    }
-
-    if (sum > 100.5) out.push({ level:'bad', text:'비율 합계 ' + f(sum, 1) + '% — 100%를 넘었습니다. 한 성분을 줄이세요.' });
-    else if (sum < 90) out.push({ level:'warn', text:'비율 합계 ' + f(sum, 1) + '% — 기타(팽창제·향료) 비중이 ' + f(100 - sum, 1) + '%로 큽니다.' });
-
-    function rangeMsg(k, label, x, min, max) {
-      if (!x) return;
-      if (x.pct < min - 3) out.push({ level:'warn', text:label + ' ' + f(x.pct, 1) + '% — 기준 ' + min + '~' + max + '%보다 적습니다. ' + (label === '설탕' ? '보습·갈변이 약해집니다. 설탕 3~5%를 늘리세요.' : label === '분말' ? '구조가 약해집니다. 분말 3~5%를 늘리세요.' : '3~5% 보정하세요.') });
-      else if (x.pct > max + 3) out.push({ level:'warn', text:label + ' ' + f(x.pct, 1) + '% — 기준 ' + min + '~' + max + '%보다 많습니다. ' + (label === '유지' ? '퍼짐·기름 분리 위험. 유지 3~5%를 줄이세요.' : label === '액체' ? '반죽이 흐르고 볼륨이 줄 수 있습니다. 액체 3~5%를 줄이세요.' : label === '계란' ? '구조가 약해지고 비린 맛이 날 수 있습니다. 계란 5%를 줄이세요.' : '3~5% 보정하세요.') });
-    }
-    if (r.flour) rangeMsg('flour', '분말', flour, r.flour[0], r.flour[1]);
-    if (r.fat) rangeMsg('fat', '유지', fat, r.fat[0], r.fat[1]);
-    if (r.sugar) rangeMsg('sugar', '설탕', sugar, r.sugar[0], r.sugar[1]);
-    if (r.egg) rangeMsg('egg', '계란', egg, r.egg[0], r.egg[1]);
-    if (r.liquid) rangeMsg('liquid', '액체', liquid, r.liquid[0], r.liquid[1]);
-
-    if (!out.length) out.push({ level:'ok', text:'이 유형의 기준 범위에 들어옵니다. 시험 배합 후 비중·색·식감을 기록하세요.' });
-    return out;
-  }
-
   function rdDataForSave() {
-    var t = rdDef();
+    var st = rdStat();
     var count = Math.max(0, val($('#rdCount')));
     var piece = Math.max(0, val($('#rdPiece')));
-    var target = (count > 0 && piece > 0) ? count * piece : Math.max(0, val($('#rdTotal')));
-    var keys = rdKeys(t);
-    var sum = 0;
-    keys.forEach(function (k) { sum += rdPct[k] || 0; });
-    var rows = [];
-    if (t.baker) {
-      var others = sum - (rdPct.flour || 100);
-      var flourG = target / (1 + others / 100);
-      keys.forEach(function (k) {
-        var g = k === 'flour' ? flourG : flourG * (rdPct[k] || 0) / 100;
-        if (g > 0) rows.push([rdIng(k, t), Math.round(g * 10) / 10, '']);
+    var rows = rdRows.filter(function (r) { return r.g > 0; })
+      .map(function (r) {
+        var m = MATMAP[r.n], u = matUnit(m);
+        return [r.n, Math.round(r.g * 10) / 10, u ? Math.round(u * r.g) : ''];
       });
-    } else {
-      var used = 0;
-      keys.forEach(function (k) {
-        var g = target * (rdPct[k] || 0) / 100;
-        used += g;
-        if (g > 0) rows.push([rdIng(k, t), Math.round(g * 10) / 10, '']);
-      });
-      var extra = Math.max(0, target - used);
-      if (extra > 0.5) rows.push([rdIng('extra', t) + ' 등', Math.round(extra * 10) / 10, '기타(팽창제·향료)']);
-    }
-    var bakeMap = {
-      pound: '170°C 45분', sponge: '170°C 25~30분', cookie: '170°C 12~15분',
-      scone: '180°C 15~18분', ganache: '85°C까지 가열 후 냉장 2시간', bread: '190°C 35분(스팀 선택)',
-      mousse: '냉동 -18°C 4시간 이상 굳힌 뒤 탈형하고 냉장 해동'
-    };
-    var shapeMap = {
-      pound: '팬에 팬닝하고 표면을 고르게 편 뒤 2~3회 내려 기포를 정리합니다.',
-      sponge: '팬에 반죽을 부어 고르게 펴고, 팬을 2회 내려 큰 기포를 정리합니다.',
-      cookie: '짜기백이나 스쿠프로 일정 크기로 성형하고 냉장 30분 휴지합니다.',
-      scone: '반죽을 2~3회 접어 3cm 두께로 밀고 원형으로 cut합니다.',
-      ganache: '초콜릿에 데운 생크림을 부어 유화하고, 사용 용도에 맞춰 점도를 조절합니다.',
-      bread: '분할·둥글리기 후 벤치타임, 성형해 팬에 넣고 2차 발효합니다.',
-      mousse: '링에 무스를 1/3 채우고 시트·과일 필링을 층으로 넣은 뒤 남은 무스를 채워 평평하게 정리합니다.'
-    };
-    var prepMap = {
-      mousse: '젤라틴을 얼음물 5배에 10분 불리고, 링·시트·필링을 미리 준비합니다. 생크림은 60~70%로 휘핑해 냉장합니다.'
-    };
-    var mixMap = {
-      mousse: '베이스를 40°C 이하로 맞춘 뒤 물기를 짠 젤라틴을 녹여 넣고, 25°C에서 휘핑 생크림을 2회 나눠 폴딩합니다.'
-    };
-    var finishMap = {
-      mousse: '미러 글라사주를 30~35°C에서 부어 마무리하고 냉장 보관합니다. 해동은 냉장 3~4시간.'
-    };
+    var isBread = (rdPr && rdPr.part === 'b');
     return {
-      id: 'u' + Date.now().toString(36), n: t.n + ' R&D 배합', c: 'R&D', unit: count > 0 ? count + '개' : '1배합',
-      batch: count > 0 ? count : 1, note: 'R&D 계산기 저장 · 목표 ' + Math.round(target) + 'g',
-      parts: [{ p: '배합', base: [rdIng('flour', t)], note: '', rows: rows }],
+      id: 'u' + Date.now().toString(36), n: (rdPr ? rdPr.n : 'R&D') + ' 배합', c: 'R&D',
+      unit: count > 0 ? count + '개' : '1배합', batch: count > 0 ? count : 1,
+      note: 'R&D 계산기 저장 · 기준 ' + (rdPr ? rdPr.base.join('+') : '') + ' ' + Math.round(st.baseG) + 'g · 총 ' + Math.round(st.total) + 'g',
+      parts: [{ p: '배합', base: rdPr ? rdPr.base.slice() : [], note: '', rows: rows }],
       steps: {
-        prep: prepMap[t.id] || '재료를 모두 계량하고 냉장 재료는 30분 전에 꺼내 상온으로 맞춥니다. 팬·틀을 준비하고 오븐을 예열합니다.',
-        mix: mixMap[t.id] || '분말·유지·설탕·계란·액체 순서로 배합합니다. (R&D 계산기 비율 기준)',
-        shape: shapeMap[t.id],
-        bake: bakeMap[t.id],
-        finish: finishMap[t.id] || '완전히 식힌 뒤 마무리하고 밀봉 보관합니다. 당일·익일 식감을 기록하세요.'
+        prep: isBread
+          ? '재료를 계량하고 물 온도를 계산합니다(반죽 온도 26~27℃ 목표). 이스트는 소금과 직접 닿지 않게 둡니다.'
+          : '재료를 계량하고 냉장 재료는 30분 전에 꺼내 상온으로 맞춥니다. 팬·틀 준비와 오븐 예열을 먼저 합니다.',
+        mix: isBread
+          ? '가루·물·이스트를 저속 3분 → 소금·설탕·유지 투입 → 중속 6~10분, 글루텐 막이 얇게 늘어날 때까지.'
+          : '분말·유지·설탕·계란·액체 순서로 배합합니다. (R&D 계산기 프리셋 비율 기준)',
+        shape: isBread ? '1차 발효 후 분할·둥글리기 → 벤치타임 15~20분 → 성형 후 팬에 넣고 2차 발효.' : '반죽을 팬에 팬닝하고 표면을 고르게 편 뒤 2~3회 내려 기포를 정리합니다.',
+        bake: rdPr ? rdPr.bake : '170℃ 30분 안팎',
+        finish: isBread ? '구운 뒤 즉시 팬에서 빼고 식힘망에 올려 식힙니다. 식은 뒤 2시간 후 썹니다.' : '완전히 식힌 뒤 마무리하고 밀봉 보관합니다. 당일·익일 식감을 기록하세요.'
       },
-      memo: 'R&D 계산기에서 저장 — ' + t.n + ' · ' + rows.map(function (x) { return x[0] + ' ' + x[1] + 'g'; }).join(', '),
+      memo: 'R&D 계산기 — ' + (rdPr ? rdPr.n + ' · ' + rdPr.batch + ' · ' : '') +
+        '기준 ' + (rdPr ? rdPr.base.join('+') : '') + ' ' + Math.round(st.baseG) + 'g',
       images: [], custom: true, en: ''
     };
   }
 
-  function buildRnd() {
-    $('#rdTypes').innerHTML = RD_TYPES.map(function (t) {
-      return '<button type="button" class="typeBtn" data-rdtype="' + t.id + '">' + esc(t.n) + '</button>';
-    }).join('');
-    rdSetType('pound');
+  function rdBindOnce() {
+    if (rdBound) return;
+    rdBound = true;
+
+    $('#rdPart').addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-rdpart]');
+      if (!b) return;
+      rdPart = b.getAttribute('data-rdpart');
+      $$('#rdPart .rdPartBtn').forEach(function (x) { x.classList.toggle('on', x === b); });
+      var list = rdPresetList(rdPart);
+      rdBuildProd();
+      if (list.length) rdLoad(list[0].id);
+    });
+    $('#rdProd').addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-rdpr]');
+      if (b) rdLoad(b.getAttribute('data-rdpr'));
+    });
+    $('#rdRows').addEventListener('input', function (ev) {
+      var it = ev.target.closest('.rdItem');
+      if (!it) return;
+      var i = parseInt(it.getAttribute('data-i'), 10);
+      if (ev.target.classList.contains('rdGIn')) {
+        rdSetG(i, Math.max(0, parseFloat(ev.target.value) || 0));
+      } else if (ev.target.classList.contains('rdPctIn')) {
+        if (rdRows[i] && rdIsBase(rdRows[i].n)) return;
+        rdSetPct(i, Math.max(0, parseFloat(ev.target.value) || 0));
+      } else if (ev.target.classList.contains('rdName')) {
+        if (rdRows[i]) { rdRows[i].n = ev.target.value; rdCompute(); }
+      }
+    });
+    $('#rdRows').addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-rddel]');
+      if (!b) return;
+      var i = parseInt(b.getAttribute('data-rddel'), 10);
+      if (!rdRows[i] || rdIsBase(rdRows[i].n)) return;
+      rdRows.splice(i, 1);
+      rdRenderRows(); rdCompute();
+    });
+    $('#rdAddRow').addEventListener('click', function () {
+      rdRows.push({ n: '새 재료', k: 'other', g: 0, w: 0, r: null });
+      rdRenderRows();
+      var list = $$('#rdRows .rdName');
+      if (list.length) { list[list.length - 1].focus(); list[list.length - 1].select(); }
+      rdCompute();
+    });
+    function rdFitTo(target) {
+      if (!(target > 0)) return;
+      rdScaleRows(target);
+      rdSyncInputs(); rdCompute();
+    }
+    $('#rdTotal').addEventListener('change', function () {
+      rdFitTo(Math.max(0, parseFloat($('#rdTotal').value) || 0));
+    });
+    ['#rdCount', '#rdPiece'].forEach(function (sel) {
+      $(sel).addEventListener('change', function () {
+        var c = Math.max(0, val($('#rdCount'))), p = Math.max(0, val($('#rdPiece')));
+        if (c > 0 && p > 0) rdFitTo(c * p);
+      });
+    });
+    $('#rdBase').addEventListener('change', function () {
+      var want = Math.max(0, parseFloat($('#rdBase').value) || 0), cur = rdBaseG();
+      if (want > 0 && cur > 0) rdFitTo(want * rdTotalG() / cur);
+    });
+    $('#rdSave').addEventListener('click', function () {
+      var d = rdDataForSave();
+      if (!persistRecipe(d)) {
+        $('#rdOut').insertAdjacentHTML('afterbegin', '<div class="warn">저장 공간이 부족합니다. 사진·레시피를 정리한 뒤 다시 시도하세요.</div>');
+        return;
+      }
+      window.openRecipeEditor(d.id);
+    });
   }
-  $('#rdBaseRow').addEventListener('click', function (ev) {
-    var b = ev.target.closest('[data-rdbase]');
-    if (b) rdSetBase(b.getAttribute('data-rdbase'));
-  });
-  $('#rdTypes').addEventListener('click', function (ev) {
-    var b = ev.target.closest('[data-rdtype]');
-    if (b) rdSetType(b.getAttribute('data-rdtype'));
-  });
-  $('#rdSliders').addEventListener('input', function (ev) {
-    var k = ev.target.getAttribute('data-k');
-    if (!k) return;
-    if (ev.target.type === 'range') {
-      var num = $('#rdSliders .rdNum[data-k="' + k + '"]');
-      if (num) num.value = ev.target.value;
-    } else {
-      var rng = $('#rdSliders input[type="range"][data-k="' + k + '"]');
-      if (rng) rng.value = ev.target.value;
-    }
-    rdCompute();
-  });
-  ['#rdTotal', '#rdCount', '#rdPiece'].forEach(function (s2) { $(s2).addEventListener('input', rdCompute); });
-  $('#rdSave').addEventListener('click', function () {
-    var d = rdDataForSave();
-    if (!persistRecipe(d)) {
-      $('#rdOut').insertAdjacentHTML('afterbegin', '<div class="warn">저장 공간이 부족합니다. 사진·레시피를 정리한 뒤 다시 시도하세요.</div>');
-      return;
-    }
-    window.openRecipeEditor(d.id);
-  });
+
+  function buildRnd() {
+    rdBindOnce();
+    rdBuildProd();
+    var list = rdPresetList(rdPart);
+    rdLoad((rdPr && rdPr.part === rdPart) ? rdPr.id : (list[0] && list[0].id));
+  }
 
   /* =========================================================
      7) 레시피 편집 · 사진 · 새 레시피 · 백업
