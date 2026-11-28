@@ -10399,12 +10399,6 @@ DB.push({
     for (var i = 0; i < segBtns.length; i++) {
       segBtns[i].classList.toggle('on', segBtns[i].getAttribute('data-view') === (tocMode ? 'toc' : 'card'));
     }
-    /* 화면이 다시 그려질 때마다 현재 위치를 알린다(부가 패널이 붙는 지점) */
-    try {
-      document.dispatchEvent(new CustomEvent('bakery:render', {
-        detail: { cat: state.cat, myg: state.myg, q: state.q }
-      }));
-    } catch (e) {}
   }
 
   /* ---------- 전재료 목차 ---------- */
