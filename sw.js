@@ -6,7 +6,7 @@
  *  - 그 밖의 같은 사이트 파일(아이콘·manifest 등): 캐시 우선 + 뒤에서 갱신
  *  - share-pro.html·share-study.html 은 네트워크 우선이라 항상 최신본이 뜬다.
  */
-const CACHE = 'bakery-pwa-v5';
+const CACHE = 'bakery-pwa-v6';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 
 self.addEventListener('install', (event) => {
