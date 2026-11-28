@@ -868,6 +868,33 @@ html[data-theme="dark"] .diag .bad{color:#f0a08a}
 .recipeGallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin:6px 0 12px}
 .recipeGallery figure{margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface2)}
 .recipeGallery img{display:block;width:100%;height:110px;object-fit:cover}
+/* 계산기 파트(전체·제과·제빵·공통) */
+.calcParts{display:flex;gap:5px;margin:0 0 6px;flex-wrap:wrap}
+.cpart{border:1px solid var(--line);background:var(--surface2);border-radius:9px;padding:5px 10px;
+  font-size:11.5px;font-weight:750;color:var(--ink2)}
+.cpart.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.mxBasis{margin:10px 0 4px;padding:8px 10px;border:1px dashed var(--line);border-radius:10px;background:var(--surface2)}
+.mxBasis>b{display:block;font-size:11.5px;color:var(--ink);margin-bottom:3px}
+.mxBasis p{margin:0 0 5px;font-size:10.8px;line-height:1.6;color:var(--muted)}
+.mxBasis ul{margin:0;padding-left:15px;font-size:10.8px;line-height:1.65;color:var(--ink2)}
+.mxBasis li{margin:0 0 2px}
+
+.recipeGallery.stepGal{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.recipeGallery.stepGal img{height:130px}
+.recipeGallery figcaption{display:flex;gap:5px;align-items:flex-start;padding:5px 6px;font-size:10.5px;line-height:1.35;color:#6b5748}
+html[data-theme="dark"] .recipeGallery figcaption{color:#cdbba7}
+.recipeGallery figcaption b{flex:0 0 15px;height:15px;border-radius:50%;background:#8a5a2b;color:#fff;font-size:9.5px;display:flex;align-items:center;justify-content:center}
+.recipeGallery img{cursor:zoom-in}
+/* 브랜드 비교 — 행별 제품 썸네일 */
+img.rowImg{width:52px;height:52px;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:zoom-in;display:block}
+.cmp th.cmpName{min-width:140px}
+.cmp th .cmpThumb{margin:0 0 5px}
+.cmpNameTx{display:block;font-weight:800}
+.cmpCard .cardThumb{width:100%;height:104px;object-fit:cover;border-radius:9px;margin:0 0 6px}
+.stepList{margin:6px 0 12px;padding-left:18px;font-size:12.5px;line-height:1.7}
+.stepList li{margin:0 0 3px}
+.drinkTbl td:first-child{font-weight:750;white-space:nowrap}
+
 .recipeMemo{white-space:pre-wrap;background:var(--surface2);border-radius:8px;padding:8px 10px}
 .recipeTips{list-style:none;margin:4px 0 12px;padding:0;display:grid;gap:6px}
 .recipeTips li{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.65;color:var(--ink2)}
@@ -1533,6 +1560,12 @@ table.icTbl th,table.icTbl td{padding:6px 8px}
 
 <main class="wrap">
   <section id="calcPanel" hidden aria-label="계산기">
+    <div class="calcParts" id="calcParts" role="group" aria-label="계산기 파트">
+      <button type="button" class="cpart on" data-cpart="all">전체</button>
+      <button type="button" class="cpart" data-cpart="p">🍰 제과</button>
+      <button type="button" class="cpart" data-cpart="b">🥖 제빵</button>
+      <button type="button" class="cpart" data-cpart="c">🧮 공통</button>
+    </div>
     <nav class="calcTabs" id="calcTabs" role="tablist" aria-label="계산기 종류">
       <button type="button" class="ctab on" role="tab" aria-selected="true" aria-controls="calc-cost" id="ctab-cost" data-calc="cost"><b>💰</b><span>원가</span></button>
       <button type="button" class="ctab" role="tab" aria-selected="false" aria-controls="calc-recipe" id="ctab-recipe" data-calc="recipe"><b>📐</b><span>변형</span></button>
@@ -1688,6 +1721,12 @@ table.icTbl th,table.icTbl td{padding:6px 8px}
     <article class="calc calcView" id="calc-ddp" role="tabpanel" aria-labelledby="ctab-ddp" data-calcview="ddp" hidden>
       <h3>💧 반죽 물 온도 계산기 <span class="calcSub">DDP</span></h3>
       <p class="hint">물온도 = 희망 반죽온도 × 인자(3 또는 4) − (실온 + 밀가루온도 + [르방온도] + 마찰계수)</p>
+      <div class="mgBtns" id="ddpPart" role="group" aria-label="제과·제빵 구분">
+        <button type="button" class="mgBtn on" data-dpart="b">🥖 제빵</button>
+        <button type="button" class="mgBtn" data-dpart="p">🍰 제과</button>
+      </div>
+      <div class="mgBtns" id="ddpProd" role="group" aria-label="품목별 기준 온도"></div>
+      <p class="mgNote" id="ddpNote"></p>
       <div class="fields">
         <div class="field"><label for="cDdt">희망 반죽온도 (°C)</label><input id="cDdt" type="number" inputmode="decimal" step="0.5" value="26"></div>
         <div class="field"><label for="cRoom">실온 (°C)</label><input id="cRoom" type="number" inputmode="decimal" step="0.5" value="24"></div>
@@ -5044,6 +5083,60 @@ const VEGAN_CATS = [
     { id: 'dark', n: '다크 70% 1:1 + 설탕 10%', parts: [['비건 다크커버춰', 1], ['설탕', 0.1]],
       note: '색이 진해지고 단맛이 줄어듭니다. 코팅·장식에는 색 차이가 크므로 시험 배합으로 확인하세요.' }
   ] },
+  { id: 'egg_bind', n: '달걀 — 결합·바인더(쿠키·브라우니·머핀)', def: 'flax', opts: [
+    { id: 'flax', n: '아마씨에그(아마씨 1 : 물 3)', parts: [['아마씨(분쇄)', 0.25], ['물', 0.75]],
+      note: '분쇄 아마씨 1에 물 3을 섞어 10분 불린 뒤 씁니다. 점성이 강해 결합력이 좋고, 색이 살짝 어두워집니다. 달걀 50g ≈ 아마씨 12g + 물 38g.' },
+    { id: 'chia', n: '치아시드에그(치아시드 1 : 물 3)', parts: [['치아시드', 0.25], ['물', 0.75]],
+      note: '아마씨와 같은 방식. 씹히는 입자가 남아 쿠키·그래놀라에 잘 어울립니다.' },
+    { id: 'fruit', n: '바나나·사과퓨레 1:1', parts: [['바나나퓨레', 1]],
+      note: '1:1 대체. 수분·당이 많아 더 퍼지고 갈변이 빨라집니다. 오븐 온도를 5~10℃ 낮추고 베이킹소다를 조금 줄이세요.' }
+  ] },
+  { id: 'egg_foam', n: '달걀 — 팽창·스펀지(케이크·제누와즈)', def: 'butter', opts: [
+    { id: 'butter', n: '두유 100 + 식초 5(버터밀크) + 베이킹소다', parts: [['두유', 0.95], ['식초', 0.05]],
+      note: '두유 100g에 식초(또는 레몬즙) 5g을 넣어 5분 두면 산성 버터밀크가 됩니다. 베이킹소다와 만나 CO₂를 만들어 팽창을 돕습니다. 달걀 50g당 베이킹소다 1~2g을 함께 넣으세요.' },
+    { id: 'soda', n: '탄산수 1:1 + 베이킹파우더 10% 추가', parts: [['탄산수', 1]],
+      note: '1:1 대체. 기포는 생기지만 구조를 잡는 힘이 약해 냉각 후 주저앉기 쉽습니다. 밀가루 단백질(강력분 10~20% 혼합)로 보강하세요.' }
+  ] },
+  { id: 'egg_meringue', n: '달걀 — 머랭·거품(마카롱·무스·머랭쿠키)', def: 'aqua', opts: [
+    { id: 'aqua', n: '아쿠아파바 1:1 + 크림오브타르타르 0.5%', parts: [['아쿠아파바', 1], ['크림오브타르타르', 0.005]],
+      note: '난백 1:1. 차갑게(4℃) 두고 휘핑하며 산을 더하면 거품이 안정됩니다. 설탕은 3~4회 나눠 천천히 넣어야 단단한 피크가 섭니다.' },
+    { id: 'aquasugar', n: '아쿠아파바 100% + 설탕 20%', parts: [['아쿠아파바', 1], ['설탕', 0.2]],
+      note: '이탈리안 머랭처럼 시럽을 부어 넣는 방식에 가깝게 만든 배합. 총중량이 늘어 배합 설탕에서 20%를 빼세요.' }
+  ] },
+  { id: 'egg_wash', n: '달걀 — 광택·에그워시(스콘·파이·빵)', def: 'soy', opts: [
+    { id: 'soy', n: '두유 100 + 메이플시럽 10', parts: [['두유', 0.91], ['메이플시럽', 0.09]],
+      note: '두유에 시럽을 섞어 바르면 광택과 갈색이 납니다. 마른 뒤 한 번 더 바르면 윤이 살아납니다.' },
+    { id: 'oat', n: '귀리우유 100 + 꿀 대체 시럽 10', parts: [['귀리우유', 0.91], ['메이플시럽', 0.09]],
+      note: '귀리우유는 단백질·당이 있어 갈변이 잘 됩니다. 온도가 높은 오븐에서는 5분 일찍 덮어 태우지 않도록 하세요.' }
+  ] },
+  { id: 'butter_cream', n: '버터 — 크리밍용(파운드·쿠키·버터크림)', def: 'vb', opts: [
+    { id: 'vb', n: '비건 블록버터 1:1', parts: [['비건버터', 1]],
+      note: '수분 15~20%·유화제가 든 블록형이 가장 안정적입니다. 18~20℃로 말랑하게 두고 5~7분 크림화하세요.' },
+    { id: 'cocosolid', n: '코코넛오일 80% + 식물성우유 20%', parts: [['코코넛오일', 0.8], ['식물성 우유', 0.2]],
+      note: '실온에서 고체라 크림화가 가능하지만 24℃ 이상에서 녹아 기포가 빠집니다. 서늘한 작업실에서 쓰세요.' }
+  ] },
+  { id: 'butter_lam', n: '버터 — 라미네이션(크루아상·데니쉬·파이)', def: 'sheet', opts: [
+    { id: 'sheet', n: '비건 시트마가린 1:1', parts: [['비건 시트마가린', 1]],
+      note: '전용 시트 유지가 가장 안전합니다. 12~16℃에서 밀어 펴고, 층이 붙으면 30분 냉장 휴지하세요.' },
+    { id: 'cocobutter', n: '카카오버터 70% + 식물성오일 30%', parts: [['카카오버터', 0.7], ['식물성 오일', 0.3]],
+      note: '카카오버터는 30℃ 부근에서 급격히 무러지므로 작업대·반죽 온도를 낮게 유지해야 합니다. 향이 중성이라 페이스트리에 적합합니다.' }
+  ] },
+  { id: 'butter_oil', n: '버터 — 오일·풍미용(쉬폰·휘낭시에)', def: 'oil', opts: [
+    { id: 'oil', n: '포도씨유 80% + 식물성우유 20%', parts: [['포도씨유', 0.8], ['식물성 우유', 0.2]],
+      note: '향이 중성인 포도씨유가 무난합니다. 물을 더하면 유화가 약해지므로 차가운 볼에서 천천히 섞으세요.' },
+    { id: 'coco', n: '코코넛오일 80% + 식물성우유 20%', parts: [['코코넛오일', 0.8], ['식물성 우유', 0.2]],
+      note: '냉각하면 단단해져 식감이 달라집니다. 실온 보관 제품에 쓰고, 코코넛 향이 어울리는 배합에 한정하세요.' }
+  ] },
+  { id: 'buttermilk', n: '버터밀크(스콘·팬케이크)', def: 'soy', opts: [
+    { id: 'soy', n: '두유 100g + 레몬즙·식초 5g', parts: [['두유', 0.95], ['레몬즙', 0.05]],
+      note: '5~10분 두면 살짝 걸쭉해집니다. 베이킹소다와 반응해 팽창을 돕습니다(베이킹파우더만 쓸 때는 생략 가능).' }
+  ] },
+  { id: 'creamcheese', n: '크림치즈(바스크·프로스팅)', def: 'vb', opts: [
+    { id: 'vb', n: '비건 크림치즈 1:1', parts: [['비건 크림치즈', 1]],
+      note: '1:1 대체. 산미가 약한 제품이 많아 레몬즙 1~2%를 더하면 치즈케이크 맛이 살아납니다.' },
+    { id: 'cashew', n: '캐슈넛 70% + 레몬즙 5% + 물 25%', parts: [['캐슈넛(불린 것)', 0.7], ['레몬즙', 0.05], ['물', 0.25]],
+      note: '캐슈넛을 4시간 불려 블렌더로 갈아 만듭니다. 입자가 거칠면 체에 거르고, 바스크처럼 고온 굽기는 갈변이 강해 설탕을 10% 줄이세요.' }
+  ] },
   { id: 'flour', n: '일반 밀가루', def: 'same', opts: [
     { id: 'same', n: '그대로 사용(비건 적합)', parts: [['밀가루', 1]],
       note: '밀가루는 식물성이라 비건 전환 대상이 아닙니다. 이 계산기에서는 총중량 비교를 위해 그대로 둡니다.' },
@@ -5470,7 +5563,7 @@ DB.push(
 
 BRD.push(
 {
-  id:'br18', title:'컨벡션 오븐 브랜드 비교', en:'Convection oven brands',
+  id:'br18', title:'컨벡션 오븐 브랜드 비교', en:'Convection oven brands', hero:'ov-unox',
   tags:['오븐','컨벡션','우녹스','스메그','지에라','에카','미웨','브랜드'],
   summary:'카페·제과 매장에서 많이 쓰는 4~6단 컨벡션 오븐을 팬 속도·스팀 방식·전원·주력 품목으로 비교합니다.',
   intro:'컨벡션 오븐은 팬 1~2개와 열선, 스팀 장치의 조합이 브랜드별로 다릅니다. 아래 스펙은 제조사·수입사 공식 표기(2026-11 확인)를 기준으로 했고, 실제 판매 구성·전압은 발주처에 다시 확인하세요.',
@@ -5497,7 +5590,7 @@ BRD.push(
   related:['컨벡션오븐 사용법','데크 오븐 브랜드 비교','오븐 온도·컨벡션 환산','미웨','우녹스']
 },
 {
-  id:'br19', title:'데크 오븐 브랜드 비교', en:'Deck oven brands',
+  id:'br19', title:'데크 오븐 브랜드 비교', en:'Deck oven brands', hero:'bd114',
   tags:['오븐','데크오븐','대흥','미웨','봉가드','부성','브랜드'],
   summary:'하드계열 빵과 케이크를 함께 굽는 데크오븐을 스톤·스팀·상하불 제어·전원·가격대로 비교합니다.',
   intro:'데크오븐은 단별 상·하불과 스팀 장치, 돌판 유무가 핵심입니다. 국내산은 380V 3상·대형 설치가 일반적이고, 유럽산은 단별 컨트롤·스팀 회복력에서 차이가 납니다. 가격은 2026-11 유통 표시가 기준입니다.',
@@ -5524,7 +5617,7 @@ BRD.push(
   related:['데크오븐 사용법','컨벡션 오븐 브랜드 비교','팬 용적과 반죽량 계산','대흥소프트밀','미웨']
 },
 {
-  id:'br20', title:'믹서 브랜드 비교 (키친에이드·스파·켄우드)', en:'Mixer brands',
+  id:'br20', title:'믹서 브랜드 비교 (키친에이드·스파·켄우드)', en:'Mixer brands', hero:'ge03',
   tags:['믹서','키친에이드','스파','켄우드','호바트','대흥','브랜드'],
   summary:'가정·카페용 스탠드 믹서와 업소용 버티컬·스파이럴 믹서를 출력·용량·기어 방식·장단점으로 비교합니다.',
   intro:'믹서는 “출력(W)”보다 볼 용량·기어 방식·최대 반죽량이 실제 작업을 결정합니다. 아래 수치는 제조사 사양서·수입사 표기(2026-11 확인)를 기준으로 했습니다.',
@@ -5918,7 +6011,7 @@ addBev({
 /* ---------- 카페 브랜드 비교 ---------- */
 BRD.push(
   {
-    id:'br21', title:'카페 시럽 브랜드 비교', en:'Cafe syrup brands',
+    id:'br21', title:'카페 시럽 브랜드 비교', en:'Cafe syrup brands', hero:'bd122',
     tags:['시럽','모닌','1883','토라니','다빈치','포모나','브랜드'],
     summary:'카페에서 쓰는 바닐라·헤이즐넛·카라멜 등 시럽 5개 브랜드의 향·당도·용량·가격대를 비교합니다.',
     intro:'시럽은 같은 “바닐라”라도 향 강도와 당도가 브랜드마다 다릅니다. 아래 가격은 2026-11 온라인 최저가·도매가 기준으로, 유통처에 따라 달라집니다.',
@@ -5938,7 +6031,7 @@ BRD.push(
     related:['바닐라라떼','카라멜마키아또','토피넛라떼','모닌 바닐라 시럽']
   },
   {
-    id:'br22', title:'카페 파우더·초코소스 브랜드 비교', en:'Cafe powder & sauce brands',
+    id:'br22', title:'카페 파우더·초코소스 브랜드 비교', en:'Cafe powder & sauce brands', hero:'bd127',
     tags:['파우더','초코소스','빅트레인','기라델리','포모나','모닌','발로나','브랜드'],
     summary:'초코라떼·프라푸치노·모카에 쓰는 파우더와 소스 브랜드를 코코아 함량·점도·용도로 비교합니다.',
     intro:'소스는 코코아·유지방 함량에 따라 진하기와 점도가 다르고, 파우더는 설탕·분유 배합에 따라 단맛이 크게 달라집니다. 라벨의 코코아 함량을 먼저 보세요.',
@@ -5958,7 +6051,7 @@ BRD.push(
     related:['카페모카','초코라떼','기라델리 초코소스','빅트레인 화이트초코 파우더']
   },
   {
-    id:'br23', title:'우유·바리스타 대체유 비교', en:'Milk & barista alt milk',
+    id:'br23', title:'우유·바리스타 대체유 비교', en:'Milk & barista alt milk', hero:'bd130',
     tags:['우유','오트밀크','아몬드브리즈','두유','바리스타','오틀리','부산우유','골드','브랜드'],
     summary:'라떼용 우유와 오트·아몬드·두유 대체유를 단백질·지방·거품 안정성·가격으로 비교합니다.',
     intro:'라떼용 우유는 지방 3.5% 이상, 단백질 3% 전후가 거품과 맛의 균형에 좋습니다. 대체유는 유화제·유지방을 보강한 “바리스타” 제품을 골라야 합니다.',
@@ -5983,7 +6076,7 @@ BRD.push(
     related:['카페라떼','오틀리 바리스타','바리스타 우유(서울우유)','아몬드브리즈 언스위트']
   },
   {
-    id:'br24', title:'카페 티·베이스 브랜드 비교', en:'Cafe tea & base brands',
+    id:'br24', title:'카페 티·베이스 브랜드 비교', en:'Cafe tea & base brands', hero:'bd138',
     tags:['티','얼그레이','아마드','트와이닝','타바론','아크바','더진한','담다','브랜드'],
     summary:'밀크티·에이드에 쓰는 홍차 티백과 과일청 베이스 브랜드를 향·가격·용도로 비교합니다.',
     intro:'홍차는 찻잎 등급과 베르가못 향의 강도가 브랜드별로 다르고, 청·베이스는 당도와 과육 함량이 제품마다 다릅니다. 밀크티는 향이 진한 쪽이 우유에 묻히지 않습니다.',
@@ -6005,7 +6098,7 @@ BRD.push(
     related:['얼그레이 밀크티','더진한 오미자베리','배도라지모과','아마드 얼그레이 티백']
   },
   {
-    id:'br25', title:'에스프레소 원두 블렌드 유형 비교', en:'Espresso blend types',
+    id:'br25', title:'에스프레소 원두 블렌드 유형 비교', en:'Espresso blend types', hero:'bd144',
     tags:['원두','블렌드','다크','미디엄','디카페인','추출','브랜드'],
     summary:'다크·미디엄다크·미디엄·산미형·디카페인 블렌드의 맛과 추출 세팅, 어울리는 음료를 비교합니다.',
     intro:'같은 머신·그라인더에서도 블렌드에 따라 도징·추출량·시간을 달리해야 맛이 균형을 이룹니다. 아래 세팅은 18g 더블 기준 출발점입니다.',
@@ -6525,10 +6618,17 @@ function recipeBody(r) {
     h += '</ul>';
   }
   if (r.memo) h += '<h4>메모</h4><p class="recipeMemo">' + recipeEsc(r.memo) + '</p>';
-  if (r.images && r.images.length) {
-    h += '<h4>사진</h4><div class="recipeGallery">';
-    r.images.forEach(function (src, i) {
-      h += '<figure><img src="' + src + '" alt="' + recipeEsc(r.n) + ' 사진 ' + (i + 1) + '"></figure>';
+  var shots = (typeof RECIPE_SHOTS !== 'undefined' && RECIPE_SHOTS && RECIPE_SHOTS[r.id]) ? RECIPE_SHOTS[r.id] : (r.images || []);
+  if (shots && shots.length) {
+    var PHM = (typeof PHOTO !== 'undefined' && PHOTO) ? PHOTO : {};
+    h += '<h4>공정 사진</h4><p class="note">보낸 순서대로 넣었습니다. 사진을 누르면 크게 볼 수 있습니다.</p><div class="recipeGallery stepGal">';
+    shots.forEach(function (it, i) {
+      var key = (typeof it === 'string') ? it : (it.k || '');
+      var cap = (typeof it === 'string') ? '' : (it.c || '');
+      var src = PHM[key] || key;
+      if (!src) return;
+      h += '<figure><img src="' + src + '" alt="' + recipeEsc(r.n) + ' 공정 사진 ' + (i + 1) + (cap ? ' · ' + recipeEsc(cap) : '') +
+        '" data-zoom="1" loading="lazy" decoding="async"><figcaption><b>' + (i + 1) + '</b>' + recipeEsc(cap) + '</figcaption></figure>';
     });
     h += '</div>';
   }
@@ -9655,24 +9755,34 @@ DB.push({
   }
 
   function brandBody(b) {
+    var rp = (typeof BRDPHOTO !== 'undefined' && BRDPHOTO && BRDPHOTO[b.id]) ? BRDPHOTO[b.id] : [];
+    function rowSrc(i) { return photoKey(rp[i]); }
     var h = '<p>' + esc(b.intro) + '</p>';
     h += '<div class="tblScroll"><table class="cmp"><thead><tr>';
     b.cols.forEach(function (c) { h += '<th scope="col">' + esc(c) + '</th>'; });
     h += '</tr></thead><tbody>';
-    b.rows.forEach(function (r) {
+    b.rows.forEach(function (r, ri) {
+      var src = rowSrc(ri);
       h += '<tr>';
       r.forEach(function (cell, i) {
-        h += (i === 0)
-          ? '<th scope="row">' + esc(cell) + '</th>'
-          : '<td>' + esc(cell) + '</td>';
+        if (i === 0) {
+          h += '<th scope="row" class="cmpName">' +
+            (src ? '<img class="rowImg cmpThumb" src="' + src + '" alt="' + esc(cell) + ' 제품 사진" loading="lazy" decoding="async" role="button" tabindex="0">' : '') +
+            '<span class="cmpNameTx">' + esc(cell) + '</span></th>';
+        } else {
+          h += '<td>' + esc(cell) + '</td>';
+        }
       });
       h += '</tr>';
     });
     h += '</tbody></table></div><p class="scrollHint">← 표를 좌우로 넘기면 뒤쪽 항목까지 비교할 수 있습니다.</p>';
     /* 좁은 화면: 품목별 카드로 같은 정보를 보여 준다 */
     h += '<div class="cmpCards">';
-    b.rows.forEach(function (r) {
-      h += '<article class="cmpCard"><h5>' + esc(r[0]) + '</h5><dl>';
+    b.rows.forEach(function (r, ri) {
+      var csrc = rowSrc(ri);
+      h += '<article class="cmpCard">' +
+        (csrc ? '<img class="rowImg cardThumb" src="' + csrc + '" alt="' + esc(r[0]) + ' 제품 사진" loading="lazy" decoding="async" role="button" tabindex="0">' : '') +
+        '<h5>' + esc(r[0]) + '</h5><dl>';
       b.cols.forEach(function (c, i) {
         if (i === 0) return;
         var v = r[i];
@@ -9695,7 +9805,7 @@ DB.push({
 
   if (typeof BRD !== 'undefined') BRD.forEach(function (b) {
     DB.push({
-      id: b.id, cat: 'brand', title: b.title, en: b.en, mg: b.mg,
+      id: b.id, cat: 'brand', title: b.title, en: b.en, mg: b.mg, photo: b.hero,
       tags: b.tags, summary: b.summary, body: brandBody(b),
       tips: b.notes, related: b.related, exam: false
     });
@@ -9749,6 +9859,7 @@ DB.push({
     { k: 'tart', n: '타르트·파이' },
     { k: 'bread', n: '제빵·모찌' },
     { k: 'cream', n: '크림·커드·시럽' },
+    { k: 'cafe', n: '카페음료', ic: '☕' },
     { k: 'etc', n: '전통떡·기타' }
   ];
   /* ---------- 이론·재료·카페 하위 분류 (id 기준) ---------- */
@@ -9972,7 +10083,8 @@ DB.push({
   var MYG_BY_C = {
     '케이크': 'cake', '시트': 'cake', '무스케이크': 'cake', '치즈케이크': 'cake', '디저트컵': 'cake',
     '구움과자': 'baked', '타르트·파이': 'tart', '제빵': 'bread',
-    '크림·커드': 'cream', '잼·시럽': 'cream', '제과': 'etc'
+    '크림·커드': 'cream', '잼·시럽': 'cream', '제과': 'etc',
+    '카페음료': 'cafe'
   };
   var MYG_BY_ID = {
     mm006: 'bread',   /* 요거트 과일모찌 */
@@ -10273,7 +10385,22 @@ DB.push({
 
   /* ---------- 카드 ---------- */
   function photoOf(e) {
+    if (e && e.photo && typeof PHOTO !== 'undefined' && PHOTO && PHOTO[e.photo]) return PHOTO[e.photo];
     return (typeof PHOTO !== 'undefined' && PHOTO && PHOTO[e.id]) ? PHOTO[e.id] : '';
+  }
+  function photoKey(k) {
+    return (k && typeof PHOTO !== 'undefined' && PHOTO && PHOTO[k]) ? PHOTO[k] : '';
+  }
+  /* data-photo="키" 자리표시 이미지를 실제 사진 경로로 채운다(데이터 파일 로드 순서와 무관) */
+  function hydratePhotos(root) {
+    if (!root) return;
+    var list = root.querySelectorAll('img[data-photo]');
+    for (var i = 0; i < list.length; i++) {
+      var k = list[i].getAttribute('data-photo');
+      var src = photoKey(k);
+      if (src) { list[i].src = src; list[i].classList.add('mImg'); }
+      else { list[i].hidden = true; }
+    }
   }
   function cardHTML(e, tks) {
     var on = state.bm.has(e.id);
@@ -11193,6 +11320,7 @@ DB.push({
       + videoLinksHTML(e.id)
       + ((typeof EXCOST !== 'undefined' && EXCOST[e.id]) ? excelCostHTML(e.id) : '') + tips + rel;
     wrapTables(mBody);
+    hydratePhotos(mBody);
     highlightDOM(mBody, tokens());
 
     modal.querySelector('.modal').classList.toggle('wide', e.cat === 'brand');
@@ -12025,6 +12153,11 @@ DB.push({
     if (ev.target === modal) closeAll();
   });
   /* 원가·배합표: 펼치기 · 판매가 계산 · 레시피로 이동 */
+  mBody.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Enter' && ev.key !== ' ') return;
+    var zi = ev.target.closest('img.rowImg');
+    if (zi) { ev.preventDefault(); openLightbox(zi.src, zi.alt); }
+  });
   mBody.addEventListener('click', function (ev) {
     var tg = ev.target;
     if (!tg || !tg.closest) return;
@@ -12077,7 +12210,8 @@ DB.push({
     if (state.openId) toggleBm(null, state.openId);
   });
   mBody.addEventListener('click', function (ev) {
-    if (ev.target.closest('img.mImg')) { openLightbox(ev.target.closest('img.mImg').src, ev.target.closest('img.mImg').alt); return; }
+    var zi = ev.target.closest('img.mImg, img.rowImg, img[data-zoom]');
+    if (zi) { openLightbox(zi.src, zi.alt); return; }
     var wt = ev.target.closest('[data-wtab]');
     if (wt) {
       var want = wt.getAttribute('data-wtab');
@@ -12118,6 +12252,99 @@ DB.push({
       ev.preventDefault(); qEl.focus();
     }
   });
+
+  /* ---------- 계산기 파트(전체·제과·제빵·공통) 필터 ---------- */
+  var CALC_PART = { p: ['recipe', 'vegan', 'sub', 'rnd', 'mix'], b: ['dough', 'ddp', 'oven'], c: ['cost', 'margin', 'loss', 'cafe'] };
+  var curCalcPart = 'all';
+  function applyCalcPart() {
+    var tabs = document.getElementById('calcTabs');
+    if (!tabs) return;
+    var list = Array.prototype.slice.call(tabs.querySelectorAll('.ctab'));
+    var allowed = curCalcPart === 'all' ? null : (CALC_PART[curCalcPart] || []);
+    var firstShown = null;
+    list.forEach(function (b) {
+      var k = b.getAttribute('data-calc');
+      var cat = null;
+      Object.keys(CALC_PART).forEach(function (c) { if (CALC_PART[c].indexOf(k) >= 0) cat = c; });
+      var show = !allowed || cat === curCalcPart || cat === null;
+      b.style.display = show ? '' : 'none';
+      if (show && !firstShown) firstShown = b;
+      if (!show && b.classList.contains('on')) b.classList.remove('on');
+    });
+    if (firstShown && !list.some(function (b) { return b.classList.contains('on') && b.style.display !== 'none'; })) {
+      firstShown.click();
+    }
+  }
+  document.addEventListener('click', function (ev) {
+    var cp = ev.target.closest && ev.target.closest('#calcParts .cpart');
+    if (!cp) return;
+    curCalcPart = cp.getAttribute('data-cpart');
+    Array.prototype.forEach.call(document.querySelectorAll('#calcParts .cpart'), function (b) {
+      b.classList.toggle('on', b === cp);
+    });
+    applyCalcPart();
+  });
+
+  /* ---------- 계산기: 물 온도 — 품목별 기준 프리셋 ---------- */
+  var DDP_PRESETS = {
+    b: [
+      ['loaf', '식빵·풀먼', 27, '수분 62~65%. 목표 반죽 27℃ — 여름엔 물을 얼음으로 대체.'],
+      ['baguette', '바게트·치아바타·깜빠뉴', 24, '수분 70~80% 고수분. 목표 23~25℃ — 반죽이 따뜻하면 늘어짐이 죽는다.'],
+      ['sweet', '단과자·소금빵·모닝빵', 26.5, '목표 26~27℃. 버터·계란을 차게 준비하면 물온도 여유가 생긴다.'],
+      ['brioche', '브리오슈', 23, '버터 40~60% 고버터. 목표 22~24℃ — 버터 투입 뒤 온도가 더 오른다.'],
+      ['croissant', '크루아상·데니쉬', 21, '목표 20~22℃ 저온 반죽. 라미네이션 전 반죽이 차가워야 층이 산다.'],
+      ['bagel', '베이글', 24.5, '수분 53~58% 저수분. 목표 24~25℃ — 되직해 믹서 부하가 크다.'],
+      ['rye', '호밀·통밀빵', 27, '목표 26~28℃. 글루텐이 약해 조금 따뜻하게 반죽한다.']
+    ],
+    p: [
+      ['genoise', '제누와즈·공립법 스펀지', 27, '계란 중탕 38~43℃, 반죽 완료 26~28℃. 중탕 온도가 낮으면 기포가 안 잡힌다.'],
+      ['chiffon', '쉬폰·롤시트', 23, '머랭·반죽 22~24℃. 너무 차가우면 머랭이 뭉친다.'],
+      ['pound', '파운드·버터케이크', 21, '버터 크리밍 20~22℃. 유화 최적 구간 — 차면 분리, 더우면 늘어진다.'],
+      ['financier', '휘낭시에', 26.5, '태운버터 60~65℃ + 흰자 상온, 반죽 완료 25~28℃.'],
+      ['cookie', '쿠키·사블레·타르트 파이지', 14, '차가운 버터 12~16℃. 글루텐 생성을 억제해 사각사각하게.'],
+      ['chou', '슈·에클레어', 57, '호화 80℃ 이상 → 계란 투입 55~60℃. 뜨거울 때 넣어야 부풀 준비가 된다.'],
+      ['macaron', '마카롱·다쿠아즈', 24, '이탈리안 시럽 118℃, 머랭 22~25℃. 꼬끄 마카로나주 뒤 표피 건조.'],
+      ['cheese', '바스크·치즈케이크', 21, '크림치즈 실온 20~23℃, 기포 최소로 섞는다.']
+    ]
+  };
+  var ddpPart = 'b';
+  function renderDdpPresets(part) {
+    ddpPart = part;
+    var host = document.getElementById('ddpPart');
+    if (host) Array.prototype.forEach.call(host.querySelectorAll('.mgBtn'), function (b) {
+      var on = b.getAttribute('data-dpart') === part;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    var box = document.getElementById('ddpProd');
+    if (box) box.innerHTML = DDP_PRESETS[part].map(function (r) {
+      return '<button type="button" class="mgBtn" data-dpreset="' + r[0] + '" data-dtemp="' + r[2] + '">' + r[1] + '</button>';
+    }).join('');
+  }
+  function applyDdpPreset(key) {
+    var part = ddpPart;
+    var row = (DDP_PRESETS[part] || []).filter(function (r) { return r[0] === key; })[0];
+    if (!row) return;
+    var d = document.getElementById('cDdt');
+    if (d) d.value = row[2];
+    var note = document.getElementById('ddpNote');
+    if (note) note.textContent = '선택한 품목 ' + row[1] + ' — ' + row[3];
+    var box = document.getElementById('ddpProd');
+    if (box) Array.prototype.forEach.call(box.querySelectorAll('.mgBtn'), function (b) {
+      b.classList.toggle('on', b.getAttribute('data-dpreset') === key);
+    });
+    calcDDP();
+  }
+
+  document.addEventListener('click', function (ev) {
+    var pt = ev.target.closest && ev.target.closest('#ddpPart .mgBtn');
+    if (pt) { renderDdpPresets(pt.getAttribute('data-dpart')); return; }
+    var pd = ev.target.closest && ev.target.closest('#ddpProd .mgBtn');
+    if (pd) { applyDdpPreset(pd.getAttribute('data-dpreset')); return; }
+  });
+  renderDdpPresets('b');
+  setTimeout(applyCalcPart, 0);
+  window.addEventListener('load', function () { setTimeout(applyCalcPart, 300); });
 
   /* ---------- 계산기: 물 온도 ---------- */
   function num(id) {
