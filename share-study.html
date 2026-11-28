@@ -869,6 +869,10 @@ html[data-theme="dark"] .diag .bad{color:#f0a08a}
 .recipeGallery figure{margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface2)}
 .recipeGallery img{display:block;width:100%;height:110px;object-fit:cover}
 .recipeMemo{white-space:pre-wrap;background:var(--surface2);border-radius:8px;padding:8px 10px}
+.recipeTips{list-style:none;margin:4px 0 12px;padding:0;display:grid;gap:6px}
+.recipeTips li{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.65;color:var(--ink2)}
+.recipeTips li b{display:block;font-size:11.5px;color:var(--accent);margin-bottom:2px;font-weight:750}
+.recipeTips li span{display:block}
 .editHead{display:flex;flex-direction:column;gap:2px;margin-bottom:6px}
 .editHead b{font-size:14px;color:var(--accent)}
 .editHead span{font-size:11px;color:var(--muted)}
@@ -1274,6 +1278,218 @@ html[data-theme="dark"] .xcPart td,html[data-theme="dark"] .exGrp td{background:
 @media (prefers-reduced-motion:reduce){
   *{animation:none !important;transition:none !important}
 }
+
+/* ---------- 🏨 호텔 재료·틀·오븐 카드 사진 ---------- */
+.cmpBar{display:flex;gap:6px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none}
+.cmpBar[hidden]{display:none !important}
+.cmpBar::-webkit-scrollbar{display:none}
+.cmpBtn{flex:none;border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);
+  border-radius:999px;padding:5px 11px;font-size:11.5px;font-weight:750;white-space:nowrap}
+/* 사진 카드 = 사진 왼쪽 · 제품명·브랜드·설명 오른쪽 가로형 */
+.card.hasImg{
+  display:flex;flex-direction:row;align-items:stretch;gap:10px;
+  padding:9px;overflow:hidden;
+}
+.card.hasImg:hover .hcThumb{border-color:var(--accent)}
+.hcThumb{
+  flex:none;width:104px;height:104px;border:1px solid var(--line);border-radius:11px;
+  background:linear-gradient(180deg,#fffdf9,#f5ecdf);display:flex;align-items:center;justify-content:center;
+  overflow:hidden;transition:border-color .16s ease;
+}
+html[data-theme="dark"] .hcThumb{background:linear-gradient(180deg,#241d16,#1b1510)}
+.hcImg{display:block;width:100%;height:100%;object-fit:contain;padding:5px}
+.hcBody{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:3px;padding-right:22px}
+.hcTop{display:flex;align-items:center;gap:4px;flex-wrap:wrap;max-height:34px;overflow:hidden}
+.hcTop .badge{font-size:9.5px;padding:1.5px 6px}
+.card.hasImg h3{margin:0;font-size:14px;line-height:1.35;letter-spacing:-.02em}
+.card.hasImg .hcSpec{margin:0;font-size:11px;color:var(--muted);line-height:1.45;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card.hasImg .sum{margin:0;font-size:11.5px;line-height:1.5;-webkit-line-clamp:2}
+.card.hasImg .tagrow{padding-top:0;margin-top:auto;max-height:20px;overflow:hidden}
+.card.hasImg .star{background:rgba(255,255,255,.86);border-radius:999px;width:24px;height:24px;top:7px;right:7px;backdrop-filter:blur(2px)}
+html[data-theme="dark"] .card.hasImg .star{background:rgba(20,16,12,.7)}
+.grid.hgrid{grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
+/* 🌍 세계 제과제빵 품목 카드 — 사진을 더 크게 */
+.card.wcard .hcThumb{width:124px;height:124px;border-radius:12px}
+.card.wcard .hcImg{width:100%;height:100%;object-fit:cover}
+.card.wcard h3{font-size:15px}
+.badge.brandTag{background:var(--surface2);color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.mImgWrap{margin:0 0 12px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,#fffdf9,#f6efe4);padding:10px;text-align:center}
+html[data-theme="dark"] .mImgWrap{background:linear-gradient(180deg,#241d16,#1b1510)}
+.mImgWrap{padding:8px}
+.mImg{display:block;margin:0 auto;max-width:100%;max-height:min(52vh,440px);width:auto;height:auto;object-fit:contain;cursor:zoom-in}
+.mImgCap{margin:6px 0 0;font-size:10.5px;color:var(--muted);text-align:center}
+/* 라이트박스(사진 크게 보기) */
+.lightbox{position:fixed;inset:0;z-index:400;background:rgba(12,9,6,.94);display:flex;align-items:center;justify-content:center;padding:14px}
+.lightbox[hidden]{display:none}
+.lbImg{max-width:100%;max-height:88vh;width:auto;height:auto;object-fit:contain;background:#fff;border-radius:8px}
+.lbClose{position:fixed;top:12px;right:12px;width:42px;height:42px;border-radius:999px;border:0;background:rgba(255,255,255,.16);color:#fff;font-size:18px;font-weight:700}
+.lbHint{position:fixed;bottom:14px;left:0;right:0;text-align:center;color:rgba(255,255,255,.6);font-size:11px;margin:0}
+/* 세계 제과제빵 — 유래 / 레시피 탭 */
+.wSeg{display:flex;gap:6px;margin:2px 0 12px;padding:4px;background:var(--bg2);border-radius:12px}
+.wSegBtn{flex:1;border:0;background:transparent;color:var(--ink2);border-radius:9px;padding:9px 6px;font-size:12.5px;font-weight:750}
+.wSegBtn.on{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px rgba(70,45,20,.12)}
+html[data-theme="dark"] .wSegBtn.on{background:var(--surface2);box-shadow:none}
+.wPane[hidden]{display:none}
+.wPane>h5:first-child{margin-top:4px}
+.prodSpec th{width:34%;text-align:left;background:var(--surface2);font-weight:700}
+.prodUse{margin:10px 0 6px;font-size:13px;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:8px 10px}
+.prodWarn{margin:10px 0 0;font-size:12.5px;color:#9a4a2a;background:#fbeee3;border-radius:8px;padding:8px 10px;line-height:1.6}
+html[data-theme="dark"] .prodWarn{background:#3a2317;color:#f0b090}
+.cmpTbl th{text-align:left}
+.tocThumb{width:44px;height:44px;object-fit:contain;border:1px solid var(--line);border-radius:8px;background:var(--surface2);flex:none}
+@media (max-width:640px){.tocThumb{width:38px;height:38px}}
+/* 목차(분류) 카드 */
+.catGrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin-top:12px}
+.catCard{
+  display:flex;flex-direction:column;gap:8px;text-align:left;font:inherit;color:inherit;
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 12px 12px;
+  box-shadow:var(--shadow);transition:transform .16s ease,border-color .16s ease;cursor:pointer;
+}
+.catCard:hover{transform:translateY(-2px);border-color:var(--accent)}
+.ccTop{display:flex;align-items:center;gap:7px}
+.ccNum{width:20px;height:20px;border-radius:999px;background:var(--accent);color:#fff;font-size:11px;
+  font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.ccIc{font-size:15px;line-height:1}
+.ccCnt{margin-left:auto;font-size:10.5px;font-weight:700;color:var(--muted);
+  background:var(--surface2);border-radius:999px;padding:2px 8px}
+.ccThumbs{display:flex;gap:5px;height:58px;align-items:center}
+.ccThumbs img{width:58px;height:58px;object-fit:contain;background:linear-gradient(180deg,#fffdf9,#f5ecdf);
+  border:1px solid var(--line);border-radius:8px;padding:3px}
+html[data-theme="dark"] .ccThumbs img{background:linear-gradient(180deg,#241d16,#1b1510)}
+.ccNoImg{font-size:10.5px;color:var(--muted)}
+.ccName{font-size:14px;font-weight:750;letter-spacing:-.02em;line-height:1.35}
+/* ---------- 두 번째 목차: 알약(pill) + 숫자 배지 ---------- */
+.pillToc{
+  background:var(--surface);border:1px solid var(--line);border-radius:20px;
+  overflow:hidden;margin-bottom:16px;box-shadow:var(--shadow);
+}
+.pillHead{padding:14px 14px 13px}
+.pillTop{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:26px}
+.pillWord{font-size:10px;font-weight:900;letter-spacing:.18em;color:#bd9a76;flex:none}
+html[data-theme="dark"] .pillWord{color:var(--muted)}
+.pillLabel{margin:9px 0 0;font-size:11.5px;font-weight:750;color:#a2866d;letter-spacing:.01em;line-height:1.45}
+html[data-theme="dark"] .pillLabel{color:var(--muted)}
+.pillTitle{margin:2px 0 0;font-size:25px;font-weight:900;color:#3f2717;letter-spacing:-.035em;line-height:1.2}
+.pillTitle em{font-style:normal;color:#b9762f}
+html[data-theme="dark"] .pillTitle{color:var(--ink)}
+html[data-theme="dark"] .pillTitle em{color:var(--accent2)}
+.pillSub{margin:3px 0 0;font-size:11.5px;color:#8a6a5c;line-height:1.5}
+html[data-theme="dark"] .pillSub{color:var(--muted)}
+.pillExtra{margin-top:11px}
+.pillExtra .contLink{margin:0}
+.pillBand{
+  background:linear-gradient(180deg,#f8eeda 0%,#f2e1c9 100%);
+  border-top:1px solid #ecd9bf;padding:12px 12px 14px;
+}
+html[data-theme="dark"] .pillBand{background:linear-gradient(180deg,#2c231a 0%,#241c15 100%);border-top-color:var(--line)}
+.pillList{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+@media (min-width:760px){.pillList{grid-template-columns:1fr 1fr;gap:10px 16px}}
+.pillItem{
+  display:flex;align-items:center;gap:2px;min-width:0;
+  background:#fffdf9;border:1.6px solid #dcbc95;border-radius:999px;
+  padding:5px 7px 5px 5px;box-shadow:0 1px 2px rgba(109,58,36,.07);
+  transition:border-color .15s ease,transform .12s ease;
+}
+.pillItem:hover{border-color:#b9762f}
+.pillItem:active{transform:scale(.992)}
+html[data-theme="dark"] .pillItem{background:var(--surface2);border-color:#4d3a29;box-shadow:none}
+.pillRow{
+  flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:10px;
+  border:0;background:transparent;color:inherit;font:inherit;text-align:left;padding:2px 0;
+}
+.pillNum{
+  flex:none;position:relative;width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(155deg,#b57a3d 0%,#8a5a2b 100%);color:#fff;
+  font-size:13.5px;font-weight:900;letter-spacing:-.03em;font-variant-numeric:tabular-nums;
+  display:grid;place-items:center;
+}
+.pillNum::after{
+  content:"";position:absolute;left:3px;bottom:-3px;width:0;height:0;
+  border-left:9px solid #8a5a2b;border-bottom:9px solid transparent;
+  border-radius:0 0 0 2px;
+}
+html[data-theme="dark"] .pillNum{background:linear-gradient(155deg,#c98f4f 0%,#a9702f 100%);color:#1c1510}
+html[data-theme="dark"] .pillNum::after{border-left-color:#a9702f}
+.pillRow .pt{flex:1 1 auto;min-width:0;display:block}
+.pillRow .pt b{
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  font-size:14px;font-weight:850;color:#513022;line-height:1.35;letter-spacing:-.025em;
+}
+html[data-theme="dark"] .pillRow .pt b{color:var(--ink)}
+.pillRow .pt i{
+  display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
+  margin-top:1px;font-style:normal;font-size:10.8px;color:#9a7d70;line-height:1.4;
+}
+html[data-theme="dark"] .pillRow .pt i{color:var(--muted)}
+.pillRow .badge{flex:none;font-size:9.5px;padding:1px 6px;border-radius:6px}
+.pillCnt{
+  flex:none;font-size:10.5px;font-weight:800;color:#8a5a2b;background:#f6e9d6;
+  border-radius:999px;padding:2px 8px;white-space:nowrap;font-variant-numeric:tabular-nums;
+}
+html[data-theme="dark"] .pillCnt{background:#3a2c1e;color:var(--accent2)}
+.pillThumbs{flex:none;display:flex;gap:3px}
+.pillThumbs img{
+  width:29px;height:29px;object-fit:contain;border:1px solid #ecd9bf;border-radius:8px;
+  background:#fff;padding:1.5px;display:block;
+}
+html[data-theme="dark"] .pillThumbs img{background:#241d16;border-color:#4d3a29}
+.pillItem .tocStar{width:26px;font-size:12.5px;color:#d9c6b0}
+.pillItem .tocStar.on{color:#e0a12a}
+@media (max-width:430px){
+  .pillHead{padding:13px 13px 12px}
+  .pillTitle{font-size:22px}
+  .pillBand{padding:11px 11px 13px}
+  .pillThumbs img:nth-child(n+3){display:none}
+  .pillRow{gap:9px}
+  .pillRow .pt b{font-size:13.5px}
+}
+/* 전재료 표·목록 사진 */
+.matTbl .thThumb{width:46px}
+.matTbl td.mThumb{width:46px;padding:4px 3px}
+.matTbl td.mThumb img{width:38px;height:38px;object-fit:contain;border:1px solid var(--line);border-radius:6px;
+  background:linear-gradient(180deg,#fffdf9,#f5ecdf);padding:2px;display:block}
+html[data-theme="dark"] .matTbl td.mThumb img{background:linear-gradient(180deg,#241d16,#1b1510)}
+.matItem{display:flex;flex-direction:row;align-items:flex-start;gap:9px}
+.miThumb{flex:none;width:54px;height:54px;border:1px solid var(--line);border-radius:9px;
+  background:linear-gradient(180deg,#fffdf9,#f5ecdf);display:flex;align-items:center;justify-content:center;overflow:hidden}
+html[data-theme="dark"] .miThumb{background:linear-gradient(180deg,#241d16,#1b1510)}
+.miThumb img{width:100%;height:100%;object-fit:contain;padding:3px}
+.miBody{flex:1 1 auto;min-width:0}
+@media (max-width:640px){
+  .grid.hgrid{grid-template-columns:1fr}
+  .card.hasImg{padding:8px;gap:9px}
+  .hcThumb{width:88px;height:88px}
+  .card.wcard .hcThumb{width:104px;height:104px}
+  .hcBody{padding-right:18px}
+  .card.hasImg h3{font-size:13px}
+  .card.hasImg .sum{font-size:11px;-webkit-line-clamp:2}
+  .catGrid{grid-template-columns:1fr 1fr;gap:8px}
+  .catCard{padding:9px}
+  .ccThumbs{height:46px;gap:4px}
+  .ccThumbs img{width:44px;height:44px}
+  .ccName{font-size:12.5px}
+  .mImg{max-height:none}
+  .wSegBtn{font-size:12px;padding:8px 4px}
+}
+/* ===== 색 칩·스와치·조색 표 ===== */
+.icSw{display:grid;grid-template-columns:repeat(auto-fill,minmax(94px,1fr));gap:9px;margin:12px 0 16px}
+.icSw figure{margin:0;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:7px 6px;text-align:center}
+.icSw .swChip{display:block;height:50px;border-radius:9px;border:1px solid rgba(0,0,0,.12);box-shadow:inset 0 -10px 16px rgba(0,0,0,.05)}
+.icSw b{display:block;font-size:11.5px;line-height:1.3;margin-top:6px;color:var(--ink)}
+.icSw code{display:block;font-size:10.5px;color:var(--muted);letter-spacing:.01em;margin-top:1px}
+.icSteps{margin:8px 0 14px;padding-left:20px}
+.icSteps li{margin:6px 0;line-height:1.65}
+.icSteps b{color:var(--accent2)}
+table.icTbl{font-size:13px}
+table.icTbl th,table.icTbl td{padding:6px 8px}
+.icRatio{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 14px;padding:0}
+.icRatio span{background:var(--surface2);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:12px}
+.icRatio em{font-style:normal;color:var(--accent2);font-weight:700}
+.icBig{display:flex;gap:12px;align-items:center;background:var(--surface2);border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0}
+.icBig .icDot{width:62px;height:62px;border-radius:16px;border:1px solid rgba(0,0,0,.12);flex:0 0 auto}
+.icBig b{font-size:16px;display:block;line-height:1.4}
+.icBig code{font-size:12.5px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -1311,6 +1527,7 @@ html[data-theme="dark"] .xcPart td,html[data-theme="dark"] .exGrp td{background:
     <div class="chips myChips" id="myChips" aria-label="레시피 분류" hidden></div>
     <div class="chips myChips" id="kindChips" aria-label="세계 제과·제빵 구분" hidden></div>
     <div class="chips" id="chips" aria-label="태그 필터"></div>
+    <div class="cmpBar" id="cmpBar" aria-label="브랜드 비교표"></div>
   </div>
 </header>
 
@@ -1521,7 +1738,7 @@ html[data-theme="dark"] .xcPart td,html[data-theme="dark"] .exGrp td{background:
 
   <footer>
     <b>제과제빵 이론 백과</b> v2.7 · 실무·자격증·제품개발용 개인 참고 자료<br>
-    클래식 레시피 18종·세계 제과 6개국·용어 사전 307개(🔊 발음)·참고 영상 30개·계산기 8종(레시피 변형·반죽배합·비건 변환·DDP·오븐 환산·틀 배율·젤라틴) — 배합·팬·단가를 입력하면 바로 계산됩니다. 기준가는 2026-11 시세입니다.<br>
+    레시피 185종(엑셀·사진·메모)·클래식 18종·세계 제과제빵 6개국 54품목(품목별 사진·레시피)·용어 사전 307개(🔊 발음)·참고 영상 23개·계산기 8종(원가·레시피 변형·반죽배합·비건 변환·카페 음료·R&D·DDP·오븐 환산)은 배합·팬·단가를 입력하면 바로 계산됩니다. 기준가는 2026-11 시세입니다.<br>
     클래식 레시피·장비 스펙·구매처 정보는 제조사 기술자료와 유통사 표시가(2026-11)를 교차 확인해 정리했습니다.<br>
     수치는 교재·제조사 기술자료·학술 자료의 범위를 정리한 것으로, 설비·배합·원료·제품 로트에 따라 달라질 수 있습니다. 최종 판단은 실측과 시험 배합으로 확인하세요.<br>
     즐겨찾기와 테마는 이 브라우저에만 저장됩니다(localStorage). 오프라인에서도 열립니다.
@@ -1551,7 +1768,7 @@ html[data-theme="dark"] .xcPart td,html[data-theme="dark"] .exGrp td{background:
 'use strict';
 const DB = [];
 const BAKERY_SHARE = true;
-var BAKERY_HIDE_CATS = ["shop", "cafe", "practical", "mousse", "formula"];
+var BAKERY_HIDE_CATS = ["shop", "cafe", "practical", "mousse", "formula", "icing"];
 /* ===== 제과 이론 (1) ===== */
 DB.push(
 {
@@ -5827,6 +6044,14 @@ function recipeBody(r) {
   });
   h += '</div>';
 
+  if (r.tips && r.tips.length) {
+    h += '<h4>' + recipeEsc(r.tipsTitle || '테스트로 찾은 꿀팁') + '</h4><ul class="recipeTips">';
+    r.tips.forEach(function (t) {
+      if (typeof t === 'string') h += '<li>' + recipeEsc(t) + '</li>';
+      else h += '<li><b>' + recipeEsc(t.t || '') + '</b>' + (t.d ? '<span>' + recipeEsc(t.d) + '</span>' : '') + '</li>';
+    });
+    h += '</ul>';
+  }
   if (r.memo) h += '<h4>메모</h4><p class="recipeMemo">' + recipeEsc(r.memo) + '</p>';
   if (r.images && r.images.length) {
     h += '<h4>사진</h4><div class="recipeGallery">';
@@ -5889,540 +6114,1032 @@ function wRecipe(title, unit, rows, method, note) {
   return h;
 }
 
+/* 나라별 개요 — 품목은 data-world2.js 로 분리(2026-11-19) */
+
+/* 나라별 개요 — 품목은 data-world2.js 로 분리(2026-11-19) */
 DB.push({
-  id: 'w01', cat: 'world', title: '프랑스 — 크루아상·바게트·까눌레·밀푀유·타르트 타탱', en: 'France', exam: false,
-  mg2: 'ov',
-  tags: ['프랑스', '크루아상', '바게트', '까눌레', '밀푀유', '타르트 타탱', '역사', '세계 제과'],
-  summary: '프랑스 제과·제빵의 유래와 대표 레시피 5종(배합·공정).',
+  id: 'w01', cat: 'world', title: '프랑스 — 제과·제빵 개요', en: 'France', exam: false,
+  mg: 'fr', mg2: 'ov', wc: '프랑스',
+  tags: ['프랑스', '세계 제과', '개요', '역사'],
+  summary: '프랑스 제과·제빵의 유래와 대표 품목 9가지(제과 6 · 제빵 3).',
   body: `
   <h4>역사 · 유래</h4>
   <p>프랑스 제과는 17~18세기 궁정과 수도원 주방에서 체계화됐습니다. 크루아상은 오스트리아의 <strong>키프펠(Kipferl)</strong>이 파리로 건너와 버터를 겹겹이 접는 <strong>라미네이션</strong> 기법과 만난 것으로 알려져 있고, 바게트는 19세기 파리에서 대중화된 긴 형태의 빵입니다. 까눌레는 보르도의 수녀원에서 만든 과자에서 유래했다는 이야기가 전해지며, 구리 틀과 밀랍을 써서 진한 캐러멜 껍질을 냅니다. 밀푀유(천 겹)는 17세기 프랑스 제과 문헌에서 그 뿌리를 찾고, 타르트 타탱은 1880년대 라모트-뵈브롱의 타탱 자매가 뒤집힌 타르트를 만든 데서 이름이 붙었다고 전해집니다.</p>
-  ${wRecipe('크루아상', '12개(60g)', [
-    ['강력분', 500, '단백질 11.5%'], ['물', 250, '차갑게'], ['우유', 50, ''],
-    ['설탕', 55, ''], ['소금', 10, ''], ['생이스트', 10, ''],
-    ['무염버터', 35, '반죽용'], ['롤인버터', 250, '15°C 시트']
-  ], '반죽 1단 3분+2단 3분→냉장 4시간. 롤인 버터를 넣고 3-fold 3회(매 회 4°C 30분 휴지). 3mm로 밀어 삼각형 60g 성형, 27°C 60~90분, 190°C 18~20분.', '버터와 반죽의 온도 차가 크면 층이 깨집니다.')}
-  ${wRecipe('바게트 트래디션', '4개(350g)', [
-    ['강력분', 1000, 'T55'], ['물', 720, '10°C'], ['소금', 20, ''],
-    ['생이스트', 5, ''], ['르방', 200, '선택']
-  ], '오토리즈 30분→1단 3분+2단 7분→30분 휴지→3회 접기. 350g 분할, 냉장 12시간, 250°C 스팀 10초 후 20~25분.', '수분 72%, 중심 96°C.')}
+  <h4>대표 품목 9가지</h4>
+  <p>마들렌 · 파리브레스트 · 생토노레 · 까눌레 · 밀푀유 · 타르트 타탱 · 크루아상 · 바게트 트래디션 · 브리오슈 낭테르</p>
+  `,
+  tips: [],
+  related: ['마들렌', '파리브레스트', '생토노레', '까눌레']
+});
+
+DB.push({
+  id: 'w02', cat: 'world', title: '이탈리아 — 제과·제빵 개요', en: 'Italy', exam: false,
+  mg: 'it', mg2: 'ov', wc: '이탈리아',
+  tags: ['이탈리아', '세계 제과', '개요', '역사'],
+  summary: '이탈리아 제과·제빵의 유래와 대표 품목 7가지(제과 3 · 제빵 4).',
+  body: `
+  <h4>역사 · 유래</h4>
+  <p>이탈리아는 지역별 전통이 뚜렷합니다. 티라미수는 1960~70년대 트레비소의 레스토랑에서 탄생했다는 설이 유력하고, 판토네는 밀라노의 15세기 전설에서 시작해 천연 발효종으로 만드는 크리스마스 빵이 됐습니다. 포카치아는 고대 로마의 <strong>panis focacius</strong>에서 이름이 나왔고, 치아바타는 1982년 베로나의 제빵사 아르날도 카발라리가 프랑스 바게트에 맞서 만든 것으로 알려져 있습니다. 카놀리는 시칠리아의 아랍 문화 영향 속에서 발전한 튀김 과자입니다.</p>
+  <h4>대표 품목 7가지</h4>
+  <p>티라미수 · 판나코타 · 카놀리 · 치아바타 · 포카치아 · 파네토네 · 판토네</p>
+  `,
+  tips: [],
+  related: ['티라미수', '판나코타', '카놀리', '치아바타']
+});
+
+DB.push({
+  id: 'w03', cat: 'world', title: '독일·오스트리아 — 제과·제빵 개요', en: 'Germany & Austria', exam: false,
+  mg: 'de', mg2: 'ov', wc: '독일·오스트리아',
+  tags: ['독일·오스트리아', '세계 제과', '개요', '역사'],
+  summary: '독일·오스트리아 제과·제빵의 유래와 대표 품목 10가지(제과 5 · 제빵 5).',
+  body: `
+  <h4>역사 · 유래</h4>
+  <p>독일·오스트리아는 크리스마스 빵과 궁정 케이크의 전통이 깊습니다. 슈톨렌은 15세기 드레스덴에서 유래했고, 버터 금지령이 풀린 뒤 버터를 넣은 <strong>Christstollen</strong>으로 발전했습니다. 프레첼은 독일 바이에른의 수도원에서 시작됐다는 설이 있으며, 잿물(lye)에 담갔다 구워 진한 갈색과 독특한 향을 냅니다. 자허토르테는 1832년 빈에서 메테르니히 재상의 주문으로 프란츠 자허가 만든 케이크로 알려져 있고, 바움쿠헨은 꼬치에 반죽을 겹겹이 발라 구워 나이테 모양을 만드는 독일·오스트리아 전통 과자입니다.</p>
+  <h4>대표 품목 10가지</h4>
+  <p>자허토르테 · 바움쿠헨 · 슈바르츠발트 케이크 · 카이저슈마른 · 슈트로이젤쿠헨 · 슈톨렌 · 프레첼 · 브로트헨 · 바이에른 브레첸 · 로겐브로트</p>
+  `,
+  tips: [],
+  related: ['자허토르테', '바움쿠헨', '슈바르츠발트 케이크', '카이저슈마른']
+});
+
+DB.push({
+  id: 'w04', cat: 'world', title: '영미 — 제과·제빵 개요', en: 'UK & USA', exam: false,
+  mg: 'eu', mg2: 'ov', wc: '영미',
+  tags: ['영미', '세계 제과', '개요', '역사'],
+  summary: '영미 제과·제빵의 유래와 대표 품목 13가지(제과 7 · 제빵 6).',
+  body: `
+  <h4>역사 · 유래</h4>
+  <p>영국의 스콘은 16세기 스코틀랜드에서 귀리 가루로 만든 가벼운 빵에서 시작해, 오늘날 밀가루·버터·우유의 스콘으로 발전했습니다. 미국의 브라우니는 1893년 시카고 만국박람회의 파머 하우스 호텔에서 탄생했다는 이야기가 유명하고, 당근케이크는 20세기 영국·미국에서 당근의 단맛을 활용한 케이크로 자리 잡았습니다. 뉴욕 치즈케이크는 유대인 델리 문화와 크림치즈가 만나 1920년대 뉴욕에서 대중화된 것으로 알려져 있습니다.</p>
+  <h4>대표 품목 13가지</h4>
+  <p>스콘 · 빅토리아 스펀지 · 트레클 타르트 · 브라우니 · 뉴욕 치즈케이크 · 초코칩 쿠키 · 당근케이크 · 아일랜드 소다브레드 · 잉글리시 머핀 · 홀밀 브레드 · 샌프란시스코 사워도우 · 시나몬롤 · 콘브레드</p>
+  `,
+  tips: [],
+  related: ['스콘', '빅토리아 스펀지', '트레클 타르트', '브라우니']
+});
+
+DB.push({
+  id: 'w05', cat: 'world', title: '일본 — 제과·제빵 개요', en: 'Japan', exam: false,
+  mg: 'jp', mg2: 'ov', wc: '일본',
+  tags: ['일본', '세계 제과', '개요', '역사'],
+  summary: '일본 제과·제빵의 유래와 대표 품목 7가지(제과 4 · 제빵 3).',
+  body: `
+  <h4>역사 · 유래</h4>
+  <p>일본의 카스테라는 16세기 나가사키에 포르투갈 선교사들이 전한 <strong>pão de Castela</strong>(카스텔라)에서 시작됐습니다. 달걀·설탕·밀가루를 수욕에서 휘핑해 굽는 방식이 일본식으로 정착했고, 설탕 대신 미즈아메(물엿)를 넣어 촉촉함을 냅니다. 쇼쿠판(식빵)은 20세기 일본에서 유행한 부드러운 식빵으로, 유지와 수분을 높여 결이 가는 식감을 냅니다. 말차 모찌는 우지 말차와 찹쌀가루를 결합한 현대 디저트로, 쫀득한 식감과 쓴맛의 대비가 특징입니다.</p>
+  <h4>대표 품목 7가지</h4>
+  <p>카스텔라 · 시폰케이크 · 다이후쿠 · 말차 모찌 · 쇼쿠판 · 멜론빵 · 카레빵</p>
+  `,
+  tips: [],
+  related: ['카스텔라', '시폰케이크', '다이후쿠', '말차 모찌']
+});
+
+DB.push({
+  id: 'w06', cat: 'world', title: '한국 — 제과·제빵 개요', en: 'Korea', exam: false,
+  mg: 'kr', mg2: 'ov', wc: '한국',
+  tags: ['한국', '세계 제과', '개요', '역사'],
+  summary: '한국 제과·제빵의 유래와 대표 품목 8가지(제과 4 · 제빵 4).',
+  body: `
+  <h4>역사 · 유래</h4>
+  <p>한국의 단팥빵은 20세기 초 서울에 들어온 일본식 앙팡(あんパン)이 팥앙금과 만나 정착한 빵입니다. 소보로빵은 1970~80년대 동네 빵집에서 유행한 한국형 스트로이젤 빵으로, 위에 올린 과자 반죽이 갈라진 모양이 이름의 유래가 됐습니다. 약과는 고려시대부터 전해진 유밀과로, 꿀·참기름·소주로 반죽해 기름에 튀긴 뒤 조청에 담갑니다. 주악은 조선시대 궁중·민간에서 즐긴 찹쌀 과자로, 반죽에 팥소를 넣어 찌거나 튀겨 조청·깨로 마무리합니다.</p>
+  <h4>대표 품목 8가지</h4>
+  <p>약과 · 주악 · 호두과자 · 한국식 카스텔라 · 단팥빵 · 소보로빵 · 소금빵 · 마늘빵</p>
+  `,
+  tips: [],
+  related: ['약과', '주악', '호두과자', '한국식 카스텔라']
+});
+/* 🌍 세계 제과·제빵 — 개별 품목(품목마다 유래·특징 + 레시피·배합 + 개별 사진)
+   2026-11-19 나라별·제과/제빵별로 품목 단위 분리. 사진은 위키미디어 공용(라이선스는 world_credits). */
+
+DB.push({
+  id: 'wi04', cat: 'world', title: '마들렌', en: 'Madeleine', exam: false,
+  mg: 'fr', mg2: 'pastry', wc: '프랑스',
+  tags: ['프랑스', '제과', '세계 제과', '마들렌', 'Madeleine'],
+  summary: '조개 모양 구움과자, 반죽 숙성이 배(boat) 모양 배꼽을 만든다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>프랑스 로렌 지방의 조개 모양 구움과자로, 19세기에 마들렌이라는 이름의 요리가 궁정에 소개했다는 이야기가 전해집니다. 전란·설탕·꿀을 35°C로 데워 휘핑하고 녹인 버터를 폴딩한 뒤 냉장에서 6시간 이상 숙성해야 배(boat) 모양의 배꼽이 올라옵니다.</p>
+  ${wRecipe('마들렌', '24개(35g)', [
+    ['전란', 240, '실온'], ['설탕', 200, ''], ['꿀', 40, ''], ['박력분', 220, ''],
+    ['아몬드파우더', 30, ''], ['베이킹파우더', 8, ''], ['무염버터', 230, '녹여 50°C'], ['레몬제스트', 3, '']
+  ], '전란+설탕+꿀을 35°C로 데워 휘핑 → 체 친 가루·레몬제스트 → 녹인 버터 폴딩 → 냉장 6시간 이상 숙성 → 190°C 예열 후 180°C 10~12분.', '숙성 반죽이 배(boat) 모양 배꼽을 만든다.')}
+    `,
+  tips: [],
+  related: ['마들렌', '파리브레스트', '생토노레']
+});
+
+DB.push({
+  id: 'wi05', cat: 'world', title: '파리브레스트', en: 'Paris-Brest', exam: false,
+  mg: 'fr', mg2: 'pastry', wc: '프랑스',
+  tags: ['프랑스', '제과', '세계 제과', '파리브레스트', 'Paris-Brest'],
+  summary: '자전거 경주를 기념한 링 모양 슈, 프랄리네 버터크림을 샌드한다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>1891년 파리–브레스트 자전거 경주를 기념해 만든 링 모양 슈 과자로, 아몬드 프랄린을 넣은 버터크림과 크렘 파티시에르를 샌드합니다. 슈 반죽을 20cm 링으로 짜고 아몬드 슬라이스를 올려 굽다가 뚜껑을 중간에 분리해야 속이 눅눅해지지 않습니다.</p>
+  ${wRecipe('파리브레스트', '지름 20cm 1대', [
+    ['슈 반죽', 350, '기본 슈 배합'], ['아몬드슬라이스', 60, '분당·달걀물 코팅'], ['크렘 파티시에르', 500, '바닐라'],
+    ['프랄리네 버터크림', 300, '아몬드 프랄리네+버터크림'], ['분당', 30, '표면']
+  ], '지름 20cm 원형으로 슈 반죽을 짜고 아몬드슬라이스를 올려 180°C 35~40분(중간에 뚜껑 분리) → 식힌 뒤 크렘 파티시에르+프랄리네 버터크림을 샌드 → 분당을 뿌린다.', '뚜껑을 늦게 분리하면 속이 눅눅해진다.')}
+    `,
+  tips: [],
+  related: ['파리브레스트', '마들렌', '생토노레']
+});
+
+DB.push({
+  id: 'wi06', cat: 'world', title: '생토노레', en: 'Saint-Honoré', exam: false,
+  mg: 'fr', mg2: 'pastry', wc: '프랑스',
+  tags: ['프랑스', '제과', '세계 제과', '생토노레', 'Saint-Honoré'],
+  summary: '푸프 링 위에 슈를 카라멜로 붙이고 크림을 짜는 프랑스 클래식.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>파리의 생토노레 거리에서 이름이 붙었다고 전해지는 클래식으로, 푸프 링 위에 슈를 카라멜로 붙이고 크렘 파티시에르와 샹티이 크림을 짜서 완성합니다. 카라멜은 165~170°C에서 불을 끄고 잔열로 색을 내야 씁쓸해지지 않습니다.</p>
+  ${wRecipe('생토노레', '6개(8cm)', [
+    ['푸프 페이스트리', 300, '3mm'], ['슈 반죽', 250, '링용'], ['크렘 파티시에르', 400, ''],
+    ['샹티이 크림', 300, ''], ['카라멜(이소말트)', 250, '35% 설탕 시럽']
+  ], '푸프 링을 170°C 25분 구워 식히고 슈를 구워 카라멜에 담갔다 꺼내 링 위에 붙인다 → 크렘 파티시에르와 샹티이를 짜고 카라멜로 장식.', '카라멜은 165~170°C에서 불을 끄고 잔열로 색을 낸다.')}
+    `,
+  tips: [],
+  related: ['생토노레', '마들렌', '파리브레스트']
+});
+
+DB.push({
+  id: 'wi07', cat: 'world', title: '까눌레', en: 'Canelé', exam: false,
+  mg: 'fr', mg2: 'pastry', wc: '프랑스',
+  tags: ['프랑스', '제과', '세계 제과', '까눌레', 'Canelé'],
+  summary: '보르도 수녀원 유래, 구리 틀과 밀랍으로 진한 캐러멜 껍질을 낸다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>보르도의 수녀원에서 만든 과자에서 유래했다는 이야기가 전해지며, 구리 틀과 밀랍을 써서 진한 캐러멜 껍질을 냅니다. 반죽은 냉장에서 24시간 숙성해야 향이 살고, 250°C에서 시작해 180°C로 낮춰 45분 구우면 겉은 단단하고 속은 촉촉합니다.</p>
   ${wRecipe('까눌레', '12개(5cm 틀)', [
     ['우유', 500, ''], ['무염버터', 50, ''], ['박력분', 125, ''],
     ['설탕', 250, ''], ['계란', 100, '2개'], ['노른자', 40, '2개'],
     ['럼', 50, ''], ['바닐라', 5, '']
   ], '우유+버터를 80°C로 데워 설탕·가루·계란·럼과 섞고 냉장 24시간. 구리 틀에 밀랍을 발라 8부능선까지 채우고 250°C 15분→180°C 45분.', '반죽 숙성이 캐러멜 향의 핵심.')}
+    `,
+  tips: [],
+  related: ['까눌레', '마들렌', '파리브레스트']
+});
+
+DB.push({
+  id: 'wi08', cat: 'world', title: '밀푀유', en: 'Mille-feuille', exam: false,
+  mg: 'fr', mg2: 'pastry', wc: '프랑스',
+  tags: ['프랑스', '제과', '세계 제과', '밀푀유', 'Mille-feuille'],
+  summary: '천 겹 푸프 세 장에 크렘 디플로마트를 샌드한 프랑스 대표 과자.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>‘천 겹’이라는 이름처럼 푸프 페이스트리를 세 겹 쌓아 크림을 샌드하는 프랑스 대표 과자입니다. 크렘 파티시에르에 휘핑 크림을 섞은 크렘 디플로마트를 쓰고, 시트는 무게추를 올려 눌러 굽습니다.</p>
   ${wRecipe('밀푀유', '8조각', [
     ['푸프 페이스트리', 400, '3mm 3장'], ['크렘 파티시에르', 500, ''],
     ['휘핑 생크림', 200, ''], ['폰당', 200, '또는 글라사주']
   ], '푸프를 190°C 20분(무게추) 구워 식힌다. 크렘 파티시에르에 휘핑 크림을 섞어 크렘 디플로마트로. 시트-크림-시트-크림-시트 순으로 쌓고 윗면에 폰당을 입힌다.', '크림은 짤 때마다 두께를 같게.')}
+    `,
+  tips: [],
+  related: ['밀푀유', '마들렌', '파리브레스트']
+});
+
+DB.push({
+  id: 'wi09', cat: 'world', title: '타르트 타탱', en: 'Tarte Tatin', exam: false,
+  mg: 'fr', mg2: 'pastry', wc: '프랑스',
+  tags: ['프랑스', '제과', '세계 제과', '타르트 타탱', 'Tarte Tatin'],
+  summary: '사과를 캐러멜화한 뒤 뒤집어 굽는 프랑스 타르트.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>1880년대 라모트-뵈브롱의 타탱 자매가 뒤집힌 타르트를 만든 데서 이름이 붙었다고 전해집니다. 팬에 버터·설탕을 깔고 사과를 빽빽이 배열해 캐러멜화한 뒤 푸프를 덮어 굽고, 5분 두었다가 뒤집으면 캐러멜이 안정됩니다.</p>
   ${wRecipe('타르트 타탱', '18cm 1대', [
     ['사과', 900, '5~6개'], ['무염버터', 100, ''], ['설탕', 150, ''],
     ['푸프 페이스트리', 300, '3mm']
   ], '팬에 버터·설탕을 깔고 사과를 빽빽이 배열해 중불에서 캐러멜화. 푸프를 덮어 190°C 30분, 뒤집어 식힌다.', '사과 수분이 많으면 캐러멜이 묽어집니다.')}
-  `,
-  tips: ['크루아상·바게트는 온도 관리가 전부입니다.', '까눌레는 반죽 24시간 숙성이 향을 만듭니다.', '타탱은 뒤집기 전 5분 두어 캐러멜을 안정화하세요.'],
-  related: ['크루아상 (Croissant)', '바게트 트래디션 (Baguette)', '타르트 쉘 (Tart shell)', '프랑스 — 크루아상·바게트·까눌레·밀푀유·타르트 타탱']
+    `,
+  tips: [],
+  related: ['타르트 타탱', '마들렌', '파리브레스트']
 });
 
 DB.push({
-  id: 'w02', cat: 'world', title: '이탈리아 — 티라미수·판토네·포카치아·치아바타·카놀리', en: 'Italy', exam: false,
-  mg2: 'ov',
-  tags: ['이탈리아', '티라미수', '판토네', '포카치아', '치아바타', '카놀리', '역사', '세계 제과'],
-  summary: '이탈리아 대표 디저트·빵의 유래와 레시피 5종(배합·공정).',
+  id: 'wi01', cat: 'world', title: '크루아상', en: 'Croissant', exam: false,
+  mg: 'fr', mg2: 'bread', wc: '프랑스',
+  tags: ['프랑스', '제빵', '세계 제과', '크루아상', 'Croissant'],
+  summary: '라미네이션 27겹, 껍질은 바삭하고 속은 벌집 모양인 프랑스 비엔누아즈리.',
   body: `
-  <h4>역사 · 유래</h4>
-  <p>이탈리아는 지역별 전통이 뚜렷합니다. 티라미수는 1960~70년대 트레비소의 레스토랑에서 탄생했다는 설이 유력하고, 판토네는 밀라노의 15세기 전설에서 시작해 천연 발효종으로 만드는 크리스마스 빵이 됐습니다. 포카치아는 고대 로마의 <strong>panis focacius</strong>에서 이름이 나왔고, 치아바타는 1982년 베로나의 제빵사 아르날도 카발라리가 프랑스 바게트에 맞서 만든 것으로 알려져 있습니다. 카놀리는 시칠리아의 아랍 문화 영향 속에서 발전한 튀김 과자입니다.</p>
-  ${wRecipe('티라미수', '4개(컵)', [
-    ['마스카포네', 500, ''], ['계란', 200, '4개'], ['설탕', 100, ''],
-    ['사보이아르디', 200, ''], ['에스프레소', 200, '식힌 것'], ['마르살라', 30, ''],
-    ['코코아파우더', 20, '무가당']
-  ], '노른자+설탕을 수욕에서 80°C까지 휘핑, 마스카포네와 섞는다. 흰자는 단단한 머랭으로 만들어 fold. 사보이아르디를 에스프레소+마르살라에 적셔 층층이 쌓고 냉장 6시간, 먹기 전 코코아.', '수분 많은 마스카포네는 물기를 빼세요.')}
+  <h4>유래 · 특징</h4>
+  <p>오스트리아의 키프펠(Kipferl)이 18세기 파리로 건너와 버터를 겹겹이 접는 라미네이션 기법과 만나 크루아상이 되었다고 전해집니다. 반죽과 롤인 버터의 경도를 같게 맞춰 3절 3회 접기로 층을 만들고, 190°C 전후에서 16~18분 구워 껍질이 부서질 듯 바삭하고 속은 벌집 모양이 되게 합니다.</p>
+  ${wRecipe('크루아상', '12개(60g)', [
+    ['강력분(T55)', 500, ''], ['물', 240, '차갑게'], ['우유', 50, ''], ['설탕', 55, ''],
+    ['소금', 10, ''], ['생이스트', 12, ''], ['버터', 35, '반죽용'], ['롤인버터(82%)', 250, '15°C 시트']
+  ], '반죽 1단 3분 + 2단 4분 → 냉장 4시간 → 3절 3회(매 회 4°C 30분 휴지) → 3mm 밀어 60g 삼각형 성형 → 27°C 80% 60~90분 → 190°C 16~18분.', '반죽과 버터의 경도가 같아야 층이 산다.')}
+    `,
+  tips: [],
+  related: ['크루아상', '마들렌', '파리브레스트']
+});
+
+DB.push({
+  id: 'wi02', cat: 'world', title: '바게트 트래디션', en: 'Baguette tradition', exam: false,
+  mg: 'fr', mg2: 'bread', wc: '프랑스',
+  tags: ['프랑스', '제빵', '세계 제과', '바게트 트래디션', 'Baguette tradition'],
+  summary: '밀가루·물·소금·이스트만 쓰는 프랑스 전통 바게트, 수분 72%에 칼집 30°.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>19세기 파리에서 대중화된 긴 형태의 빵입니다. 프랑스에서 ‘전통(tradition)’ 표기를 쓰려면 첨가물 없이 밀가루·물·소금·이스트(또는 르방)만 써야 하고, 수분 70% 이상의 무른 반죽을 냉장에서 오래 발효해 껍질을 만듭니다. 칼집은 30° 각도로 넣어 오븐 팽창을 유도하며 중심 온도 96°C가 완성 기준입니다.</p>
+  ${wRecipe('바게트 트래디션', '4개(350g)', [
+    ['강력분(T55)', 1000, ''], ['물', 700, '10~12°C'], ['소금', 20, ''],
+    ['생이스트', 4, ''], ['르방(액종)', 200, '수분 100%']
+  ], '오토리즈 30분 → 본믹싱 2단 6~8분(반죽 24°C) → 1차 60분(중간 접기 1회) → 350g 분할·성형 → 4°C 냉장 12~18시간 → 250°C 스팀 10초, 230°C 20~25분.', '칼집은 30° 각도로 5mm 깊이. 중심 96°C.')}
+    `,
+  tips: [],
+  related: ['바게트 트래디션', '마들렌', '파리브레스트']
+});
+
+DB.push({
+  id: 'wi03', cat: 'world', title: '브리오슈 낭테르', en: 'Brioche Nanterre', exam: false,
+  mg: 'fr', mg2: 'bread', wc: '프랑스',
+  tags: ['프랑스', '제빵', '세계 제과', '브리오슈 낭테르', 'Brioche Nanterre'],
+  summary: '버터·달걀 비율이 높은 프랑스 비엔누아즈리, 틀에 3구로 나눠 굽는 낭테르 형태.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>버터와 달걀 비율이 높은 프랑스 비엔누아즈리로, 낭테르는 식빵 틀에 60g 반죽을 3구로 나눠 넣어 굽는 모양을 말합니다. 반죽 온도를 24°C 아래로 유지하며 버터를 3회 나눠 넣고 냉장 12시간 숙성해야 결이 살아납니다.</p>
+  ${wRecipe('브리오슈 낭테르', '1대(500g 틀)', [
+    ['강력분', 500, ''], ['전란', 250, ''], ['우유', 60, ''], ['설탕', 60, ''],
+    ['소금', 9, ''], ['생이스트', 15, ''], ['무염버터', 280, '22°C']
+  ], '반죽 1단 5분 → 버터를 3회 나눠 투입하며 2단 10분(반죽 24°C) → 냉장 12시간 → 60g 분할 3구 성형 → 28°C 75% 2시간 → 달걀물 → 170°C 25~30분.', '버터가 녹으면 결이 무너지므로 저온 유지.')}
+    `,
+  tips: [],
+  related: ['브리오슈 낭테르', '마들렌', '파리브레스트']
+});
+
+DB.push({
+  id: 'wi10', cat: 'world', title: '티라미수', en: 'Tiramisu', exam: false,
+  mg: 'it', mg2: 'pastry', wc: '이탈리아',
+  tags: ['이탈리아', '제과', '세계 제과', '티라미수', 'Tiramisu'],
+  summary: '마스카포네 크림과 에스프레소 사보이아르디를 층층이 쌓은 이탈리아 디저트.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>1960~70년대 이탈리아 트레비소의 레스토랑에서 탄생했다는 설이 유력한 디저트로, 마스카포네 크림과 에스프레소에 적신 사보이아르디를 층층이 쌓습니다. 노른자를 82°C까지 익힌 크림에 휘핑 생크림을 폴딩해 무겁지 않게 만듭니다.</p>
+  ${wRecipe('티라미수', '4개', [
+    ['마스카포네', 250, ''], ['노른자', 40, ''], ['설탕', 60, ''], ['물', 35, ''],
+    ['생크림', 120, ''], ['깔루아', 13, ''], ['에스프레소', 100, '식힌 것'], ['사보이아르디', 12, '개']
+  ], '노른자+설탕+물을 82°C까지 익혀 마스카포네에 섞고 60% 휘핑 크림을 폴딩 → 사보이아르디를 에스프레소+깔루아에 적셔 층층이 담기 → 냉장 4시간.', '크림은 단단하게 올리면 입자가 거칠어진다.')}
+    `,
+  tips: [],
+  related: ['티라미수', '판나코타', '카놀리']
+});
+
+DB.push({
+  id: 'wi11', cat: 'world', title: '판나코타', en: 'Panna cotta', exam: false,
+  mg: 'it', mg2: 'pastry', wc: '이탈리아',
+  tags: ['이탈리아', '제과', '세계 제과', '판나코타', 'Panna cotta'],
+  summary: '생크림과 우유를 젤라틴으로 굳힌 이탈리아 북부 디저트.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>‘익힌 크림’이라는 뜻의 이탈리아 북부 디저트로, 생크림과 우유에 젤라틴을 녹여 굳힙니다. 젤라틴은 60°C 이상 액체에서만 녹으므로 80°C에서 넣고 체에 걸러 틀에 부어야 매끈하게 굳습니다.</p>
+  ${wRecipe('판나코타', '4개', [
+    ['생크림', 400, ''], ['우유', 100, ''], ['설탕', 60, ''], ['판젤라틴', 7, '3.5장'],
+    ['바닐라빈', 3, ''], ['레몬제스트', 1, '선택']
+  ], '크림+우유+설탕+바닐라를 80°C로 데우고 불린 젤라틴을 녹임 → 체에 걸러 컵에 붓고 냉장 4시간.', '젤라틴은 60°C 이상 액체에서만 녹는다.')}
+    `,
+  tips: [],
+  related: ['판나코타', '티라미수', '카놀리']
+});
+
+DB.push({
+  id: 'wi12', cat: 'world', title: '카놀리', en: 'Cannoli', exam: false,
+  mg: 'it', mg2: 'pastry', wc: '이탈리아',
+  tags: ['이탈리아', '제과', '세계 제과', '카놀리', 'Cannoli'],
+  summary: '시칠리아 튀김 과자, 식힌 뒤 리코타 크림을 채운다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>시칠리아의 아랍 문화 영향 속에서 발전한 튀김 과자로, 리코타 크림을 채웁니다. 반죽을 얇게 밀어 금속 링에 감아 튀기거나 구워 바삭한 껍질을 만들고, 식은 뒤에 크림을 채워야 눅눅해지지 않습니다.</p>
+  ${wRecipe('카놀리', '12개', [
+    ['박력분', 300, ''], ['설탕', 30, ''], ['카카오파우더', 10, ''], ['계란', 2, '개'],
+    ['화이트와인', 90, ''], ['식초', 10, ''], ['리코타', 500, '체에 걸러 물기 제거'],
+    ['분당', 120, ''], ['초콜릿칩', 60, ''], ['피스타치오분태', 40, '']
+  ], '반죽을 얇게 밀어 링에 감아 180°C 8~10분 → 식힌 뒤 리코타+분당+초콜릿칩을 채우고 양 끝에 피스타치오를 묻힌다.', '튀김형은 190°C 기름에서 2분.')}
+    `,
+  tips: [],
+  related: ['카놀리', '티라미수', '판나코타']
+});
+
+DB.push({
+  id: 'wi13', cat: 'world', title: '치아바타', en: 'Ciabatta', exam: false,
+  mg: 'it', mg2: 'bread', wc: '이탈리아',
+  tags: ['이탈리아', '제빵', '세계 제과', '치아바타', 'Ciabatta'],
+  summary: '수분 78% 고수분 반죽, 접기로 기포를 살린 이탈리아 빵.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>1982년 베로나의 제빵사 아르날도 카발라리가 프랑스 바게트에 맞서 만든 것으로 알려진 고수분 빵입니다. 수분 75~80% 반죽을 30분마다 접기(stretch & fold)해 글루텐을 만들고, 분할 후에는 기포를 지키려 누르지 않고 옮깁니다.</p>
+  ${wRecipe('치아바타', '6개(250g)', [
+    ['강력분', 1000, 'W 320'], ['물', 780, '10°C'], ['소금', 22, ''], ['생이스트', 3, ''],
+    ['빅아', 200, '액종, 선택'], ['올리브유', 40, '',  '마지막']
+  ], '오토리즈 40분 → 1단 3분 + 2단 5분 → 30분마다 3회 접기 → 1차 75분 → 분할 후 팬닝(자르지 않고 옮기기) → 250°C 스팀 15초, 230°C 20분.', '기포를 지키려 분할 후 손으로 눌러 성형.')}
+    `,
+  tips: [],
+  related: ['치아바타', '티라미수', '판나코타']
+});
+
+DB.push({
+  id: 'wi14', cat: 'world', title: '포카치아', en: 'Focaccia', exam: false,
+  mg: 'it', mg2: 'bread', wc: '이탈리아',
+  tags: ['이탈리아', '제빵', '세계 제과', '포카치아', 'Focaccia'],
+  summary: '올리브유·로즈마리·소금으로 마무리하는 이탈리아 납작빵.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>고대 로마의 panis focacius에서 이름이 나온 납작한 빵으로, 올리브유와 로즈마리·굵은소금으로 마무리합니다. 팬에 펴서 2차 발효한 뒤 손가락으로 홈을 내고 오일을 부어야 기포가 살아 있습니다.</p>
+  ${wRecipe('포카치아', '1판(30×40cm)', [
+    ['강력분', 1000, ''], ['물', 750, ''], ['소금', 20, ''], ['생이스트', 8, ''],
+    ['올리브유', 80, ''], ['토핑 올리브오일', 60, ''], ['로즈마리', 8, ''], ['방울토마토', 200, '선택']
+  ], '반죽 100% 믹싱 → 30분마다 3회 접기 → 2시간 1차 → 팬에 펴 2차 60분 → 손가락으로 눌러 홈을 내고 오일·로즈마리·소금 → 230°C 18~22분.', '팬닝 후 눌러야 기포가 남는다.')}
+    `,
+  tips: [],
+  related: ['포카치아', '티라미수', '판나코타']
+});
+
+DB.push({
+  id: 'wi15', cat: 'world', title: '파네토네', en: 'Panettone', exam: false,
+  mg: 'it', mg2: 'bread', wc: '이탈리아',
+  tags: ['이탈리아', '제빵', '세계 제과', '파네토네', 'Panettone'],
+  summary: '밀라노의 천연발효종 크리스마스 빵, 거꾸로 매달아 식힌다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>밀라노의 15세기 전설에서 시작해 크리스마스 빵이 된 천연발효종 빵입니다. 리치오(천연종)로 12시간 이상 발효하고 건포도·오렌지필을 2차에 넣어 몰드 위로 1cm 올라오면 굽고, 거꾸로 매달아 식혀야 꺼지지 않습니다.</p>
+  ${wRecipe('파네토네', '1개(1kg 몰드)', [
+    ['강력분', 1000, ''], ['설탕', 220, ''], ['노른자', 200, ''], ['전란', 200, ''],
+    ['우유', 300, ''], ['버터', 300, ''], ['리치오(천연종)', 300, ''], ['건포도', 300, '럼 처리'],
+    ['오렌지필', 150, ''], ['소금', 12, '']
+  ], '1차 반죽 후 12시간 발효 → 2차에 지방·건과일 투입 → 몰드 6부 → 28°C 80%에서 6~8시간(몰드 위로 1cm) → 175°C 50분 → 거꾸로 매달아 식힘.', '천연종 없이는 이스트 1.5%로 대체.')}
+    `,
+  tips: [],
+  related: ['파네토네', '티라미수', '판나코타']
+});
+
+DB.push({
+  id: 'wi16', cat: 'world', title: '판토네', en: 'Pandoro', exam: false,
+  mg: 'it', mg2: 'bread', wc: '이탈리아',
+  tags: ['이탈리아', '제빵', '세계 제과', '판토네', 'Pandoro'],
+  summary: '베로나 유래 8각 별 모양 크리스마스 빵, 가루 설탕을 뿌린다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>베로나에서 유래한 8각 별 모양의 크리스마스 빵으로, 파네토네와 함께 이탈리아를 대표합니다. 노른자와 버터 비율이 높아 결이 섬세하고, 가루 설탕을 뿌려 눈처럼 마무리합니다.</p>
   ${wRecipe('판토네', '1kg 1개', [
     ['강력분', 1000, 'W300'], ['물', 450, ''], ['설탕', 250, ''],
     ['무염버터', 250, ''], ['노른자', 200, ''], ['천연발효종', 200, '활성'],
     ['건포도', 300, '럼에 불린 것'], ['칸디트', 200, ''], ['소금', 12, '']
   ], '발효종+가루+물로 1차 12시간. 반죽에 설탕·노른자·버터를 나눠 넣고 2차 30°C 4~6시간. 건포도·칸디트를 넣어 팬토네 틀에 8부, 3차 30°C 6시간, 180°C 50분(꼬치로 매달아 식힘).', '고당·고유지 반죽은 믹서 마찰열 관리가 핵심.')}
-  ${wRecipe('포카치아', '30×20cm 1판', [
-    ['강력분', 500, ''], ['물', 400, '80%'], ['소금', 10, ''],
-    ['생이스트', 5, ''], ['올리브오일', 50, ''], ['방울토마토', 150, '토핑']
-  ], '오토리즈 30분→반죽 1단 3분+2단 5분→30분마다 3회 접기. 팬에 펴서 28°C 60분, 손가락으로 눌러 홈을 내고 오일·소금·토마토. 220°C 20분.', '수분 80%는 접기로 힘을 줍니다.')}
-  ${wRecipe('치아바타', '4개', [
-    ['강력분', 500, ''], ['물', 400, '10°C'], ['소금', 10, ''],
-    ['생이스트', 3, ''], ['올리브오일', 15, '']
-  ], '오토리즈 30분→1단 3분→30분마다 3회 접기→30분 휴지. 분할 4개, 손으로 늘려 성형, 250°C 스팀 20분.', '기공이 크고 껍질이 얇게 나와야 합니다.')}
-  ${wRecipe('카놀리', '12개', [
-    ['박력분', 300, ''], ['설탕', 30, ''], ['코코아파우더', 10, ''],
-    ['마르살라', 30, ''], ['라드', 30, '또는 버터'], ['리코타', 500, '물기 뺀 것'],
-    ['설탕', 150, '필링'], ['다크초콜릿', 80, '칩']
-  ], '가루+라드+마르살라로 반죽해 2mm로 밀고 금속 롤에 감아 190°C 8~10분. 식힌 뒤 리코타+설탕+초콜릿 필링을 채우고 양끝에 피스타치오.', '튀김 온도가 낮으면 기름을 먹습니다.')}
-  `,
-  tips: ['판토네는 천연발효종의 활성과 3차 발효가 성패를 가릅니다.', '포카치아·치아바타는 접기로 글루텐을 만들고 가스를 살립니다.', '카놀리 필링은 먹기 직전에 채워야 바삭함이 유지됩니다.'],
-  related: ['티라미수', '치아바타 (Ciabatta)', '이탈리아 — 티라미수·판토네·포카치아·치아바타·카놀리']
+    `,
+  tips: [],
+  related: ['판토네', '티라미수', '판나코타']
 });
 
 DB.push({
-  id: 'w03', cat: 'world', title: '독일·오스트리아 — 슈톨렌·프레첼·자허토르테·바움쿠헨', en: 'Germany & Austria', exam: false,
-  mg2: 'ov',
-  tags: ['독일', '오스트리아', '슈톨렌', '프레첼', '자허토르테', '바움쿠헨', '역사', '세계 제과'],
-  summary: '독일·오스트리아 전통 빵과 케이크의 유래와 레시피 4종.',
+  id: 'wi22', cat: 'world', title: '자허토르테', en: 'Sachertorte', exam: false,
+  mg: 'de', mg2: 'pastry', wc: '독일·오스트리아',
+  tags: ['독일·오스트리아', '제과', '세계 제과', '자허토르테', 'Sachertorte'],
+  summary: '1832년 빈 자허 호텔의 초콜릿 케이크, 살구잼과 초콜릿 글레이즈.',
   body: `
-  <h4>역사 · 유래</h4>
-  <p>독일·오스트리아는 크리스마스 빵과 궁정 케이크의 전통이 깊습니다. 슈톨렌은 15세기 드레스덴에서 유래했고, 버터 금지령이 풀린 뒤 버터를 넣은 <strong>Christstollen</strong>으로 발전했습니다. 프레첼은 독일 바이에른의 수도원에서 시작됐다는 설이 있으며, 잿물(lye)에 담갔다 구워 진한 갈색과 독특한 향을 냅니다. 자허토르테는 1832년 빈에서 메테르니히 재상의 주문으로 프란츠 자허가 만든 케이크로 알려져 있고, 바움쿠헨은 꼬치에 반죽을 겹겹이 발라 구워 나이테 모양을 만드는 독일·오스트리아 전통 과자입니다.</p>
+  <h4>유래 · 특징</h4>
+  <p>1832년 빈의 자허 호텔에서 프란츠 자허가 만든 초콜릿 케이크로, 시트 사이에 살구잼을 바르고 초콜릿 글레이즈로 덮습니다. 원조 레시피를 둘러싼 호텔과 제과점의 분쟁으로도 유명합니다.</p>
+  ${wRecipe('자허토르테', '18cm 1대', [
+    ['다크커버춰', 150, ''], ['무염버터', 150, ''], ['설탕', 150, ''],
+    ['계란', 300, '6개'], ['박력분', 150, ''], ['살구잼', 200, ''],
+    ['초콜릿 글레이즈', 200, '']
+  ], '버터+설탕 크림화→초콜릿→계란→가루. 170°C 45분, 식힌 뒤 살구잼을 발라 냉장. 글레이즈를 30°C로 맞춰 코팅.', '전통은 살구잼 층을 반으로 자른 시트 사이에도 넣습니다.')}
+    `,
+  tips: [],
+  related: ['자허토르테', '바움쿠헨', '슈바르츠발트 케이크']
+});
+
+DB.push({
+  id: 'wi23', cat: 'world', title: '바움쿠헨', en: 'Baumkuchen', exam: false,
+  mg: 'de', mg2: 'pastry', wc: '독일·오스트리아',
+  tags: ['독일·오스트리아', '제과', '세계 제과', '바움쿠헨', 'Baumkuchen'],
+  summary: '꼬치에 반죽을 한 겹씩 발라 구워 나이테 층을 만드는 독일 과자.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>‘나무 케이크’라는 뜻으로, 회전하는 꼬치에 반죽을 여러 번 발라 한 겹씩 구워 나이테 모양의 층을 만드는 독일 과자입니다. 한 번에 얇게 발라야 층이 고르고, 굽는 동안 반죽을 식히지 않는 것이 핵심입니다.</p>
+  ${wRecipe('바움쿠헨', '18cm 1대', [
+    ['무염버터', 250, ''], ['설탕', 200, ''], ['계란', 300, '6개'],
+    ['박력분', 200, ''], ['아몬드가루', 100, ''], ['다크초콜릿', 200, '코팅']
+  ], '버터+설탕 크림화→계란→가루+아몬드. 꼬치에 얇게 발라 220°C 상부에서 1층씩 굽기를 반복(8~12층). 식힌 뒤 초콜릿 코팅.', '한 층이 익기 전에 다음 층을 바르면 뭉칩니다.')}
+    `,
+  tips: [],
+  related: ['바움쿠헨', '자허토르테', '슈바르츠발트 케이크']
+});
+
+DB.push({
+  id: 'wi24', cat: 'world', title: '슈바르츠발트 케이크', en: 'Black Forest gateau', exam: false,
+  mg: 'de', mg2: 'pastry', wc: '독일·오스트리아',
+  tags: ['독일·오스트리아', '제과', '세계 제과', '슈바르츠발트 케이크', 'Black Forest gateau'],
+  summary: '체리·키르쉬·생크림을 층층이 쌓은 독일 남서부 케이크.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>독일 남서부 슈바르츠발트 지방의 체리·키르쉬·생크림 케이크로, 초콜릿 시트와 체리, 크림을 번갈아 쌓습니다. 키르쉬 시럽으로 시트를 적시고 표면에 초콜릿을 깎아 장식합니다.</p>
+  ${wRecipe('슈바르츠발트 케이크', '지름 18cm 1대', [
+    ['계란', 200, ''], ['설탕', 150, ''], ['박력분', 130, ''], ['코코아파우더', 30, ''],
+    ['녹인버터', 60, ''], ['생크림', 500, ''], ['설탕(크림)', 50, ''], ['체리(산체리)', 400, ''],
+    ['키르쉬', 40, ''], ['다크초콜릿', 100, '장식']
+  ], '계란+설탕 100% 휘핑 → 가루 폴딩 → 180°C 25분(얇은 시트) → 시트를 3장으로 재단, 키르쉬 시럽 → 크림과 체리로 샌드 → 표면 크림·초콜릿 장식.', '체리 즙은 시럽에 섞어 시트를 적신다.')}
+    `,
+  tips: [],
+  related: ['슈바르츠발트 케이크', '자허토르테', '바움쿠헨']
+});
+
+DB.push({
+  id: 'wi25', cat: 'world', title: '카이저슈마른', en: 'Kaiserschmarrn', exam: false,
+  mg: 'de', mg2: 'pastry', wc: '독일·오스트리아',
+  tags: ['독일·오스트리아', '제과', '세계 제과', '카이저슈마른', 'Kaiserschmarrn'],
+  summary: '오스트리아 팬케이크를 찢어 카라멜화한 디저트, 자두잼을 곁들인다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>오스트리아의 팬케이크를 손으로 찢어 버터·설탕에 카라멜화한 디저트로, 자두잼과 분당·시나몬을 곁들입니다. 반죽을 얇게 부쳐 구운 뒤 조각내는 방식이라 겉은 바삭하고 속은 부드럽습니다.</p>
+  ${wRecipe('카이저슈마른', '4인분', [
+    ['밀가루', 250, ''], ['우유', 500, ''], ['계란', 4, '개'], ['설탕', 40, ''],
+    ['소금', 3, ''], ['버터', 50, ''], ['자두잼', 200, ''], ['분당', 40, ''], ['시나몬', 4, '']
+  ], '팬케이크 반죽을 얇게 부쳐 구운 뒤 손으로 찢어 버터·자두잼에 버무리고 분당+시나몬을 뿌린다.', '찢은 조각을 겹쳐 담아야 결이 산다.')}
+    `,
+  tips: [],
+  related: ['카이저슈마른', '자허토르테', '바움쿠헨']
+});
+
+DB.push({
+  id: 'wi26', cat: 'world', title: '슈트로이젤쿠헨', en: 'Streuselkuchen', exam: false,
+  mg: 'de', mg2: 'pastry', wc: '독일·오스트리아',
+  tags: ['독일·오스트리아', '제과', '세계 제과', '슈트로이젤쿠헨', 'Streuselkuchen'],
+  summary: '버터·밀가루·설탕 1:1:1 슈트로이젤을 올린 독일 과일 케이크.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>버터·밀가루·설탕을 1:1:1로 비벼 만든 슈트로이젤을 사과나 과일 위에 올려 굽는 독일 과자입니다. 슈트로이젤은 손끝으로 굵은 입자를 만들어야 구운 뒤에도 바삭합니다.</p>
+  ${wRecipe('슈트로이젤쿠헨(사과)', '1판(24cm)', [
+    ['버터', 180, ''], ['설탕', 150, ''], ['계란', 2, '개'], ['박력분', 300, ''],
+    ['베이킹파우더', 8, ''], ['사과', 800, ''], ['시나몬', 4, ''], ['슈트로이젤(버터:밀가루:설탕)', 240, '1:1:1']
+  ], '버터+설탕 크림화 → 계란 → 가루 순으로 섞어 팬에 펴고 사과 슬라이스를 눕힘 → 슈트로이젤 뿌려 180°C 45~50분.', '사과는 산미 있는 품종(보스코프) 사용.')}
+    `,
+  tips: [],
+  related: ['슈트로이젤쿠헨', '자허토르테', '바움쿠헨']
+});
+
+DB.push({
+  id: 'wi17', cat: 'world', title: '슈톨렌', en: 'Stollen', exam: false,
+  mg: 'de', mg2: 'bread', wc: '독일·오스트리아',
+  tags: ['독일·오스트리아', '제빵', '세계 제과', '슈톨렌', 'Stollen'],
+  summary: '드레스덴 크리스마스 빵, 버터를 입혀 몇 주 숙성한다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>독일 드레스덴의 크리스마스 빵으로, 건과일을 럼에 재워 반죽에 넣고 버터를 듬뿍 넣어 만듭니다. 구운 뒤 뜨거울 때 버터를 입히고 설탕을 뿌려 몇 주 숙성하면 향이 깊어집니다.</p>
   ${wRecipe('슈톨렌', '1개(1kg)', [
     ['강력분', 500, ''], ['우유', 200, '미지근하게'], ['생이스트', 10, ''],
     ['설탕', 80, ''], ['무염버터', 200, ''], ['아몬드', 100, ''],
     ['건포도', 200, '럼에 불린 것'], ['칸디트', 100, ''], ['마지팬', 100, ''],
     ['계란', 50, '']
   ], '반죽을 1차 60분 발효 후 건포도·칸디트·아몬드를 넣어 성형. 마지팬을 가운데 넣고 접어 180°C 50분. 식힌 뒤 버터를 녹여 바르고 슈가파우더를 두껍게.', '구운 뒤 버터 코팅이 보습·풍미의 핵심.')}
+    `,
+  tips: [],
+  related: ['슈톨렌', '자허토르테', '바움쿠헨']
+});
+
+DB.push({
+  id: 'wi18', cat: 'world', title: '프레첼', en: 'Pretzel', exam: false,
+  mg: 'de', mg2: 'bread', wc: '독일·오스트리아',
+  tags: ['독일·오스트리아', '제빵', '세계 제과', '프레첼', 'Pretzel'],
+  summary: '잿물에 담갔다 구워 진한 갈색 껍질과 특유의 향을 내는 매듭 빵.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>독일·오스트리아의 매듭 모양 빵으로, 잿물(또는 베이킹소다)에 담갔다 구워 진한 갈색 껍질과 특유의 향을 냅니다. 잿물 처리는 장갑과 환기가 필수이고, 굽기 전 냉장 건조가 껍질을 매끈하게 만듭니다.</p>
   ${wRecipe('프레첼', '8개', [
     ['강력분', 500, ''], ['물', 300, ''], ['무염버터', 30, ''],
     ['설탕', 20, ''], ['소금', 10, ''], ['생이스트', 7, ''],
     ['잿물', 40, '물 1L에 4%']
   ], '반죽 1차 60분→분할 80g→길게 늘여 매듭→냉장 30분→잿물 30초→굵은소금. 200°C 15분.', '잿물은 장갑 필수. 베이킹소다 4%로 대체 가능.')}
-  ${wRecipe('자허토르테', '18cm 1대', [
-    ['다크커버춰', 150, ''], ['무염버터', 150, ''], ['설탕', 150, ''],
-    ['계란', 300, '6개'], ['박력분', 150, ''], ['살구잼', 200, ''],
-    ['초콜릿 글레이즈', 200, '']
-  ], '버터+설탕 크림화→초콜릿→계란→가루. 170°C 45분, 식힌 뒤 살구잼을 발라 냉장. 글레이즈를 30°C로 맞춰 코팅.', '전통은 살구잼 층을 반으로 자른 시트 사이에도 넣습니다.')}
-  ${wRecipe('바움쿠헨', '18cm 1대', [
-    ['무염버터', 250, ''], ['설탕', 200, ''], ['계란', 300, '6개'],
-    ['박력분', 200, ''], ['아몬드가루', 100, ''], ['다크초콜릿', 200, '코팅']
-  ], '버터+설탕 크림화→계란→가루+아몬드. 꼬치에 얇게 발라 220°C 상부에서 1층씩 굽기를 반복(8~12층). 식힌 뒤 초콜릿 코팅.', '한 층이 익기 전에 다음 층을 바르면 뭉칩니다.')}
-  `,
-  tips: ['슈톨렌은 구운 뒤 2주 숙성하면 향이 깊어집니다.', '프레첼 잿물은 안전장비를 착용하세요.', '자허토르테는 글레이즈 온도 30°C가 광택의 핵심.'],
-  related: ['슈톨렌', '프레첼', '자허토르테', '독일·오스트리아 — 슈톨렌·프레첼·자허토르테·바움쿠헨']
+    `,
+  tips: [],
+  related: ['프레첼', '자허토르테', '바움쿠헨']
 });
 
 DB.push({
-  id: 'w04', cat: 'world', title: '영미 — 스콘·브라우니·당근케이크·뉴욕 치즈케이크', en: 'UK & USA', exam: false,
-  mg2: 'ov',
-  tags: ['영국', '미국', '스콘', '브라우니', '당근케이크', '뉴욕 치즈케이크', '역사', '세계 제과'],
-  summary: '영국·미국 대표 베이킹의 유래와 레시피 4종.',
+  id: 'wi19', cat: 'world', title: '브로트헨', en: 'Brötchen', exam: false,
+  mg: 'de', mg2: 'bread', wc: '독일·오스트리아',
+  tags: ['독일·오스트리아', '제빵', '세계 제과', '브로트헨', 'Brötchen'],
+  summary: '독일 아침 식사용 작은 롤, 스팀으로 겉바삭 속쫄깃.',
   body: `
-  <h4>역사 · 유래</h4>
-  <p>영국의 스콘은 16세기 스코틀랜드에서 귀리 가루로 만든 가벼운 빵에서 시작해, 오늘날 밀가루·버터·우유의 스콘으로 발전했습니다. 미국의 브라우니는 1893년 시카고 만국박람회의 파머 하우스 호텔에서 탄생했다는 이야기가 유명하고, 당근케이크는 20세기 영국·미국에서 당근의 단맛을 활용한 케이크로 자리 잡았습니다. 뉴욕 치즈케이크는 유대인 델리 문화와 크림치즈가 만나 1920년대 뉴욕에서 대중화된 것으로 알려져 있습니다.</p>
-  ${wRecipe('스콘', '8개', [
-    ['박력분', 400, ''], ['무염버터', 100, '냉장'], ['설탕', 60, ''],
-    ['우유', 200, ''], ['베이킹파우더', 12, ''], ['소금', 4, '']
-  ], '가루+버터를 모래알 크기로→설탕·BP·우유로 한 덩이(과도한 반죽 금지). 2.5cm로 밀어 원형 cut, 200°C 15분.', '반죽을 두 번 접으면 층이 생깁니다.')}
-  ${wRecipe('브라우니', '20cm 1판', [
-    ['무염버터', 200, ''], ['다크커버춰', 200, ''], ['설탕', 250, ''],
-    ['계란', 200, '4개'], ['박력분', 120, ''], ['코코아파우더', 30, '']
-  ], '버터+초콜릿 중탕→설탕→계란→가루. 180°C 25분, 중심이 살짝 덜 익은 상태로 꺼내 식힌다.', '과소 굽기가 퍼지 브라우니의 비결.')}
+  <h4>유래 · 특징</h4>
+  <p>독일 지역마다 이름이 다른 작은 롤빵으로, 북부에서는 브로트헨, 남부에서는 젬멜(Semmel)이라 부릅니다. 수분이 낮은 단단한 반죽을 높은 온도와 스팀으로 구워 겉은 바삭하고 속은 쫄깃한 대비를 냅니다.</p>
+  ${wRecipe('브로트헨(소형 롤)', '16개(60g)', [
+    ['강력분', 1000, ''], ['물', 580, ''], ['소금', 20, ''], ['이스트', 12, ''],
+    ['버터', 30, ''], ['몰트', 10, '']
+  ], '반죽 26°C → 60분 → 60g 분할 둥글리기 → 30분 벤치 → 성형 → 230°C 스팀 8초 15분.', '한쪽에 칼집을 넣어 벌어짐을 만든다.')}
+    `,
+  tips: [],
+  related: ['브로트헨', '자허토르테', '바움쿠헨']
+});
+
+DB.push({
+  id: 'wi20', cat: 'world', title: '바이에른 브레첸', en: 'Bavarian Brezn', exam: false,
+  mg: 'de', mg2: 'bread', wc: '독일·오스트리아',
+  tags: ['독일·오스트리아', '제빵', '세계 제과', '바이에른 브레첸', 'Bavarian Brezn'],
+  summary: '바이에른의 잿물 빵, 굵은 소금을 뿌려 짭짤하게 먹는다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>바이에른에서 아침 식사로 즐기는 잿물 빵으로, 프레첼과 같은 잿물 공정을 쓰되 팔을 굵게 꼬아 모양을 냅니다. 굵은 소금을 뿌려 짭짤하게 먹고, 버터와 함께 내는 것이 전통적인 방식입니다.</p>
+  ${wRecipe('바이에른 브레첸(잿물)', '12개(80g)', [
+    ['강력분', 1000, ''], ['물', 520, '', '5°C'], ['소금', 20, ''], ['이스트', 10, ''],
+    ['버터', 40, ''], ['잿물(수산화나트륨 3~4%)', 1000, '또는 베이킹소다 5%']
+  ], '반죽 1단 3분 + 2단 5분(24°C) → 4시간 냉장 → 80g 분할, 양팔 모양 성형 → 30분 안정 → 잿물에 10초 담갔다 물기 제거 → 굵은소금 뿌려 240°C 15~18분.', '잿물은 장갑·환기 필수.')}
+    `,
+  tips: [],
+  related: ['바이에른 브레첸', '자허토르테', '바움쿠헨']
+});
+
+DB.push({
+  id: 'wi21', cat: 'world', title: '로겐브로트', en: 'Roggenbrot', exam: false,
+  mg: 'de', mg2: 'bread', wc: '독일·오스트리아',
+  tags: ['독일·오스트리아', '제빵', '세계 제과', '로겐브로트', 'Roggenbrot'],
+  summary: '호밀 70% 독일 빵, 사워도우 산이 없으면 부피가 나지 않는다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>호밀가루 비율이 높은 독일 빵으로, 신맛 있는 사워도우 종으로 발효합니다. 호밀은 글루텐이 적어 산이 없으면 부피가 나지 않으므로 사워도우가 필수이고, 구운 뒤 하루 이상 두어야 단면이 안정됩니다.</p>
+  ${wRecipe('로겐브로트(호밀 70%)', '1개(1kg)', [
+    ['호밀가루', 700, ''], ['강력분', 300, ''], ['물', 750, ''], ['사워도우(호밀 100% 수분)', 300, ''],
+    ['소금', 22, ''], ['이스트', 5, '']
+  ], '사워도우+물+호밀가루로 2시간 예비발효 → 본반죽 1단 4분 + 2단 3분(26°C) → 60분 → 성형 후 26°C 90분 → 250°C 스팀 15초, 200°C 45~50분.', '중심 96°C, 구운 뒤 12시간 식혀야 결이 안정.')}
+    `,
+  tips: [],
+  related: ['로겐브로트', '자허토르테', '바움쿠헨']
+});
+
+DB.push({
+  id: 'wi27', cat: 'world', title: '스콘', en: 'Scone', exam: false,
+  mg: 'eu', mg2: 'pastry', wc: '영미',
+  tags: ['영미', '제과', '세계 제과', '스콘', 'Scone'],
+  summary: '영국 티타임의 기본 구움과자, 차가운 버터와 적은 반죽이 포인트.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>영국 티타임의 기본 구움과자로, 스코틀랜드에서 유래해 지금의 모양으로 자리 잡았습니다. 차갑게 유지한 버터를 가루에 비벼 넣고 반죽을 적게 만져야 층이 살아 있고, 갓 구운 스콘에 클로티드 크림과 잼을 곁들입니다.</p>
+  ${wRecipe('스콘', '8개(70g)', [
+    ['중력분', 300, ''], ['베이킹파우더', 15, ''], ['버터', 80, '차갑게'],
+    ['설탕', 40, ''], ['소금', 3, ''], ['우유', 140, ''], ['계란', 30, '표면용']
+  ], '가루+차가운 버터 모래알 → 우유 넣어 한 덩이(치대지 않기) → 2cm 밀어 6cm 원형 → 계란물 → 200°C 12~15분.', '반죽을 두 번 접어 층을 만든다.')}
+    `,
+  tips: [],
+  related: ['스콘', '빅토리아 스펀지', '트레클 타르트']
+});
+
+DB.push({
+  id: 'wi28', cat: 'world', title: '빅토리아 스펀지', en: 'Victoria sponge', exam: false,
+  mg: 'eu', mg2: 'pastry', wc: '영미',
+  tags: ['영미', '제과', '세계 제과', '빅토리아 스펀지', 'Victoria sponge'],
+  summary: '버터·설탕·달걀·가루를 같은 무게로 쓰는 영국 스펀지, 잼과 크림을 샌드한다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>빅토리아 여왕의 티타임 과자에서 이름이 붙은 영국 스펀지로, 잼과 휘핑 크림을 샌드합니다. 버터·설탕·달걀·가루를 같은 무게로 쓰는 1:1:1:1 배합이 기본입니다.</p>
+  ${wRecipe('빅토리아 스펀지', '지름 18cm 1대', [
+    ['버터', 200, ''], ['설탕', 200, ''], ['계란', 200, ''], ['박력분', 200, ''],
+    ['베이킹파우더', 4, ''], ['딸기잼', 150, ''], ['생크림', 150, ''], ['분당', 10, '']
+  ], '버터+설탕 크림화 → 계란 나눠 → 가루 → 180°C 20~25분 2판 → 잼+크림 샌드 → 분당.', '계란·버터·설탕·가루를 같은 무게로 두는 1:1:1:1.')}
+    `,
+  tips: [],
+  related: ['빅토리아 스펀지', '스콘', '트레클 타르트']
+});
+
+DB.push({
+  id: 'wi29', cat: 'world', title: '트레클 타르트', en: 'Treacle tart', exam: false,
+  mg: 'eu', mg2: 'pastry', wc: '영미',
+  tags: ['영미', '제과', '세계 제과', '트레클 타르트', 'Treacle tart'],
+  summary: '골든 시럽에 빵가루·달걀·레몬을 섞어 굽는 영국 타르트.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>영국의 골든 시럽(트레클)을 빵가루·달걀·레몬과 섞어 타르트지에 채워 굽는 디저트로, 《해리 포터》에 나와 더 유명해졌습니다. 시럽을 끓여 식힌 뒤 빵가루를 섞어야 굳었을 때 탄력이 생깁니다.</p>
+  ${wRecipe('트레클 타르트', '지름 20cm 1대', [
+    ['파트 사블레', 300, '타르트지'], ['골든시럽', 200, ''], ['레몬즙', 20, ''],
+    ['식빵가루', 120, ''], ['계란', 2, '개'], ['생크림', 60, ''], ['레몬제스트', 2, '']
+  ], '타르트지를 블라인드 베이크(180°C 15분) → 시럽+레몬즙+빵가루+계란+크림을 섞어 채움 → 170°C 25분.', '시럽을 끓여 빵가루를 불린 뒤 채운다.')}
+    `,
+  tips: [],
+  related: ['트레클 타르트', '스콘', '빅토리아 스펀지']
+});
+
+DB.push({
+  id: 'wi33', cat: 'world', title: '브라우니', en: 'Brownie', exam: false,
+  mg: 'eu', mg2: 'pastry', wc: '영미',
+  tags: ['영미', '제과', '세계 제과', '브라우니', 'Brownie'],
+  summary: '부풀리지 않고 진하게 구운 미국 초콜릿 케이크.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>미국 시카고의 호텔에서 초콜릿 케이크가 오븐에서 부풀지 않아 브라우니가 되었다는 이야기가 전해집니다. 버터와 초콜릿을 녹여 넣고 계란을 많이 휘핑하지 않아야 진하고 쫀득하며, 구운 뒤 하루 두면 맛이 정리됩니다.</p>
+  ${wRecipe('브라우니', '20cm 1틀', [
+    ['무염버터', 180, ''], ['다크초콜릿', 200, ''], ['설탕', 200, ''], ['황설탕', 80, ''],
+    ['계란', 3, '개'], ['박력분', 120, ''], ['코코아파우더', 30, ''], ['소금', 3, ''], ['호두', 100, '']
+  ], '버터+초콜릿 중탕 → 설탕·계란을 넣어 광택 → 체 친 가루·코코아·소금 → 호두 → 175°C 25분.', '중심 90°C에서 꺼내야 쫀득하다.')}
+    `,
+  tips: [],
+  related: ['브라우니', '스콘', '빅토리아 스펀지']
+});
+
+DB.push({
+  id: 'wi34', cat: 'world', title: '뉴욕 치즈케이크', en: 'New York cheesecake', exam: false,
+  mg: 'eu', mg2: 'pastry', wc: '영미',
+  tags: ['영미', '제과', '세계 제과', '뉴욕 치즈케이크', 'New York cheesecake'],
+  summary: '크림치즈를 듬뿍 넣고 수욕으로 구운 미국식 치즈케이크.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>크림치즈를 듬뿍 넣은 미국식 치즈케이크로, 크래커 크럼 바닥 위에 수욕(water bath)으로 굽습니다. 수욕은 갈라짐을 막고, 냉장에서 6시간 이상 식혀야 단면이 매끈합니다.</p>
+  ${wRecipe('뉴욕 치즈케이크', '지름 15cm 1대', [
+    ['크림치즈', 500, ''], ['설탕', 140, ''], ['계란', 3, '개'], ['사워크림', 100, ''],
+    ['생크림', 60, ''], ['레몬즙', 10, ''], ['바닐라', 4, ''], ['비스킷(파이지)', 150, '']
+  ], '비스킷+버터를 깔고 170°C 10분 → 크림치즈 풀고 설탕·계란·사워크림·레몬 순으로 섞어 붓기 → 160°C 50~60분(중탕) → 냉장 6시간.', '중심이 살짝 흔들릴 때 오븐에서 꺼낸다.')}
+    `,
+  tips: [],
+  related: ['뉴욕 치즈케이크', '스콘', '빅토리아 스펀지']
+});
+
+DB.push({
+  id: 'wi35', cat: 'world', title: '초코칩 쿠키', en: 'Chocolate chip cookie', exam: false,
+  mg: 'eu', mg2: 'pastry', wc: '영미',
+  tags: ['영미', '제과', '세계 제과', '초코칩 쿠키', 'Chocolate chip cookie'],
+  summary: '1930년대 미국에서 시작된 쿠키, 반죽 냉장이 퍼짐을 줄인다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>1930년대 미국 매사추세츠의 호텔에서 초콜릿 바를 쪼개 넣은 것이 시작으로 전해집니다. 설탕을 휘핑해 버터의 공기를 잡고, 반죽을 냉장해 구우면 퍼짐이 줄고 진한 맛이 납니다.</p>
+  ${wRecipe('초코칩 쿠키', '12개(60g)', [
+    ['버터', 120, ''], ['황설탕', 100, ''], ['설탕', 50, ''], ['계란', 1, '개'],
+    ['박력분', 220, ''], ['베이킹소다', 3, ''], ['소금', 2, ''], ['초코칩', 150, ''], ['바닐라', 3, '']
+  ], '버터+설탕 크림화 → 계란·바닐라 → 가루 → 초코칩 → 60g 성형 후 냉장 30분 → 180°C 11~13분.', '냉장 숙성이 두께와 갈라짐을 만든다.')}
+    `,
+  tips: [],
+  related: ['초코칩 쿠키', '스콘', '빅토리아 스펀지']
+});
+
+DB.push({
+  id: 'wi36', cat: 'world', title: '당근케이크', en: 'Carrot cake', exam: false,
+  mg: 'eu', mg2: 'pastry', wc: '영미',
+  tags: ['영미', '제과', '세계 제과', '당근케이크', 'Carrot cake'],
+  summary: '당근을 갈아 넣고 크림치즈 프로스팅을 올린 케이크.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>설탕이 귀했던 시기에 당근을 케이크에 쓴 것이 널리 퍼졌다는 이야기가 있습니다. 갈아 넣은 당근의 수분과 시나몬·호두가 어울리고, 크림치즈 프로스팅을 올려 마무리합니다.</p>
   ${wRecipe('당근케이크', '18cm 1대', [
     ['박력분', 300, ''], ['설탕', 250, ''], ['식용유', 200, ''],
     ['계란', 200, '4개'], ['당근', 300, '채 썬 것'], ['베이킹파우더', 8, ''],
     ['시나몬', 4, ''], ['크림치즈', 200, '프로스팅']
   ], '계란+설탕+오일 휘핑→가루·당근. 170°C 40분. 식힌 뒤 크림치즈+버터+슈가파우더 프로스팅.', '당근 수분을 살려야 촉촉합니다.')}
-  ${wRecipe('뉴욕 치즈케이크', '18cm 1대', [
-    ['크림치즈', 900, '실온'], ['설탕', 250, ''], ['계란', 200, '4개'],
-    ['생크림', 200, ''], ['박력분', 30, ''], ['비스킷', 200, '크러스트'],
-    ['무염버터', 80, '크러스트']
-  ], '비스킷+버터를 팬에 깔고 냉장. 크림치즈+설탕을 부드럽게→계란 하나씩→크림·가루. 160°C 60분(수욕), 문을 닫고 식힌 뒤 냉장 6시간.', '수욕과 서서히 식히기가 갈라짐 방지.')}
-  `,
-  tips: ['스콘은 버터를 차갑게 유지해야 층이 살아납니다.', '브라우니는 오븐에서 꺼낸 뒤 잔열로 익습니다.', '치즈케이크는 냉장 숙성이 맛을 만듭니다.'],
-  related: ['스콘', '브라우니', '당근케이크', '뉴욕 치즈케이크', '영미 — 스콘·브라우니·당근케이크·뉴욕 치즈케이크']
+    `,
+  tips: [],
+  related: ['당근케이크', '스콘', '빅토리아 스펀지']
 });
 
 DB.push({
-  id: 'w05', cat: 'world', title: '일본 — 카스테라·쇼쿠판·말차 모찌', en: 'Japan', exam: false,
-  mg2: 'ov',
-  tags: ['일본', '카스테라', '쇼쿠판', '우유식빵', '말차', '모찌', '역사', '세계 제과'],
-  summary: '일본 카스테라·식빵·말차 디저트의 유래와 레시피 3종.',
+  id: 'wi30', cat: 'world', title: '아일랜드 소다브레드', en: 'Irish soda bread', exam: false,
+  mg: 'eu', mg2: 'bread', wc: '영미',
+  tags: ['영미', '제빵', '세계 제과', '아일랜드 소다브레드', 'Irish soda bread'],
+  summary: '베이킹소다와 버터밀크로 바로 구워 내는 아일랜드 빵.',
   body: `
-  <h4>역사 · 유래</h4>
-  <p>일본의 카스테라는 16세기 나가사키에 포르투갈 선교사들이 전한 <strong>pão de Castela</strong>(카스텔라)에서 시작됐습니다. 달걀·설탕·밀가루를 수욕에서 휘핑해 굽는 방식이 일본식으로 정착했고, 설탕 대신 미즈아메(물엿)를 넣어 촉촉함을 냅니다. 쇼쿠판(식빵)은 20세기 일본에서 유행한 부드러운 식빵으로, 유지와 수분을 높여 결이 가는 식감을 냅니다. 말차 모찌는 우지 말차와 찹쌀가루를 결합한 현대 디저트로, 쫀득한 식감과 쓴맛의 대비가 특징입니다.</p>
-  ${wRecipe('카스테라', '18cm 1대', [
-    ['계란', 250, '5개'], ['설탕', 150, ''], ['꿀', 40, ''],
-    ['강력분', 120, ''], ['우유', 30, '']
-  ], '계란+설탕+꿀을 40°C 수욕에서 휘핑(리본 상태)→체 친 강력분→우유. 160°C 45분, 팬에 유산지. 굽고 나서 뒤집어 식힌다.', '수욕 온도가 너무 높으면 기포가 거칩니다.')}
-  ${wRecipe('쇼쿠판(우유식빵)', '1.5근 틀 1개', [
-    ['강력분', 500, ''], ['우유', 350, '차갑게'], ['설탕', 40, ''],
-    ['소금', 8, ''], ['생이스트', 6, ''], ['무염버터', 50, '']
-  ], '1단 3분+2단 6분(버터 후반). 1차 28°C 60분→분할 2개→벤치 20분→성형→2차 35°C 45분. 190°C 30분.', '유단백·수분이 많아 부드러운 결이 납니다.')}
-  ${wRecipe('말차 모찌', '12개', [
-    ['찹쌀가루(모치코)', 150, ''], ['설탕', 100, ''], ['말차', 5, '체 친 것'],
-    ['물', 200, ''], ['팥앙금', 200, '선택']
-  ], '모치코+설탕+말차+물을 섞어 전자레인지 3분(1분마다 저어주기). 반죽을 12등분해 앙금을 싸고 녹말가루를 묻힌다.', '말차는 체로 2회 쳐야 덩어리가 없습니다.')}
-  `,
-  tips: ['카스테라는 뒤집어 식혀야 주름이 방지됩니다.', '쇼쿠판은 우유 온도(10°C)로 반죽 온도를 잡습니다.', '말차 모찌는 먹기 전 냉장 보관하면 굳습니다.'],
-  related: ['카스테라', '우유 식빵 (Milk bread)', '말차 모찌', '일본 — 카스테라·쇼쿠판·말차 모찌']
-});
-
-DB.push({
-  id: 'w06', cat: 'world', title: '한국 — 단팥빵·소보로빵·약과·주악', en: 'Korea', exam: false,
-  mg2: 'ov',
-  tags: ['한국', '단팥빵', '소보로빵', '약과', '주악', '역사', '세계 제과'],
-  summary: '한국 전통·근대 빵과 한과의 유래와 레시피 4종.',
-  body: `
-  <h4>역사 · 유래</h4>
-  <p>한국의 단팥빵은 20세기 초 서울에 들어온 일본식 앙팡(あんパン)이 팥앙금과 만나 정착한 빵입니다. 소보로빵은 1970~80년대 동네 빵집에서 유행한 한국형 스트로이젤 빵으로, 위에 올린 과자 반죽이 갈라진 모양이 이름의 유래가 됐습니다. 약과는 고려시대부터 전해진 유밀과로, 꿀·참기름·소주로 반죽해 기름에 튀긴 뒤 조청에 담갑니다. 주악은 조선시대 궁중·민간에서 즐긴 찹쌀 과자로, 반죽에 팥소를 넣어 찌거나 튀겨 조청·깨로 마무리합니다.</p>
-  ${wRecipe('단팥빵', '10개', [
-    ['강력분', 500, ''], ['우유', 280, '따뜻하게'], ['설탕', 60, ''],
-    ['무염버터', 40, ''], ['생이스트', 8, ''], ['소금', 6, ''],
-    ['팥앙금', 400, '40g × 10']
-  ], '반죽 1차 60분→분할 60g→벤치 20분→앙금 40g 싸기→2차 35°C 40분→계란물→180°C 15분.', '앙금 수분이 많으면 빵 밑이 젖습니다.')}
-  ${wRecipe('소보로빵', '8개', [
-    ['강력분', 500, '빵 반죽'], ['우유', 280, ''], ['설탕', 60, ''],
-    ['무염버터', 40, ''], ['생이스트', 8, ''], ['소금', 6, ''],
-    ['박력분', 100, '소보로'], ['설탕', 60, '소보로'], ['무염버터', 50, '소보로'], ['계란', 20, '소보로']
-  ], '빵 반죽 1차 60분→분할 70g→2차 35°C 35분. 소보로 재료를 비벼 냉장 30분, 빵 위에 얹고 180°C 15분.', '소보로는 굵게 비벼야 갈라진 모양이 납니다.')}
-  ${wRecipe('약과', '20개', [
-    ['박력분', 300, ''], ['꿀', 120, ''], ['참기름', 60, ''],
-    ['소주', 30, ''], ['식용유', 800, '튀김'], ['조청', 300, '시럽'],
-    ['물', 150, '시럽'], ['생강', 10, '시럽']
-  ], '가루+꿀+참기름+소주를 모아 1cm 두께로 밀어 약과 틀. 150°C에서 천천히 튀겨 속까지 익힌 뒤 조청+물+생강 시럽에 담근다.', '튀김 온도가 높으면 속이 익기 전에 탑니다.')}
-  ${wRecipe('주악', '12개', [
-    ['찹쌀가루', 300, ''], ['뜨거운 물', 150, ''], ['설탕', 30, ''],
-    ['팥앙금', 150, ''], ['조청', 100, '마무리'], ['잣', 20, '고명']
-  ], '찹쌀가루+설탕+뜨거운 물로 반죽→20g씩 떼어 앙금을 싸고 둥글게. 170°C에서 튀기거나 찜 후 조청을 입히고 잣.', '찹쌀 반죽은 뜨거울 때 빨리 성형하세요.')}
-  `,
-  tips: ['단팥빵은 앙금을 충분히 식혀 넣으세요.', '소보로는 냉장 휴지 후 얹어야 모양이 유지됩니다.', '약과·주악은 조청 온도가 낮으면 코팅이 뭉칩니다.'],
-  related: ['단팥빵', '소보로빵', '약과', '주악', '한국 — 단팥빵·소보로빵·약과·주악']
-});
-/* ===== 나라별 제과 / 제빵 분리 (2026-11-17 추가) =====
-   data-world.js의 wRecipe()를 그대로 사용. 각 나라마다 제(과)과 제빵을 따로 둔다. */
-DB.push({
-  id: 'wp01', cat: 'world', title: '프랑스 — 제과(Patisserie)', en: 'France · pastry', exam: false,
-  mg2: 'pastry',
-  tags: ['프랑스', '제과', '마들렌', '파리브레스트', '생토노레', '파티시에', '세계 제과'],
-  summary: '프랑스 궁정 제과의 기본기 — 마들렌·파리브레스트·생토노레 배합과 공정.',
-  body: `
-  <h4>프랑스 제과의 성격</h4>
-  <p>17~18세기 궁정 주방에서 체계화된 프랑스 제과는 <strong>가루·버터·계란·설탕</strong> 네 재료의 비율과 온도로 완성도를 만듭니다. 구움과자는 반죽 숙성, 슈는 수분과 호화, 앙트르메는 젤라틴과 유화가 핵심입니다.</p>
-  ${wRecipe('마들렌', '24개(35g)', [
-    ['전란', 240, '실온'], ['설탕', 200, ''], ['꿀', 40, ''], ['박력분', 220, ''],
-    ['아몬드파우더', 30, ''], ['베이킹파우더', 8, ''], ['무염버터', 230, '녹여 50°C'], ['레몬제스트', 3, '']
-  ], '전란+설탕+꿀을 35°C로 데워 휘핑 → 체 친 가루·레몬제스트 → 녹인 버터 폴딩 → 냉장 6시간 이상 숙성 → 190°C 예열 후 180°C 10~12분.', '숙성 반죽이 배(boat) 모양 배꼽을 만든다.')}
-  ${wRecipe('파리브레스트', '지름 20cm 1대', [
-    ['슈 반죽', 350, '기본 슈 배합'], ['아몬드슬라이스', 60, '분당·달걀물 코팅'], ['크렘 파티시에르', 500, '바닐라'],
-    ['프랄리네 버터크림', 300, '아몬드 프랄리네+버터크림'], ['분당', 30, '표면']
-  ], '지름 20cm 원형으로 슈 반죽을 짜고 아몬드슬라이스를 올려 180°C 35~40분(중간에 뚜껑 분리) → 식힌 뒤 크렘 파티시에르+프랄리네 버터크림을 샌드 → 분당을 뿌린다.', '뚜껑을 늦게 분리하면 속이 눅눅해진다.')}
-  ${wRecipe('생토노레', '6개(8cm)', [
-    ['푸프 페이스트리', 300, '3mm'], ['슈 반죽', 250, '링용'], ['크렘 파티시에르', 400, ''],
-    ['샹티이 크림', 300, ''], ['카라멜(이소말트)', 250, '35% 설탕 시럽']
-  ], '푸프 링을 170°C 25분 구워 식히고 슈를 구워 카라멜에 담갔다 꺼내 링 위에 붙인다 → 크렘 파티시에르와 샹티이를 짜고 카라멜로 장식.', '카라멜은 165~170°C에서 불을 끄고 잔열로 색을 낸다.')}
-  `,
-  related: ['마들렌', '파리브레스트', '생토노레', '크렘 파티시에르']
-});
-
-DB.push({
-  id: 'wp02', cat: 'world', title: '프랑스 — 제빵(Boulangerie)', en: 'France · bread', exam: false,
-  mg2: 'bread',
-  tags: ['프랑스', '제빵', '바게트', '크루아상', '브리오슈', 'T55', '르방'],
-  summary: '바게트 트래디션·크루아상·브리오슈 낭테르 — 프랑스 제빵의 수분·라미네이션·버터 비율.',
-  body: `
-  <h4>프랑스 제빵의 성격</h4>
-  <p>T55·T65 밀가루와 <strong>르방(액종)</strong>을 쓰고, 수분 70% 이상의 반죽을 오랜 시간 냉장 발효해 껍질을 만듭니다. 비엔누아즈리는 버터를 층으로 넣거나 반죽에 다량 넣어 결을 만듭니다.</p>
-  ${wRecipe('바게트 트래디션', '4개(350g)', [
-    ['강력분(T55)', 1000, ''], ['물', 700, '10~12°C'], ['소금', 20, ''],
-    ['생이스트', 4, ''], ['르방(액종)', 200, '수분 100%']
-  ], '오토리즈 30분 → 본믹싱 2단 6~8분(반죽 24°C) → 1차 60분(중간 접기 1회) → 350g 분할·성형 → 4°C 냉장 12~18시간 → 250°C 스팀 10초, 230°C 20~25분.', '칼집은 30° 각도로 5mm 깊이. 중심 96°C.')}
-  ${wRecipe('크루아상', '12개(60g)', [
-    ['강력분(T55)', 500, ''], ['물', 240, '차갑게'], ['우유', 50, ''], ['설탕', 55, ''],
-    ['소금', 10, ''], ['생이스트', 12, ''], ['버터', 35, '반죽용'], ['롤인버터(82%)', 250, '15°C 시트']
-  ], '반죽 1단 3분 + 2단 4분 → 냉장 4시간 → 3절 3회(매 회 4°C 30분 휴지) → 3mm 밀어 60g 삼각형 성형 → 27°C 80% 60~90분 → 190°C 16~18분.', '반죽과 버터의 경도가 같아야 층이 산다.')}
-  ${wRecipe('브리오슈 낭테르', '1대(500g 틀)', [
-    ['강력분', 500, ''], ['전란', 250, ''], ['우유', 60, ''], ['설탕', 60, ''],
-    ['소금', 9, ''], ['생이스트', 15, ''], ['무염버터', 280, '22°C']
-  ], '반죽 1단 5분 → 버터를 3회 나눠 투입하며 2단 10분(반죽 24°C) → 냉장 12시간 → 60g 분할 3구 성형 → 28°C 75% 2시간 → 달걀물 → 170°C 25~30분.', '버터가 녹으면 결이 무너지므로 저온 유지.')}
-  `,
-  related: ['바게트', '크루아상', '브리오슈', '르방']
-});
-
-DB.push({
-  id: 'wp03', cat: 'world', title: '이탈리아 — 제과(Dolci)', en: 'Italy · pastry', exam: false,
-  mg2: 'pastry',
-  tags: ['이탈리아', '제과', '티라미수', '판나코타', '카놀리', '마스카포네', '세계 제과'],
-  summary: '티라미수·판나코타·카놀리 — 마스카포네·리코타·젤라틴을 쓰는 이탈리아 디저트.',
-  body: `
-  <h4>이탈리아 제과의 성격</h4>
-  <p>이탈리아 디저트는 <strong>치즈(마스카포네·리코타)</strong>와 커피·시트러스로 맛을 만들고, 크림을 가볍게 씁니다. 젤라틴과 전분으로 굳히는 디저트가 많습니다.</p>
-  ${wRecipe('티라미수', '4개', [
-    ['마스카포네', 250, ''], ['노른자', 40, ''], ['설탕', 60, ''], ['물', 35, ''],
-    ['생크림', 120, ''], ['깔루아', 13, ''], ['에스프레소', 100, '식힌 것'], ['사보이아르디', 12, '개']
-  ], '노른자+설탕+물을 82°C까지 익혀 마스카포네에 섞고 60% 휘핑 크림을 폴딩 → 사보이아르디를 에스프레소+깔루아에 적셔 층층이 담기 → 냉장 4시간.', '크림은 단단하게 올리면 입자가 거칠어진다.')}
-  ${wRecipe('판나코타', '4개', [
-    ['생크림', 400, ''], ['우유', 100, ''], ['설탕', 60, ''], ['판젤라틴', 7, '3.5장'],
-    ['바닐라빈', 3, ''], ['레몬제스트', 1, '선택']
-  ], '크림+우유+설탕+바닐라를 80°C로 데우고 불린 젤라틴을 녹임 → 체에 걸러 컵에 붓고 냉장 4시간.', '젤라틴은 60°C 이상 액체에서만 녹는다.')}
-  ${wRecipe('카놀리', '12개', [
-    ['박력분', 300, ''], ['설탕', 30, ''], ['카카오파우더', 10, ''], ['계란', 2, '개'],
-    ['화이트와인', 90, ''], ['식초', 10, ''], ['리코타', 500, '체에 걸러 물기 제거'],
-    ['분당', 120, ''], ['초콜릿칩', 60, ''], ['피스타치오분태', 40, '']
-  ], '반죽을 얇게 밀어 링에 감아 180°C 8~10분 → 식힌 뒤 리코타+분당+초콜릿칩을 채우고 양 끝에 피스타치오를 묻힌다.', '튀김형은 190°C 기름에서 2분.')}
-  `,
-  related: ['티라미수', '판나코타', '카놀리', '마스카포네']
-});
-
-DB.push({
-  id: 'wp04', cat: 'world', title: '이탈리아 — 제빵(Pane)', en: 'Italy · bread', exam: false,
-  mg2: 'bread',
-  tags: ['이탈리아', '제빵', '치아바타', '포카치아', '파네토네', '빅아', '올리브유'],
-  summary: '치아바타·포카치아·파네토네 — 수분 75~80% 반죽과 올리브유, 천연발효종.',
-  body: `
-  <h4>이탈리아 제빵의 성격</h4>
-  <p>수분 75~80%의 <strong>고수분 반죽</strong>을 올리브유와 함께 쓰고, 접기(stretch & fold)로 글루텐을 만듭니다. 파네토네는 천연발효종(리치오)으로 긴 발효를 줍니다.</p>
-  ${wRecipe('치아바타', '6개(250g)', [
-    ['강력분', 1000, 'W 320'], ['물', 780, '10°C'], ['소금', 22, ''], ['생이스트', 3, ''],
-    ['빅아', 200, '액종, 선택'], ['올리브유', 40, '',  '마지막']
-  ], '오토리즈 40분 → 1단 3분 + 2단 5분 → 30분마다 3회 접기 → 1차 75분 → 분할 후 팬닝(자르지 않고 옮기기) → 250°C 스팀 15초, 230°C 20분.', '기포를 지키려 분할 후 손으로 눌러 성형.')}
-  ${wRecipe('포카치아', '1판(30×40cm)', [
-    ['강력분', 1000, ''], ['물', 750, ''], ['소금', 20, ''], ['생이스트', 8, ''],
-    ['올리브유', 80, ''], ['토핑 올리브오일', 60, ''], ['로즈마리', 8, ''], ['방울토마토', 200, '선택']
-  ], '반죽 100% 믹싱 → 30분마다 3회 접기 → 2시간 1차 → 팬에 펴 2차 60분 → 손가락으로 눌러 홈을 내고 오일·로즈마리·소금 → 230°C 18~22분.', '팬닝 후 눌러야 기포가 남는다.')}
-  ${wRecipe('파네토네', '1개(1kg 몰드)', [
-    ['강력분', 1000, ''], ['설탕', 220, ''], ['노른자', 200, ''], ['전란', 200, ''],
-    ['우유', 300, ''], ['버터', 300, ''], ['리치오(천연종)', 300, ''], ['건포도', 300, '럼 처리'],
-    ['오렌지필', 150, ''], ['소금', 12, '']
-  ], '1차 반죽 후 12시간 발효 → 2차에 지방·건과일 투입 → 몰드 6부 → 28°C 80%에서 6~8시간(몰드 위로 1cm) → 175°C 50분 → 거꾸로 매달아 식힘.', '천연종 없이는 이스트 1.5%로 대체.')}
-  `,
-  related: ['치아바타', '포카치아', '파네토네', '올리브유']
-});
-
-DB.push({
-  id: 'wp05', cat: 'world', title: '독일 — 제과(Kuchen & Gebäck)', en: 'Germany · pastry', exam: false,
-  mg2: 'pastry',
-  tags: ['독일', '제과', '슈바르츠발트', '카이저슈마른', '슈트로이젤쿠헨', '체리', '세계 제과'],
-  summary: '슈바르츠발트 케이크·카이저슈마른·슈트로이젤쿠헨 — 체리·사과와 버터 슈트로이젤.',
-  body: `
-  <h4>독일 제과의 성격</h4>
-  <p>독일·오스트리아권은 <strong>과일(체리·사과·자두)</strong>과 시나몬, 버터 슈트로이젤을 즐겨 씁니다. 커피와 함께 먹는 오후 과자(Kaffee und Kuchen) 문화가 기준입니다.</p>
-  ${wRecipe('슈바르츠발트 케이크', '지름 18cm 1대', [
-    ['계란', 200, ''], ['설탕', 150, ''], ['박력분', 130, ''], ['코코아파우더', 30, ''],
-    ['녹인버터', 60, ''], ['생크림', 500, ''], ['설탕(크림)', 50, ''], ['체리(산체리)', 400, ''],
-    ['키르쉬', 40, ''], ['다크초콜릿', 100, '장식']
-  ], '계란+설탕 100% 휘핑 → 가루 폴딩 → 180°C 25분(얇은 시트) → 시트를 3장으로 재단, 키르쉬 시럽 → 크림과 체리로 샌드 → 표면 크림·초콜릿 장식.', '체리 즙은 시럽에 섞어 시트를 적신다.')}
-  ${wRecipe('카이저슈마른', '4인분', [
-    ['밀가루', 250, ''], ['우유', 500, ''], ['계란', 4, '개'], ['설탕', 40, ''],
-    ['소금', 3, ''], ['버터', 50, ''], ['자두잼', 200, ''], ['분당', 40, ''], ['시나몬', 4, '']
-  ], '팬케이크 반죽을 얇게 부쳐 구운 뒤 손으로 찢어 버터·자두잼에 버무리고 분당+시나몬을 뿌린다.', '찢은 조각을 겹쳐 담아야 결이 산다.')}
-  ${wRecipe('슈트로이젤쿠헨(사과)', '1판(24cm)', [
-    ['버터', 180, ''], ['설탕', 150, ''], ['계란', 2, '개'], ['박력분', 300, ''],
-    ['베이킹파우더', 8, ''], ['사과', 800, ''], ['시나몬', 4, ''], ['슈트로이젤(버터:밀가루:설탕)', 240, '1:1:1']
-  ], '버터+설탕 크림화 → 계란 → 가루 순으로 섞어 팬에 펴고 사과 슬라이스를 눕힘 → 슈트로이젤 뿌려 180°C 45~50분.', '사과는 산미 있는 품종(보스코프) 사용.')}
-  `,
-  related: ['슈바르츠발트', '카이저슈마른', '슈트로이젤', '시나몬']
-});
-
-DB.push({
-  id: 'wp06', cat: 'world', title: '독일 — 제빵(Brot & Brötchen)', en: 'Germany · bread', exam: false,
-  mg2: 'bread',
-  tags: ['독일', '제빵', '로겐브로트', '브레첸', '브로트헨', '호밀', '사워도우'],
-  summary: '호밀 사워도우 브로트·바이에른 브레첸·브로트헨 — 호밀·잿물·알칼리 처리.',
-  body: `
-  <h4>독일 제빵의 성격</h4>
-  <p>독일 빵은 <strong>호밀 사워도우</strong>가 기준입니다. 호밀은 산도가 없으면 전분이 풀리지 않으므로 24시간 산성 발효종을 씁니다. 브레첸은 잿물(알칼리) 처리가 특징입니다.</p>
-  ${wRecipe('로겐브로트(호밀 70%)', '1개(1kg)', [
-    ['호밀가루', 700, ''], ['강력분', 300, ''], ['물', 750, ''], ['사워도우(호밀 100% 수분)', 300, ''],
-    ['소금', 22, ''], ['이스트', 5, '']
-  ], '사워도우+물+호밀가루로 2시간 예비발효 → 본반죽 1단 4분 + 2단 3분(26°C) → 60분 → 성형 후 26°C 90분 → 250°C 스팀 15초, 200°C 45~50분.', '중심 96°C, 구운 뒤 12시간 식혀야 결이 안정.')}
-  ${wRecipe('바이에른 브레첸(잿물)', '12개(80g)', [
-    ['강력분', 1000, ''], ['물', 520, '', '5°C'], ['소금', 20, ''], ['이스트', 10, ''],
-    ['버터', 40, ''], ['잿물(수산화나트륨 3~4%)', 1000, '또는 베이킹소다 5%']
-  ], '반죽 1단 3분 + 2단 5분(24°C) → 4시간 냉장 → 80g 분할, 양팔 모양 성형 → 30분 안정 → 잿물에 10초 담갔다 물기 제거 → 굵은소금 뿌려 240°C 15~18분.', '잿물은 장갑·환기 필수.')}
-  ${wRecipe('브로트헨(소형 롤)', '16개(60g)', [
-    ['강력분', 1000, ''], ['물', 580, ''], ['소금', 20, ''], ['이스트', 12, ''],
-    ['버터', 30, ''], ['몰트', 10, '']
-  ], '반죽 26°C → 60분 → 60g 분할 둥글리기 → 30분 벤치 → 성형 → 230°C 스팀 8초 15분.', '한쪽에 칼집을 넣어 벌어짐을 만든다.')}
-  `,
-  related: ['호밀', '사워도우', '브레첸', '브로트헨']
-});
-
-DB.push({
-  id: 'wp07', cat: 'world', title: '영국 — 제과(Teatime)', en: 'UK · pastry', exam: false,
-  mg2: 'pastry',
-  tags: ['영국', '제과', '스콘', '빅토리아 스펀지', '트레클타르트', '애프터눈 티', '세계 제과'],
-  summary: '스콘·빅토리아 스펀지·트레클 타르트 — 애프터눈 티의 기본 3종.',
-  body: `
-  <h4>영국 제과의 성격</h4>
-  <p>영국 제과는 <strong>버터와 밀가루의 단순한 배합</strong>을 정확히 지키는 쪽입니다. 스콘은 차가운 버터, 스펀지는 계란 무게 기준 1:1:1:1이 기본입니다.</p>
-  ${wRecipe('스콘', '8개(70g)', [
-    ['중력분', 300, ''], ['베이킹파우더', 15, ''], ['버터', 80, '차갑게'],
-    ['설탕', 40, ''], ['소금', 3, ''], ['우유', 140, ''], ['계란', 30, '표면용']
-  ], '가루+차가운 버터 모래알 → 우유 넣어 한 덩이(치대지 않기) → 2cm 밀어 6cm 원형 → 계란물 → 200°C 12~15분.', '반죽을 두 번 접어 층을 만든다.')}
-  ${wRecipe('빅토리아 스펀지', '지름 18cm 1대', [
-    ['버터', 200, ''], ['설탕', 200, ''], ['계란', 200, ''], ['박력분', 200, ''],
-    ['베이킹파우더', 4, ''], ['딸기잼', 150, ''], ['생크림', 150, ''], ['분당', 10, '']
-  ], '버터+설탕 크림화 → 계란 나눠 → 가루 → 180°C 20~25분 2판 → 잼+크림 샌드 → 분당.', '계란·버터·설탕·가루를 같은 무게로 두는 1:1:1:1.')}
-  ${wRecipe('트레클 타르트', '지름 20cm 1대', [
-    ['파트 사블레', 300, '타르트지'], ['골든시럽', 200, ''], ['레몬즙', 20, ''],
-    ['식빵가루', 120, ''], ['계란', 2, '개'], ['생크림', 60, ''], ['레몬제스트', 2, '']
-  ], '타르트지를 블라인드 베이크(180°C 15분) → 시럽+레몬즙+빵가루+계란+크림을 섞어 채움 → 170°C 25분.', '시럽을 끓여 빵가루를 불린 뒤 채운다.')}
-  `,
-  related: ['스콘', '빅토리아 스펀지', '트레클 타르트', '애프터눈 티']
-});
-
-DB.push({
-  id: 'wp08', cat: 'world', title: '영국 — 제빵(Bread)', en: 'UK · bread', exam: false,
-  mg2: 'bread',
-  tags: ['영국', '제빵', '소다브레드', '브라우니 소다', '잉글리시 머핀', '홀밀'],
-  summary: '소다브레드·잉글리시 머핀·홀밀 브레드 — 이스트 없이 굽는 빵과 팬 구이 빵.',
-  body: `
-  <h4>영국 제빵의 성격</h4>
-  <p>영국은 <strong>베이킹소다로 부풀리는 소다브레드</strong>와 철판에서 굽는 머핀 문화가 있습니다. 홀밀·버터밀크로 거친 결을 살립니다.</p>
+  <h4>유래 · 특징</h4>
+  <p>베이킹소다로 팽창시키는 아일랜드 빵으로, 발효 시간이 필요 없습니다. 버터밀크의 산과 소다가 반응해 부풀며, 반죽을 너무 치대면 단단해지므로 섞자마자 성형해 굽습니다.</p>
   ${wRecipe('아일랜드 소다브레드', '1개(800g)', [
     ['중력분', 450, ''], ['홀밀가루', 200, ''], ['베이킹소다', 8, ''], ['소금', 10, ''],
     ['버터밀크', 400, ''], ['계란', 1, '개'], ['귀리', 30, '표면']
   ], '가루+소다+소금 → 버터밀크+계란을 넣어 최소한으로 섞기 → 둥글게 성형, 위에 십자 칼집 → 200°C 30분 → 190°C 15분.', '섞는 시간이 길면 결이 단단해진다.')}
+    `,
+  tips: [],
+  related: ['아일랜드 소다브레드', '스콘', '빅토리아 스펀지']
+});
+
+DB.push({
+  id: 'wi31', cat: 'world', title: '잉글리시 머핀', en: 'English muffin', exam: false,
+  mg: 'eu', mg2: 'bread', wc: '영미',
+  tags: ['영미', '제빵', '세계 제과', '잉글리시 머핀', 'English muffin'],
+  summary: '팬에 구워 옆면이 갈색, 속은 쫄깃한 영국 아침 빵.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>영국 아침 식사 빵으로, 팬에 구워 옆면은 갈색이 되고 속은 쫄깃합니다. 반죽이 무르므로 링에 넣어 굽고, 식힌 뒤 반으로 갈라 구우면 결이 벌어집니다.</p>
   ${wRecipe('잉글리시 머핀', '10개(75g)', [
     ['강력분', 500, ''], ['물', 300, ''], ['우유', 50, ''], ['설탕', 10, ''],
     ['소금', 8, ''], ['이스트', 8, ''], ['버터', 20, ''], ['옥수수가루', 30, '팬닝용']
   ], '반죽 26°C → 1차 60분 → 75g 분할 둥글리기 → 옥수수가루를 뿌려 팬닝 → 30분 → 철판에서 약불로 양면 5분씩 굽고 200°C 8분 마무리.', '틀에 넣어 구우면 옆면이 곧게 선다.')}
+    `,
+  tips: [],
+  related: ['잉글리시 머핀', '스콘', '빅토리아 스펀지']
+});
+
+DB.push({
+  id: 'wi32', cat: 'world', title: '홀밀 브레드', en: 'Wholemeal bread', exam: false,
+  mg: 'eu', mg2: 'bread', wc: '영미',
+  tags: ['영미', '제빵', '세계 제과', '홀밀 브레드', 'Wholemeal bread'],
+  summary: '통밀 50% 식사빵, 수화 시간을 길게 주어야 부피가 산다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>통밀가루를 50% 이상 넣은 영국식 식사빵으로, 글루텐이 적어 부피가 작습니다. 물을 먼저 넣어 글루텐을 30분간 수화시키고, 식빵 비율로 소금·이스트를 더해 구우면 거칠지 않고 촉촉합니다.</p>
   ${wRecipe('홀밀 브레드(50%)', '1개(900g)', [
     ['강력분', 500, ''], ['홀밀가루', 500, ''], ['물', 720, ''], ['소금', 20, ''],
     ['이스트', 10, ''], ['버터', 40, ''], ['몰트', 15, '']
   ], '오토리즈 30분 → 1단 3분 + 2단 6분 → 60분 → 성형 후 팬닝 → 32°C 60분 → 200°C 40분.', '홀밀은 수분을 더 잡아준다.')}
-  `,
-  related: ['소다브레드', '잉글리시 머핀', '홀밀', '베이킹소다']
+    `,
+  tips: [],
+  related: ['홀밀 브레드', '스콘', '빅토리아 스펀지']
 });
 
 DB.push({
-  id: 'wp09', cat: 'world', title: '미국 — 제과(Dessert)', en: 'USA · pastry', exam: false,
-  mg2: 'pastry',
-  tags: ['미국', '제과', '브라우니', '뉴욕 치즈케이크', '초코칩 쿠키', '세계 제과'],
-  summary: '브라우니·뉴욕 치즈케이크·초코칩 쿠키 — 진한 단맛과 쫀득한 식감.',
+  id: 'wi37', cat: 'world', title: '샌프란시스코 사워도우', en: 'San Francisco sourdough', exam: false,
+  mg: 'eu', mg2: 'bread', wc: '영미',
+  tags: ['영미', '제빵', '세계 제과', '샌프란시스코 사워도우', 'San Francisco sourdough'],
+  summary: '천연 발효종의 젖산이 만드는 신맛이 특징인 미국 고수분 빵.',
   body: `
-  <h4>미국 제과의 성격</h4>
-  <p>미국 디저트는 <strong>설탕·버터·초콜릿의 밀도</strong>로 승부합니다. 브라우니는 수분을 적게, 치즈케이크는 크림치즈:설탕:계란 비율로 식감을 정합니다.</p>
-  ${wRecipe('브라우니', '20cm 1틀', [
-    ['무염버터', 180, ''], ['다크초콜릿', 200, ''], ['설탕', 200, ''], ['황설탕', 80, ''],
-    ['계란', 3, '개'], ['박력분', 120, ''], ['코코아파우더', 30, ''], ['소금', 3, ''], ['호두', 100, '']
-  ], '버터+초콜릿 중탕 → 설탕·계란을 넣어 광택 → 체 친 가루·코코아·소금 → 호두 → 175°C 25분.', '중심 90°C에서 꺼내야 쫀득하다.')}
-  ${wRecipe('뉴욕 치즈케이크', '지름 15cm 1대', [
-    ['크림치즈', 500, ''], ['설탕', 140, ''], ['계란', 3, '개'], ['사워크림', 100, ''],
-    ['생크림', 60, ''], ['레몬즙', 10, ''], ['바닐라', 4, ''], ['비스킷(파이지)', 150, '']
-  ], '비스킷+버터를 깔고 170°C 10분 → 크림치즈 풀고 설탕·계란·사워크림·레몬 순으로 섞어 붓기 → 160°C 50~60분(중탕) → 냉장 6시간.', '중심이 살짝 흔들릴 때 오븐에서 꺼낸다.')}
-  ${wRecipe('초코칩 쿠키', '12개(60g)', [
-    ['버터', 120, ''], ['황설탕', 100, ''], ['설탕', 50, ''], ['계란', 1, '개'],
-    ['박력분', 220, ''], ['베이킹소다', 3, ''], ['소금', 2, ''], ['초코칩', 150, ''], ['바닐라', 3, '']
-  ], '버터+설탕 크림화 → 계란·바닐라 → 가루 → 초코칩 → 60g 성형 후 냉장 30분 → 180°C 11~13분.', '냉장 숙성이 두께와 갈라짐을 만든다.')}
-  `,
-  related: ['브라우니', '치즈케이크', '초코칩 쿠키', '크림치즈']
-});
-
-DB.push({
-  id: 'wp10', cat: 'world', title: '미국 — 제빵(Bread)', en: 'USA · bread', exam: false,
-  mg2: 'bread',
-  tags: ['미국', '제빵', '샌프란시스코 사워도우', '시나몬롤', '콘브레드', '천연발효'],
-  summary: '샌프란시스코 사워도우·시나몬롤·콘브레드 — 천연발효와 달콤한 소프트 브레드.',
-  body: `
-  <h4>미국 제빵의 성격</h4>
-  <p>미국은 <strong>샌프란시스코 천연발효 사워도우</strong>와 달콤한 소프트 브레드(시나몬롤·콘브레드)가 대표입니다. 사워도우는 산미를, 소프트 브레드는 버터·설탕을 늘립니다.</p>
+  <h4>유래 · 특징</h4>
+  <p>샌프란시스코의 천연 발효종으로 만든 고수분 빵으로, 젖산균이 만드는 신맛이 특징입니다. 27°C 전후에서 4~6시간 발효하고 250°C 스팀으로 구워 껍질을 두껍게 냅니다.</p>
   ${wRecipe('샌프란시스코 사워도우', '2개(800g)', [
     ['강력분', 1000, ''], ['물', 720, ''], ['소금', 20, ''],
     ['사워도우 스타터(100% 수분)', 200, ''], ['홀밀가루', 50, '표면']
   ], '스타터+물+가루 오토리즈 40분 → 소금 투입 후 30분마다 4회 접기(24°C) → 4~6시간 1차(60% 부피) → 분할·성형 → 4°C 12시간 → 250°C 스팀 15초, 230°C 35분.', '산미는 냉장 발효 시간으로 조절.')}
+    `,
+  tips: [],
+  related: ['샌프란시스코 사워도우', '스콘', '빅토리아 스펀지']
+});
+
+DB.push({
+  id: 'wi38', cat: 'world', title: '시나몬롤', en: 'Cinnamon roll', exam: false,
+  mg: 'eu', mg2: 'bread', wc: '영미',
+  tags: ['영미', '제빵', '세계 제과', '시나몬롤', 'Cinnamon roll'],
+  summary: '시나몬·흑설탕 필링을 말아 넣고 크림치즈 아이싱을 얹는 나선 빵.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>미국과 스칸디나비아에서 사랑받는 나선형 단과자로, 시나몬·흑설탕 필링을 말아 넣고 크림치즈 아이싱을 얹습니다. 30°C·습도 80%에서 충분히 발효해야 굽는 동안 결이 벌어집니다.</p>
   ${wRecipe('시나몬롤', '9개', [
     ['강력분', 500, ''], ['우유', 250, ''], ['버터', 60, ''], ['설탕', 60, ''],
     ['계란', 50, ''], ['이스트', 10, ''], ['소금', 8, ''], ['흑설탕', 120, '필링'],
     ['시나몬', 12, ''], ['버터(필링)', 80, ''], ['크림치즈', 120, '아이싱'], ['분당', 100, '아이싱']
   ], '반죽 26°C → 1차 60분 → 3mm 밀어 흑설탕+시나몬+버터를 발라 말기 → 2cm 컷 → 32°C 50분 → 180°C 25분 → 크림치즈 아이싱.', '말기 전 반죽을 차게 하면 결이 깔끔.')}
+    `,
+  tips: [],
+  related: ['시나몬롤', '스콘', '빅토리아 스펀지']
+});
+
+DB.push({
+  id: 'wi39', cat: 'world', title: '콘브레드', en: 'Cornbread', exam: false,
+  mg: 'eu', mg2: 'bread', wc: '영미',
+  tags: ['영미', '제빵', '세계 제과', '콘브레드', 'Cornbread'],
+  summary: '옥수수가루와 버터밀크로 굽는 미국 남부 빵.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>미국 남부의 옥수수 가루 빵으로, 소다로 팽창시키고 버터밀크를 씁니다. 옥수수가루와 밀가루 비율에 따라 식감이 달라지고, 갓 구운 뒤 버터를 바르는 것이 가장 맛있는 방식입니다.</p>
   ${wRecipe('콘브레드', '20cm 1틀', [
     ['옥수수가루', 200, ''], ['중력분', 150, ''], ['설탕', 60, ''], ['베이킹파우더', 10, ''],
     ['소금', 5, ''], ['버터밀크', 300, ''], ['계란', 2, '개'], ['버터', 80, '녹인 것']
   ], '가루+설탕+BP+소금 → 버터밀크+계란+녹인버터를 섞어 최소한으로 → 200°C 25분.', '옥수수가루가 굵으면 물에 10분 불린다.')}
-  `,
-  related: ['사워도우', '시나몬롤', '콘브레드', '천연발효종']
+    `,
+  tips: [],
+  related: ['콘브레드', '스콘', '빅토리아 스펀지']
 });
 
 DB.push({
-  id: 'wp11', cat: 'world', title: '일본 — 제과(洋菓子)', en: 'Japan · pastry', exam: false,
-  mg2: 'pastry',
-  tags: ['일본', '제과', '카스텔라', '시폰케이크', '다이후쿠', '쇼쿠판', '세계 제과'],
-  summary: '카스텔라·시폰케이크·다이후쿠 — 촉촉한 계란 케이크와 찹쌀 디저트.',
+  id: 'wi40', cat: 'world', title: '카스텔라', en: 'Castella', exam: false,
+  mg: 'jp', mg2: 'pastry', wc: '일본',
+  tags: ['일본', '제과', '세계 제과', '카스텔라', 'Castella'],
+  summary: '포르투갈에서 나가사키로 전해진 스펀지, 꿀과 낮은 온도 굽기가 핵심.',
   body: `
-  <h4>일본 제과의 성격</h4>
-  <p>일본은 서양 제과를 <strong>촉촉함과 정교함</strong>으로 재해석했습니다. 카스텔라는 강력분과 꿀, 시폰은 수분과 머랭 비율이 핵심입니다.</p>
+  <h4>유래 · 특징</h4>
+  <p>16세기 포르투갈의 파오드로(카스텔라)가 나가사키에 전해져 일본에서 발전한 스펀지 케이크입니다. 꿀이 들어가 촉촉하고, 낮은 온도에서 오래 구워 바닥에 진한 갈색이 생깁니다.</p>
   ${wRecipe('카스텔라', '1대(15cm)', [
     ['전란', 300, ''], ['설탕', 220, ''], ['물엿', 40, ''], ['강력분', 200, ''],
     ['우유', 40, ''], ['미림', 30, ''], ['버터', 30, '']
   ], '전란+설탕+물엿을 40°C 중탕 휘핑 → 강력분 폴딩 → 우유+미림+버터(50°C) 섞기 → 목칠 틀에 30cm 높이에서 떨어뜨려 기포 제거 → 160°C 50~60분 → 뒤집어 하루 숙성.', '바닥 설탕(자당)을 깔면 캐러멜 바닥이 생긴다.')}
+    `,
+  tips: [],
+  related: ['카스텔라', '시폰케이크', '다이후쿠']
+});
+
+DB.push({
+  id: 'wi41', cat: 'world', title: '시폰케이크', en: 'Chiffon cake', exam: false,
+  mg: 'jp', mg2: 'pastry', wc: '일본',
+  tags: ['일본', '제과', '세계 제과', '시폰케이크', 'Chiffon cake'],
+  summary: '식물성 기름으로 가볍게 만든 케이크, 일본에서 대중화됐다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>1927년 미국의 해리 베이커가 개발하고 일본에서 대중화된 케이크로, 식물성 기름을 넣어 가볍고 촉촉합니다. 머랭을 폴딩하고 굽는 동안 틀을 뒤집어 식혀야 꺼지지 않습니다.</p>
   ${wRecipe('시폰케이크', '17cm 1대', [
     ['노른자', 60, ''], ['설탕(a)', 30, ''], ['식용유', 50, ''], ['우유', 60, ''],
     ['박력분', 90, ''], ['흰자', 140, ''], ['설탕(b)', 60, ''],
     ['바닐라', 3, ''], ['레몬즙', 3, '']
   ], '노른자+설탕a+오일+우유 유화 → 박력분 → 흰자+설탕b 90% 머랭 → 폴딩 → 170°C 30분 → 뒤집어 식힘.', '틀에 기름을 바르지 않아야 잘 붙어 오른다.')}
+    `,
+  tips: [],
+  related: ['시폰케이크', '카스텔라', '다이후쿠']
+});
+
+DB.push({
+  id: 'wi42', cat: 'world', title: '다이후쿠', en: 'Daifuku', exam: false,
+  mg: 'jp', mg2: 'pastry', wc: '일본',
+  tags: ['일본', '제과', '세계 제과', '다이후쿠', 'Daifuku'],
+  summary: '찹쌀떡으로 앙금을 감싼 일본 과자, 전분을 묻혀 감싼다.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>찹쌀떡으로 앙금을 감싼 일본 과자로, 에도 시대부터 전해집니다. 찐 찹쌀을 절구로 찧어 쫀득하게 만들고, 전분을 묻혀 감싸야 손에 붙지 않고 모양이 잡힙니다.</p>
   ${wRecipe('다이후쿠', '6개', [
     ['찹쌀가루', 150, ''], ['물', 180, ''], ['설탕', 30, ''], ['팥앙금', 240, ''],
     ['전분', 30, '성형용']
   ], '찹쌀가루+물 섞어 600W 전자레인지 2분 → 설탕 넣고 2분 더(투명해질 때까지) → 전분 위에 펴 40g씩 나눠 앙금 40g을 감싸기.', '뜨거울 때 감싸야 밀봉된다.')}
-  `,
-  related: ['카스텔라', '시폰케이크', '다이후쿠', '물엿']
+    `,
+  tips: [],
+  related: ['다이후쿠', '카스텔라', '시폰케이크']
 });
 
 DB.push({
-  id: 'wp12', cat: 'world', title: '일본 — 제빵(製パン)', en: 'Japan · bread', exam: false,
-  mg2: 'bread',
-  tags: ['일본', '제빵', '쇼쿠판', '멜론빵', '카레빵', '탕종', '우유식빵'],
-  summary: '쇼쿠판(식빵)·멜론빵·카레빵 — 탕종과 쿠키 반죽으로 만드는 일본식 빵.',
+  id: 'wi43', cat: 'world', title: '말차 모찌', en: 'Matcha mochi', exam: false,
+  mg: 'jp', mg2: 'pastry', wc: '일본',
+  tags: ['일본', '제과', '세계 제과', '말차 모찌', 'Matcha mochi'],
+  summary: '말차를 넣은 모찌, 쌉싸름한 차 향과 쫀득한 식감.',
   body: `
-  <h4>일본 제빵의 성격</h4>
-  <p>일본 빵은 <strong>탕종(湯種)</strong>으로 수분을 붙잡아 촉촉하게 만들고, 쿠키 반죽·카레 같은 부재료를 얹어 식사빵으로 발전했습니다.</p>
+  <h4>유래 · 특징</h4>
+  <p>말차를 넣은 모찌로, 일본 차 문화와 함께 발전한 과자입니다. 말차 가루는 뜨거운 물에 개어 시럽처럼 쓰고, 모찌 반죽에 넣으면 색과 쌉싸름한 맛이 살아납니다.</p>
+  ${wRecipe('말차 모찌', '12개', [
+    ['찹쌀가루(모치코)', 150, ''], ['설탕', 100, ''], ['말차', 5, '체 친 것'],
+    ['물', 200, ''], ['팥앙금', 200, '선택']
+  ], '모치코+설탕+말차+물을 섞어 전자레인지 3분(1분마다 저어주기). 반죽을 12등분해 앙금을 싸고 녹말가루를 묻힌다.', '말차는 체로 2회 쳐야 덩어리가 없습니다.')}
+    `,
+  tips: [],
+  related: ['말차 모찌', '카스텔라', '시폰케이크']
+});
+
+DB.push({
+  id: 'wi44', cat: 'world', title: '쇼쿠판', en: 'Shokupan', exam: false,
+  mg: 'jp', mg2: 'bread', wc: '일본',
+  tags: ['일본', '제빵', '세계 제과', '쇼쿠판', 'Shokupan'],
+  summary: '생크림·탕종을 넣어 결이 가늘고 촉촉한 일본 우유식빵.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>일본의 우유식빵으로, 생크림이나 탕종을 넣어 결이 가늘고 촉촉합니다. 수분과 유지 비율이 높아 2차 발효를 충분히 해야 윗면이 둥글게 부풀고, 식힌 뒤 잘라야 단면이 깨끗합니다.</p>
   ${wRecipe('쇼쿠판(우유식빵)', '1근(450g 틀)', [
     ['강력분', 500, ''], ['설탕', 40, ''], ['소금', 9, ''], ['이스트', 10, ''],
     ['탈지분유', 15, ''], ['버터', 40, ''], ['우유', 180, ''], ['물', 170, ''], ['탕종', 100, '']
   ], '탕종(강력분 50+물 100을 65°C 호화) 식힘 → 본반죽 26°C → 1차 60분 → 3분할 성형 → 2차 35°C 50분 → 190°C 35분.', '탕종이 20% 들어가면 이틀 뒤에도 촉촉하다.')}
+    `,
+  tips: [],
+  related: ['쇼쿠판', '카스텔라', '시폰케이크']
+});
+
+DB.push({
+  id: 'wi45', cat: 'world', title: '멜론빵', en: 'Melon pan', exam: false,
+  mg: 'jp', mg2: 'bread', wc: '일본',
+  tags: ['일본', '제빵', '세계 제과', '멜론빵', 'Melon pan'],
+  summary: '쿠키 크러스트를 얹어 격자무늬를 낸 일본 빵.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>일본에서 만든 쿠키 크러스트 빵으로, 겉면에 격자무늬를 넣어 멜론처럼 보입니다. 쿠키 반죽을 빵 위에 얹어 구우면 갈라진 무늬가 생기고, 설탕을 뿌리면 더 바삭합니다.</p>
   ${wRecipe('멜론빵', '8개(60g)', [
     ['강력분(반죽)', 300, ''], ['우유', 180, ''], ['설탕', 35, ''], ['이스트', 6, ''],
     ['소금', 5, ''], ['버터', 30, ''], ['버터(쿠키)', 60, ''], ['설탕(쿠키)', 60, ''],
     ['계란(쿠키)', 40, ''], ['박력분(쿠키)', 130, ''], ['베이킹파우더', 2, ''], ['메론향', 2, '']
   ], '쿠키 반죽을 만들어 냉장 → 본반죽 1차 60분 → 60g 둥글리기 → 쿠키 35g을 얇게 밀어 덮고 설탕 입히기 → 35°C 40분 → 180°C 15분.', '쿠키 반죽을 얇게 밀어야 갈라진 무늬가 선명.')}
+    `,
+  tips: [],
+  related: ['멜론빵', '카스텔라', '시폰케이크']
+});
+
+DB.push({
+  id: 'wi46', cat: 'world', title: '카레빵', en: 'Curry bread', exam: false,
+  mg: 'jp', mg2: 'bread', wc: '일본',
+  tags: ['일본', '제빵', '세계 제과', '카레빵', 'Curry bread'],
+  summary: '카레를 감싸 빵가루를 입혀 튀긴 일본식 튀김빵.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>1927년경 도쿄의 제빵사가 만든 것으로 알려진 일본식 튀김빵으로, 카레를 감싸 빵가루를 입혀 튀깁니다. 카레는 되직하게 졸여야 튀는 것을 막고, 반죽 가장자리를 잘 붙여야 터지지 않습니다.</p>
   ${wRecipe('카레빵', '6개(80g)', [
     ['강력분', 300, ''], ['우유', 180, ''], ['설탕', 20, ''], ['이스트', 5, ''],
     ['소금', 5, ''], ['버터', 25, ''], ['카레(다진고기+양파)', 300, '식힌 것'], ['계란물', 30, ''], ['빵가루', 60, '']
   ], '반죽 1차 60분 → 80g 분할 → 카레 50g 감싸기 → 계란물+빵가루 → 190°C 기름에 3분(또는 200°C 12분).', '카레를 완전히 식혀야 반죽이 죽지 않는다.')}
-  `,
-  related: ['탕종', '우유식빵', '멜론빵', '카레빵']
+    `,
+  tips: [],
+  related: ['카레빵', '카스텔라', '시폰케이크']
 });
 
 DB.push({
-  id: 'wp13', cat: 'world', title: '한국 — 제과(과자·떡)', en: 'Korea · pastry', exam: false,
-  mg2: 'pastry',
-  tags: ['한국', '제과', '카스텔라', '약과', '호두과자', '떡', '세계 제과'],
-  summary: '한국식 카스텔라·약과·호두과자 — 견과·조청·찹쌀을 쓰는 한국 제과.',
+  id: 'wi51', cat: 'world', title: '약과', en: 'Yakgwa', exam: false,
+  mg: 'kr', mg2: 'pastry', wc: '한국',
+  tags: ['한국', '제과', '세계 제과', '약과', 'Yakgwa'],
+  summary: '꿀·참기름 반죽을 지지고 조청에 담근 한국의 유밀과.',
   body: `
-  <h4>한국 제과의 성격</h4>
-  <p>한국 제과는 <strong>찹쌀·조청·견과</strong>를 쓰고, 서양 케이크보다 단맛과 씹힘을 중시합니다. 약과는 유밀과 계열, 호두과자는 팥앙금을 넣은 구움과자입니다.</p>
-  ${wRecipe('한국식 카스텔라', '1대(20cm)', [
-    ['전란', 400, ''], ['설탕', 200, ''], ['꿀', 40, ''], ['강력분', 220, ''],
-    ['우유', 60, ''], ['버터', 40, '녹인 것'], ['베이킹파우더', 2, '']
-  ], '전란+설탕+꿀 40°C 휘핑 → 강력분+BP → 우유+녹인버터 → 170°C 40분 → 뒤집어 식힘.', '전란 비중 0.45~0.5 유지.')}
+  <h4>유래 · 특징</h4>
+  <p>고려 시대부터 전해지는 한국의 유밀과로, 밀가루·꿀·참기름·소주를 반죽해 기름에 지지고 조청(집청)에 담급니다. 반죽을 오래 치대지 않고 약한 불에서 천천히 지져야 속까지 익고, 집청은 따뜻할 때 담가야 속까지 뱁니다.</p>
   ${wRecipe('약과', '20개', [
     ['중력분', 300, ''], ['참기름', 60, ''], ['꿀', 120, ''], ['청주', 60, ''],
     ['소금', 3, ''], ['생강즙', 10, ''], ['조청', 300, '집청'],
     ['식용유', 800, '튀김용'], ['잣', 20, '고명']
   ], '가루+참기름을 비벼 체질 → 꿀+청주+소금+생강즙으로 반죽 → 1cm 밀어 모양 찍기 → 150°C 기름에서 서서히 10분(튀밥이 뜨면 뒤집기) → 조청에 30분 집청 → 잣 고명.', '기름 온도가 높으면 속이 익기 전에 탄다.')}
+    `,
+  tips: [],
+  related: ['약과', '주악', '호두과자']
+});
+
+DB.push({
+  id: 'wi52', cat: 'world', title: '주악', en: 'Juak', exam: false,
+  mg: 'kr', mg2: 'pastry', wc: '한국',
+  tags: ['한국', '제과', '세계 제과', '주악', 'Juak'],
+  summary: '찹쌀 반죽에 팥·대추를 넣어 지진 한국 전통 유과.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>찹쌀가루 반죽에 팥이나 대추 등을 넣고 둥글게 빚어 기름에 지진 한국 전통 유과입니다. 끓는 물로 익반죽해 쫀득하게 만들고, 지진 뒤 조청이나 꿀을 발라 윤을 냅니다.</p>
+  ${wRecipe('주악', '12개', [
+    ['찹쌀가루', 300, ''], ['뜨거운 물', 150, ''], ['설탕', 30, ''],
+    ['팥앙금', 150, ''], ['조청', 100, '마무리'], ['잣', 20, '고명']
+  ], '찹쌀가루+설탕+뜨거운 물로 반죽→20g씩 떼어 앙금을 싸고 둥글게. 170°C에서 튀기거나 찜 후 조청을 입히고 잣.', '찹쌀 반죽은 뜨거울 때 빨리 성형하세요.')}
+    `,
+  tips: [],
+  related: ['주악', '약과', '호두과자']
+});
+
+DB.push({
+  id: 'wi53', cat: 'world', title: '호두과자', en: 'Hodugwaja', exam: false,
+  mg: 'kr', mg2: 'pastry', wc: '한국',
+  tags: ['한국', '제과', '세계 제과', '호두과자', 'Hodugwaja'],
+  summary: '팥 앙금과 호두를 넣어 호두 모양 틀에 구운 천안의 과자.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>1930년대 천안에서 시작된 한국의 과자로, 밀가루 반죽에 팥 앙금과 호두를 넣어 호두 모양 틀에 구워 냅니다. 틀을 충분히 예열하고 반죽을 8부능선까지만 부어야 모양이 터지지 않습니다.</p>
   ${wRecipe('호두과자', '12개', [
     ['중력분', 200, ''], ['계란', 100, ''], ['우유', 150, ''], ['설탕', 60, ''],
     ['베이킹파우더', 3, ''], ['버터', 30, ''], ['팥앙금', 240, ''], ['호두', 60, '다진 것']
   ], '가루+계란+우유+설탕+BP+버터 반죽 → 팬에 반죽 절반 → 앙금+호두 → 반죽 덮어 170°C 15분.', '앙금에 다진 호두를 섞으면 씹힘이 산다.')}
-  `,
-  related: ['카스텔라', '약과', '호두과자', '조청']
+    `,
+  tips: [],
+  related: ['호두과자', '약과', '주악']
 });
 
 DB.push({
-  id: 'wp14', cat: 'world', title: '한국 — 제빵(단팥빵·소금빵)', en: 'Korea · bread', exam: false,
-  mg2: 'bread',
-  tags: ['한국', '제빵', '단팥빵', '소금빵', '마늘빵', '앙금', '시오판'],
-  summary: '단팥빵·소금빵·마늘빵 — 한국 베이커리에서 가장 많이 팔리는 식사빵.',
+  id: 'wi54', cat: 'world', title: '한국식 카스텔라', en: 'Korean castella', exam: false,
+  mg: 'kr', mg2: 'pastry', wc: '한국',
+  tags: ['한국', '제과', '세계 제과', '한국식 카스텔라', 'Korean castella'],
+  summary: '마가린·꿀을 넣어 두툼하게 구운 한국 제과점의 카스텔라.',
   body: `
-  <h4>한국 제빵의 성격</h4>
-  <p>한국 베이커리에서는 <strong>단팥빵·소금빵·마늘빵</strong>이 대표 판매 품목입니다. 버터 풍미와 짭짤한 소금, 달콤한 앙금이 축입니다.</p>
+  <h4>유래 · 특징</h4>
+  <p>1970~80년대 한국 제과점에서 자리 잡은 카스텔라로, 밀가루·설탕·계란·꿀에 마가린(또는 버터)을 넣어 두툼하게 굽습니다. 일본식보다 달고 촉촉하며, 낮은 온도에서 오래 구워 바닥을 진하게 냅니다.</p>
+  ${wRecipe('한국식 카스텔라', '1대(20cm)', [
+    ['전란', 400, ''], ['설탕', 200, ''], ['꿀', 40, ''], ['강력분', 220, ''],
+    ['우유', 60, ''], ['버터', 40, '녹인 것'], ['베이킹파우더', 2, '']
+  ], '전란+설탕+꿀 40°C 휘핑 → 강력분+BP → 우유+녹인버터 → 170°C 40분 → 뒤집어 식힘.', '전란 비중 0.45~0.5 유지.')}
+    `,
+  tips: [],
+  related: ['한국식 카스텔라', '약과', '주악']
+});
+
+DB.push({
+  id: 'wi47', cat: 'world', title: '단팥빵', en: 'Danpatppang', exam: false,
+  mg: 'kr', mg2: 'bread', wc: '한국',
+  tags: ['한국', '제빵', '세계 제과', '단팥빵', 'Danpatppang'],
+  summary: '팥 앙금을 넣어 구운 한국의 대표 단과자빵.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>1900년대 초 일본의 앙킨만이 들어와 한국에서 자리 잡은 빵으로, 팥 앙금을 넣어 굽습니다. 팥을 삶아 설탕에 졸인 앙금은 수분을 줄여야 빵 속에서 흐르지 않고, 굽기 전 가운데를 눌러 표시를 냅니다.</p>
   ${wRecipe('단팥빵', '10개(70g)', [
     ['강력분', 400, ''], ['우유', 200, ''], ['설탕', 40, ''], ['이스트', 8, ''],
     ['소금', 6, ''], ['버터', 30, ''], ['팥앙금', 300, ''], ['계란물', 30, '표면'], ['검정깨', 5, '']
   ], '반죽 26°C → 1차 60분 → 70g 분할 15분 벤치 → 앙금 30g 감싸기 → 35°C 40분 → 계란물+깨 → 180°C 15분.', '앙금은 유통기한 짧은 생앙금이 맛이 좋다.')}
+    `,
+  tips: [],
+  related: ['단팥빵', '약과', '주악']
+});
+
+DB.push({
+  id: 'wi48', cat: 'world', title: '소보로빵', en: 'Soboro ppang', exam: false,
+  mg: 'kr', mg2: 'bread', wc: '한국',
+  tags: ['한국', '제빵', '세계 제과', '소보로빵', 'Soboro ppang'],
+  summary: '표면에 소보로 크럼을 얹어 갈라진 무늬를 내는 한국 단과자빵.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>곰보빵이라고도 부르는 한국의 단과자빵으로, 표면에 소보로(곰보) 크럼을 얹어 갈라진 무늬를 냅니다. 소보로는 버터·설탕·가루를 비벼 만들어 발효가 끝난 반죽 위에 얹고 구우면 갈라집니다.</p>
+  ${wRecipe('소보로빵', '8개', [
+    ['강력분', 500, '빵 반죽'], ['우유', 280, ''], ['설탕', 60, ''],
+    ['무염버터', 40, ''], ['생이스트', 8, ''], ['소금', 6, ''],
+    ['박력분', 100, '소보로'], ['설탕', 60, '소보로'], ['무염버터', 50, '소보로'], ['계란', 20, '소보로']
+  ], '빵 반죽 1차 60분→분할 70g→2차 35°C 35분. 소보로 재료를 비벼 냉장 30분, 빵 위에 얹고 180°C 15분.', '소보로는 굵게 비벼야 갈라진 모양이 납니다.')}
+    `,
+  tips: [],
+  related: ['소보로빵', '약과', '주악']
+});
+
+DB.push({
+  id: 'wi49', cat: 'world', title: '소금빵', en: 'Salt bread', exam: false,
+  mg: 'kr', mg2: 'bread', wc: '한국',
+  tags: ['한국', '제빵', '세계 제과', '소금빵', 'Salt bread'],
+  summary: '소금 버터를 넣어 밀어 만든 짭짤한 버터 롤빵.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>일본에서 시작해 한국에서 유행한 짭짤한 버터 롤빵으로, 반죽을 길게 밀어 소금 버터를 넣고 말아 성형합니다. 바닥이 바삭해야 하므로 철판을 충분히 예열하고 고온에서 구웁니다.</p>
   ${wRecipe('소금빵(시오판)', '8개(60g)', [
     ['강력분', 300, ''], ['우유', 200, ''], ['설탕', 10, ''], ['소금', 6, ''],
     ['이스트', 6, ''], ['버터(반죽)', 20, ''], ['롤인버터', 64, '8g씩'], ['게랑드소금', 4, '표면']
   ], '반죽 24°C → 냉장 12시간 → 60g 분할 → 롤인버터 8g 감싸 성형 → 30°C 60분 → 230°C 10~12분, 게랑드소금 뿌리기.', '고온 단시간이 겉은 바삭 속은 쫀득.')}
+    `,
+  tips: [],
+  related: ['소금빵', '약과', '주악']
+});
+
+DB.push({
+  id: 'wi50', cat: 'world', title: '마늘빵', en: 'Garlic bread', exam: false,
+  mg: 'kr', mg2: 'bread', wc: '한국',
+  tags: ['한국', '제빵', '세계 제과', '마늘빵', 'Garlic bread'],
+  summary: '마늘 버터소스를 채워 구운 한국 제과점의 대표 단과자.',
+  body: `
+  <h4>유래 · 특징</h4>
+  <p>한국 제과점의 대표 단과자로, 마늘 버터소스를 빵 사이에 채워 굽습니다. 마늘·버터·파슬리를 섞은 소스를 발효가 끝난 빵에 넣고 180°C에서 8~10분 더 구우면 겉은 바삭하고 속은 촉촉합니다.</p>
   ${wRecipe('마늘빵', '6개', [
     ['바게트(또는 소프트롤)', 6, '개'], ['버터', 120, ''], ['다진마늘', 30, ''],
     ['파슬리', 10, ''], ['설탕', 20, ''], ['소금', 3, ''], ['마요네즈', 30, '선택'], ['모짜렐라', 120, '선택']
   ], '바게트를 6등분해 칼집 → 버터+마늘+파슬리+설탕+소금을 섞어 칼집에 발라 180°C 10분 → 모짜렐라·마요를 올려 3분 더.', '마늘크림은 냉장 숙성하면 향이 안정.')}
-  `,
-  related: ['단팥빵', '소금빵', '마늘빵', '앙금']
+    `,
+  tips: [],
+  related: ['마늘빵', '약과', '주악']
 });
 /* 제과·제빵 용어 사전 — 불어 / 일본어 / 한국 표준 */
 DB.push({
@@ -7905,6 +8622,9 @@ DB.push({
     { k: 'term', n: '용어 사전', ic: '📖' },
     { k: 'tool', n: '도구·구매', ic: '🛠️' },
     { k: 'equip', n: '장비', ic: '⚙️' },
+    { k: 'hotel', n: '호텔 재료', ic: '🏨' },
+    { k: 'pan', n: '틀·팬', ic: '🍳' },
+    { k: 'oven', n: '오븐·도구', ic: '🔥' },
     { k: 'brand', n: '브랜드 비교', ic: '🏷️' },
     { k: 'material', n: '전재료', ic: '📦' },
     { k: 'trouble', n: '트러블슈팅' },
@@ -7916,7 +8636,7 @@ DB.push({
   var HIDE_CATS = (typeof BAKERY_HIDE_CATS !== 'undefined' && BAKERY_HIDE_CATS) ? BAKERY_HIDE_CATS : [];
   var DROP_IDS = (typeof BAKERY_DROP_IDS !== 'undefined' && BAKERY_DROP_IDS) ? BAKERY_DROP_IDS : [];
   function catHidden(k) { return HIDE_CATS.indexOf(k) >= 0; }
-  if (SHARE) CATS = CATS.filter(function (c) { return c.k !== 'my' && c.k !== 'material' && c.k !== 'brand'; });
+  if (SHARE) CATS = CATS.filter(function (c) { return c.k !== 'my' && c.k !== 'material' && c.k !== 'brand' && c.k !== 'icing'; });
   if (HIDE_CATS.length) CATS = CATS.filter(function (c) { return !catHidden(c.k); });
   var CATNAME = {};
   CATS.forEach(function (c) { CATNAME[c.k] = c.n; });
@@ -8288,6 +9008,31 @@ DB.push({
       { k: 'fruit', n: '퓨레·향료·시럽·음료', ic: '🍓' },
       { k: 'gear', n: '오븐·믹서 장비', ic: '⚙️' }
     ],
+    /* 🏨 호텔 제과제빵 재료 — 실무 카테고리 칩 */
+    hotel: [
+      { k: 'flour', n: '밀가루·곡물·분말', ic: '🌾' },
+      { k: 'dairy', n: '버터·유지·유제품', ic: '🧈' },
+      { k: 'choco', n: '초콜릿·코코아', ic: '🍫' },
+      { k: 'sugar', n: '당류·시럽·겔화제', ic: '🍯' },
+      { k: 'fruit', n: '퓨레·과일·견과', ic: '🍓' },
+      { k: 'flavor', n: '향료·리큐르', ic: '🌸' },
+      { k: 'leaven', n: '이스트·소금·첨가제', ic: '🫧' },
+      { k: 'color', n: '색소', ic: '🎨' },
+      { k: 'decor', n: '허브·식용꽃·장식', ic: '🌿' }
+    ],
+    /* 🍳 틀·팬 */
+    pan: [
+      { k: 'pancake', n: '케이크·쉬폰틀', ic: '🎂' },
+      { k: 'panring', n: '무스링·타르트틀', ic: '⭕' },
+      { k: 'pansmall', n: '마들렌·휘낭시에·까눌레', ic: '🐚' },
+      { k: 'panbread', n: '식빵·바게트·소금빵', ic: '🍞' },
+      { k: 'pansheet', n: '철판·매트', ic: '⬜' }
+    ],
+    /* 🔥 오븐·도구 */
+    oven: [
+      { k: 'brand', n: '오븐 브랜드', ic: '🔥' },
+      { k: 'tool', n: '오븐 도구', ic: '🧤' }
+    ],
     /* 🏪 판매처·발주처 — 업체 유형별 분류(업체 카드가 있을 때만 쓰인다) */
     shop: [
       { k: 'b2b', n: 'B2B 발주·제조사', ic: '🏢' },
@@ -8330,12 +9075,12 @@ DB.push({
       decaf: ['c11', 'c12', 'c14', 'c15', 'c16', 'c17', 'c18', 'c19', 'c20', 'c21']
     },
     world: {
-      fr: ['w01', 'wp01', 'wp02'],
-      it: ['w02', 'wp03', 'wp04'],
-      de: ['w03', 'wp05', 'wp06'],
-      eu: ['w04', 'wp07', 'wp08', 'wp09', 'wp10'],
-      jp: ['w05', 'wp11', 'wp12'],
-      kr: ['w06', 'wp13', 'wp14']
+      fr: ['w01', 'wi01', 'wi02', 'wi03', 'wi04', 'wi05', 'wi06', 'wi07', 'wi08', 'wi09'],
+      it: ['w02', 'wi10', 'wi11', 'wi12', 'wi13', 'wi14', 'wi15', 'wi16'],
+      de: ['w03', 'wi17', 'wi18', 'wi19', 'wi20', 'wi21', 'wi22', 'wi23', 'wi24', 'wi25', 'wi26'],
+      eu: ['w04', 'wi27', 'wi28', 'wi29', 'wi30', 'wi31', 'wi32', 'wi33', 'wi34', 'wi35', 'wi36', 'wi37', 'wi38', 'wi39'],
+      jp: ['w05', 'wi40', 'wi41', 'wi42', 'wi43', 'wi44', 'wi45', 'wi46'],
+      kr: ['w06', 'wi47', 'wi48', 'wi49', 'wi50', 'wi51', 'wi52', 'wi53', 'wi54']
     },
     exam_p: {
       cake: ['bk02', 'bk03', 'bk04', 'bk05', 'bk14', 'bk15', 'bk20'],
@@ -8538,6 +9283,7 @@ DB.push({
       state.tag = ''; state.matcat = ''; state.group = null; state.myg = 'all'; state.wk = 'all';
       state.tml = 'all'; state.tmt = 'all';
       state.q = ''; qEl.value = '';
+      state.view = 'toc';
       resetLimit();
       renderTabs(); renderChips(); render();
     });
@@ -8551,6 +9297,20 @@ DB.push({
     { k: 'pastry', n: '제과', ic: '🍰' },
     { k: 'bread', n: '제빵', ic: '🍞' }
   ];
+  /* 사진 카드로 보는 카테고리 */
+  function photoCatOf(k) {
+    return k === 'hotel' || k === 'pan' || k === 'oven' || k === 'world' || k === 'icing';
+  }
+  function gotoMyGroup(k) {
+    navDo(function () {
+      state.myg = k;
+      state.tag = '';
+      if (photoCatOf(state.cat)) state.view = k === 'all' ? 'toc' : 'card';
+      resetLimit();
+      renderChips(); render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
   function worldMode() {
     return state.cat === 'world' ||
       !!(state.group && state.group.cats && state.group.cats.length === 1 && state.group.cats[0] === 'world');
@@ -8654,6 +9414,7 @@ DB.push({
     if (k === state.myg) return;
     navDo(function () {
       state.myg = k;
+      if (photoCatOf(state.cat)) state.view = k === 'all' ? 'toc' : 'card';
       resetLimit();
       renderChips();
       render();
@@ -8684,10 +9445,34 @@ DB.push({
   });
 
   /* ---------- 카드 ---------- */
+  function photoOf(e) {
+    return (typeof PHOTO !== 'undefined' && PHOTO && PHOTO[e.id]) ? PHOTO[e.id] : '';
+  }
   function cardHTML(e, tks) {
     var on = state.bm.has(e.id);
     var tags = e.tags.slice(0, 3).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('');
     var dupEn = e.en && e.title.toLowerCase().indexOf(e.en.toLowerCase()) >= 0;
+    var ph = photoOf(e);
+    if (ph) {
+      /* 사진 왼쪽 · 제품명·규격·설명 오른쪽 — 가로 카드 */
+      var isW = e.cat === 'world';
+      var bTop = isW
+        ? '<span class="badge">' + esc(e.wc || CATNAME[e.cat]) + '</span>' +
+          (e.mg2 === 'pastry' ? '<span class="badge brandTag">제과</span>' : e.mg2 === 'bread' ? '<span class="badge brandTag">제빵</span>' : '')
+        : '<span class="badge">' + CATNAME[e.cat] + '</span>' +
+          (e.brand ? '<span class="badge brandTag">' + esc(e.brand) + '</span>' : '');
+      return '<article class="card hasImg' + (isW ? ' wcard' : '') + '" role="button" tabindex="0" data-id="' + e.id + '" aria-label="' + esc(e.title) + ' 자세히 보기">' +
+        '<div class="hcThumb"><img class="hcImg" src="' + ph + '" alt="' + esc(e.title) + '" loading="lazy" decoding="async"></div>' +
+        '<div class="hcBody">' +
+        '<div class="hcTop">' + bTop + '</div>' +
+        '<h3>' + highlight(e.title, tks) + '</h3>' +
+        (e.spec ? '<p class="hcSpec">' + esc(e.spec) + '</p>' : '') +
+        '<p class="sum">' + highlight(e.summary, tks) + '</p>' +
+        (isW ? '' : '<div class="tagrow">' + tags + '</div>') +
+        '</div>' +
+        '<button class="star' + (on ? ' on' : '') + '" data-star="' + e.id + '" aria-label="즐겨찾기" aria-pressed="' + on + '">★</button>' +
+        '</article>';
+    }
     return '<article class="card" role="button" tabindex="0" data-id="' + e.id + '" aria-label="' + esc(e.title) + ' 자세히 보기">' +
       '<div class="cardTop"><span class="badge">' + CATNAME[e.cat] + '</span>' +
       (e.exam ? '<span class="badge exam">기능사</span>' : '') + '</div>' +
@@ -8773,13 +9558,19 @@ DB.push({
         return state.group.cats.indexOf(e.cat) >= 0;
       });
     }
-    var tocMode = state.view === 'toc' && !q && !matMode && !termOn;
-    var homeMode = tocMode && !state.group && state.cat === 'all' && !state.tag && !state.bmOnly;
+    var photoAll = photoCatOf(state.cat) && state.myg === 'all' && !q && !state.tag && !state.bmOnly;
+    var matTOC = matMode && !q && !state.matcat && !state.bmOnly;
+    var tocMode = (state.view === 'toc' && !q && !matMode && !termOn) || photoAll || matTOC;
+    var homeMode = tocMode && !matTOC && !photoAll && !state.group && state.cat === 'all' && !state.tag && !state.bmOnly;
     var showToc = tocMode || (!!state.group && !q && !termOn);
 
-    $('#matWrap').hidden = !matMode;
+    $('#matWrap').hidden = !matMode || matTOC;
     $('#termWrap').hidden = !termOn;
-    if (matMode) { $('#toc').innerHTML = ''; $('#grid').innerHTML = ''; $('#termWrap').innerHTML = ''; renderMatTable(list, tks); }
+    if (matTOC) {
+      $('#toc').innerHTML = ''; $('#grid').innerHTML = ''; $('#matWrap').innerHTML = '';
+      renderMatTOC(list, tks);
+    }
+    else if (matMode) { $('#toc').innerHTML = ''; $('#grid').innerHTML = ''; $('#termWrap').innerHTML = ''; renderMatTable(list, tks); }
     else if (termOn) {
       $('#matWrap').innerHTML = '';
       $('#toc').innerHTML = ''; $('#grid').innerHTML = '';
@@ -8794,10 +9585,11 @@ DB.push({
         var pvG = pageSlice(list);
         $('#grid').innerHTML = pvG.items.map(function (e) { return cardHTML(e, tks); }).join('') +
           pagerHTML(pvG.p, pvG.pc, list.length);
+        $('#grid').className = 'grid' + (pvG.items.some(function (e) { return !!photoOf(e); }) ? ' hgrid' : '');
       }
     }
     $('#toc').hidden = !showToc;
-    $('#grid').hidden = showToc || matMode || termOn;
+    $('#grid').hidden = showToc || (matMode && !matTOC) || termOn;
 
     var m;
     if (q) {
@@ -8805,6 +9597,10 @@ DB.push({
       m = scope + '<b>' + esc(q) + '</b> 검색 · ' + list.length + '개';
     } else if (state.bmOnly) {
       m = '즐겨찾기 ' + list.length + '개';
+    } else if (matTOC) {
+      m = '전재료 목차 · <b>' + MATCATS.length + '</b>분류 · 전체 ' + MATTOTAL + '품목';
+    } else if (photoAll) {
+      m = CATNAME[state.cat] + ' 목차 · <b>' + (CAT_GROUPS[state.cat] || []).length + '</b>분류 · 전체 ' + list.length + '개';
     } else if (matMode) {
       m = '전재료 <b>' + list.length + '</b>품목' + (state.matcat ? ' · ' + esc(state.matcat) : ' · ' + MATCATS.length + '분류');
     } else if (termOn) {
@@ -8820,32 +9616,73 @@ DB.push({
       if (state.tag) m += ' · ' + esc(state.tag);
     }
     $('#meta').innerHTML = m;
-    $('#empty').hidden = termOn ? true : list.length !== 0;
+    $('#empty').hidden = (termOn || matTOC || photoAll) ? true : list.length !== 0;
     $('#calcPanel').hidden = !(state.cat === 'formula');
     $('#bmToggle').classList.toggle('on', state.bmOnly);
     $('#bmToggle').setAttribute('aria-pressed', String(state.bmOnly));
     $('#clearBtn').hidden = !state.q;
 
     /* 2단계(목차·전재료·계산기)에서는 태그 대신 ‘← 이전으로 (목차)’ 줄을 같은 높이에 보여 준다 */
-    var crumbOn = !homeMode && (showToc || matMode || (termOn && !!state.group));
+    var drilled = (photoCatOf(state.cat) && state.myg !== 'all') || (matMode && !!state.matcat);
+    var crumbOn = !homeMode && !photoAll && !matTOC && (showToc || matMode || drilled || (termOn && !!state.group));
     $('#crumb').hidden = !crumbOn;
     if (crumbOn) {
       var where = matMode ? '전재료' : (state.group ? state.group.n : (state.cat === 'all' ? '' : CATNAME[state.cat] || ''));
+      if (drilled && !matMode) {
+        var gname = '';
+        (CAT_GROUPS[state.cat] || []).forEach(function (g) { if (g.k === state.myg) gname = g.n; });
+        where = (CATNAME[state.cat] || '') + (gname ? ' · ' + gname : '');
+      }
+      if (drilled && matMode) where = '전재료 · ' + state.matcat;
       $('#crumbPath').textContent = where ? ' · ' + where : '';
+      var cb = $('#crumb').querySelector('.crumbBtn');
+      if (cb) {
+        if (drilled) { cb.setAttribute('data-catback', '1'); cb.removeAttribute('data-home'); cb.textContent = '← 이전으로'; }
+        else { cb.removeAttribute('data-catback'); cb.setAttribute('data-home', '1'); cb.textContent = '← 이전으로 (목차)'; }
+      }
     }
-    $('#chips').style.display = (matMode || crumbOn || termOn) ? 'none' : '';
+    $('#chips').style.display = (matMode || crumbOn || termOn || photoCatOf(state.cat)) ? 'none' : '';
+    renderCmpBar();
 
-    $('#viewSeg').hidden = !!q || matMode || homeMode || termOn;
+    $('#viewSeg').hidden = !!q || matMode || homeMode || termOn || photoAll;
     var segBtns = $('#viewSeg').querySelectorAll('button');
     for (var i = 0; i < segBtns.length; i++) {
       segBtns[i].classList.toggle('on', segBtns[i].getAttribute('data-view') === (tocMode ? 'toc' : 'card'));
     }
   }
 
+  /* ---------- 전재료 목차 ---------- */
+  function matPhotoOf(idx) {
+    var id = 'm' + (idx < 100 ? '0' + idx : idx);
+    return (typeof PHOTO !== 'undefined' && PHOTO && PHOTO[id]) ? PHOTO[id] : '';
+  }
+  function renderMatTOC(list, tks) {
+    var rows = MATCATS.map(function (c, gi) {
+      var cnt = 0, prev = [];
+      MAT.forEach(function (m, i) {
+        if (m.c !== c) return;
+        cnt++;
+        if (prev.length < 3) { var ph = matPhotoOf(i + 1); if (ph) prev.push(ph); }
+      });
+      return '<li class="pillItem">' +
+        '<button type="button" class="pillRow" data-matcat="' + esc(c) + '" aria-label="' + esc(c) + ' 분류 열기">' +
+        '<span class="pillNum">' + (gi + 1) + '</span>' +
+        '<span class="pt"><b>' + esc(c) + '</b><i>사진·기준가·g당 단가</i></span>' +
+        pillThumbsHTML(prev) +
+        '<span class="pillCnt">' + cnt + '품목</span></button></li>';
+    }).join('');
+    $('#matWrap').innerHTML = '<div class="pillToc">' +
+      pillHeadHTML({
+        title: '전재료', accent: '목차',
+        label: MATCATS.length + '분류 · ' + MATTOTAL + '품목',
+        sub: '분류를 누르면 사진 카드와 기준가·g당 단가가 열립니다.'
+      }) + pillBandHTML(rows) + '</div>';
+    $('#matWrap').hidden = false;
+  }
+
   /* ---------- 전재료 표 ---------- */
   function renderMatTable(list, tks) {
     var h = '<div class="matTop">';
-    h += '<button type="button" class="backBtn" data-home="1">← 목차</button>';
     h += '<div class="matTools" role="group" aria-label="재료 분류">';
     h += '<button type="button" class="mchip' + (state.matcat === '' ? ' on' : '') + '" data-matcat="">전체<b>' + MATTOTAL + '</b></button>';
     MATCATS.forEach(function (c) {
@@ -8866,6 +9703,7 @@ DB.push({
     });
 
     h += '<div class="matScroll"><table class="matTbl"><thead><tr>' +
+      '<th scope="col" class="thThumb">사진</th>' +
       '<th scope="col">재료 · 원/g</th><th scope="col">브랜드·원산지</th><th scope="col">규격</th>' +
       '<th scope="col">기준가</th><th scope="col">발주처</th><th scope="col">용도</th>' +
       '</tr></thead><tbody>';
@@ -8874,11 +9712,13 @@ DB.push({
     groups.forEach(function (g) {
       var arr = g.arr;
       var groupTotal = list.filter(function (e) { return e.m.c === g.c; }).length;
-      rowsH += '<tr class="grp"><th colspan="6" scope="colgroup">' + esc(g.c) + '<i>' + groupTotal + '</i></th></tr>';
+      rowsH += '<tr class="grp"><th colspan="7" scope="colgroup">' + esc(g.c) + '<i>' + groupTotal + '</i></th></tr>';
       listH += '<div class="mlGrp">' + esc(g.c) + '<i>' + groupTotal + '</i></div>';
       arr.forEach(function (e) {
         var m = e.m, u = unit(m.p, m.s);
+        var _mp = photoOf(e);
         rowsH += '<tr class="mrow" tabindex="0" role="button" data-id="' + e.id + '" aria-label="' + esc(m.n) + ' 상세 보기">' +
+          '<td class="mThumb">' + (_mp ? '<img src="' + _mp + '" alt="" loading="lazy" decoding="async">' : '') + '</td>' +
           '<th scope="row" class="name">' + highlight(m.n, tks) + (m.bv ? '<span class="cmpDot" title="브랜드 비교 있음">🏷️</span>' : '') +
           '<i class="up">' + (u ? fmtUnit(u) + '원/g' : '가격 미확인') + '</i></th>' +
           '<td class="mBrand">' + highlight(m.b, tks) + '</td>' +
@@ -8888,12 +9728,12 @@ DB.push({
           '<td class="use">' + esc(m.u) + '</td>' +
           '</tr>';
         listH += '<button type="button" class="matItem" data-id="' + e.id + '">' +
-          '<span class="miTop"><b>' + highlight(m.n, tks) + '</b>' +
+          (_mp ? '<span class="miThumb"><img src="' + _mp + '" alt="" loading="lazy" decoding="async"></span>' : '') +
+          '<span class="miBody"><span class="miTop"><b>' + highlight(m.n, tks) + '</b>' +
           '<i>' + (u ? fmtUnit(u) + '원/g' : '가격 미확인') + '</i>' +
           (m.bv ? '<em title="브랜드 비교 있음">🏷️</em>' : '') + '</span>' +
           '<span class="miSub">' + highlight(m.b, tks) + ' · ' + esc(m.sl) + ' · ' + (m.p ? won(m.p) + '원' : '—') + '</span>' +
-          '<span class="miUse">' + esc(m.u) + '</span>' +
-          '</button>';
+          '<span class="miUse">' + esc(m.u) + '</span></span></button>';
       });
     });
     h += rowsH + '</tbody></table></div>';
@@ -8902,6 +9742,12 @@ DB.push({
     $('#matWrap').innerHTML = h;
   }
 
+  var cmpBarEl = document.getElementById('cmpBar');
+  if (cmpBarEl) cmpBarEl.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-cmp]');
+    if (!b) return;
+    openCmp(b.getAttribute('data-cmp'));
+  });
   $('#matWrap').addEventListener('click', function (ev) {
     var pgM = ev.target.closest('[data-page]');
     if (pgM && !pgM.disabled) { goPage(parseInt(pgM.getAttribute('data-page'), 10)); return; }
@@ -8958,6 +9804,9 @@ DB.push({
   var HOME_GROUPS = [
     { k:'g1', n:'제과 이론', s:'반죽·케이크·쿠키·초콜릿·구움과자', cats:['pastry'], ic:'🍰' },
     { k:'g2', n:'제빵 이론', s:'발효·스트레이트·사워도우·하드계열', cats:['bread'], ic:'🍞' },
+    { k:'ghotel', n:'호텔 제과제빵 재료', s:'실무 원부재료 134 · 색소·허브·장식 · 브랜드 비교', cats:['hotel'], ic:'🏨' },
+    { k:'gpan', n:'틀·팬 (제누와즈·쉬폰·무스링·타르트)', s:'틀 25종 · 수입 vs 국산 비교 · 구매처', cats:['pan'], ic:'🍳' },
+    { k:'goven', n:'오븐·오븐 도구', s:'우녹스·에카·우성·EGS·LK 비교 · 오븐 도구 4', cats:['oven'], ic:'🔥' },
     { k:'g3', n:'재료학 & 전재료 DB', s:'재료 이론 14 · 품목 260 · g당 단가', cats:['ingredient','material'], ic:'📦' },
     { k:'g4', n:'브랜드 비교 & 장비', s:'재료·오븐·믹서·카페 27표 · 장비 5', cats:['brand','equip'], ic:'🏷️' },
     { k:'g5', n:'트러블슈팅 & 실패·R&D', s:'원인·보완·대체·레시피 설계 17항목', cats:['trouble'], ic:'🧪' },
@@ -9016,44 +9865,114 @@ DB.push({
     $('#toc').innerHTML = h;
   }
 
-  function contentsHeadHTML(title, sub) {
-    return '<div class="contentsHead">' +
-      '<div class="contentsTop"><button type="button" class="backBtn" data-home="1">← 목차</button>' +
-      '<span class="contentsWord">CONTENTS</span></div>' +
-      '<h2 class="contentsTitle">' + esc(title) + '</h2>' +
-      (sub ? '<p class="contentsSub">' + esc(sub) + '</p>' : '') + '</div>';
+  /* ---------- 두 번째 목차 공통 틀: 흰 머리(라벨·큰 제목) + 파스텔 띠 + 알약 행 ---------- */
+  function pillHeadHTML(o, extra) {
+    var label = o.label || '';
+    return '<div class="pillHead">' +
+      '<div class="pillTop">' +
+      (o.back === false ? '' : '<button type="button" class="backBtn" data-home="1">← 목차</button>') +
+      '<span class="pillWord">' + esc(o.word || 'CONTENTS') + '</span></div>' +
+      (label ? '<p class="pillLabel">' + label + '</p>' : '') +
+      '<h2 class="pillTitle">' + esc(o.title) + (o.accent ? ' <em>' + esc(o.accent) + '</em>' : '') + '</h2>' +
+      (o.sub ? '<p class="pillSub">' + esc(o.sub) + '</p>' : '') +
+      (extra ? '<div class="pillExtra">' + extra + '</div>' : '') +
+      '</div>';
+  }
+  function pillBandHTML(rows, empty) {
+    if (!rows) {
+      return '<div class="pillBand"><div class="empty" style="padding:22px 8px">' +
+        '<span class="big">🥣</span>' + esc(empty || '항목이 없습니다.') + '</div></div>';
+    }
+    return '<div class="pillBand"><ul class="pillList">' + rows + '</ul></div>';
+  }
+  function pillThumbsHTML(list) {
+    if (!list || !list.length) return '';
+    return '<span class="pillThumbs">' + list.map(function (p) {
+      return '<img src="' + p + '" alt="" loading="lazy" decoding="async">';
+    }).join('') + '</span>';
   }
 
   function contentsRowHTML(e, n, tks) {
     var on = state.bm.has(e.id);
     var tt = tocTitle(e);
     var sum = String(e.summary || '').replace(/\s+/g, ' ');
-    if (sum.length > 58) sum = sum.slice(0, 58) + '…';
-    return '<li class="tocItem contItem">' +
-      '<button type="button" class="tocRow contRow" data-id="' + e.id + '" aria-label="' + esc(e.title) + ' 본문 열기">' +
-      '<span class="cNumWrap"><span class="cNum"><i>' + n + '</i></span></span>' +
-      '<span class="tt"><b>' + highlight(tt.t, tks) + '</b><i>' + highlight(sum, tks) + '</i></span>' +
+    if (sum.length > 46) sum = sum.slice(0, 46) + '…';
+    var _th = photoOf(e);
+    return '<li class="pillItem">' +
+      '<button type="button" class="pillRow" data-id="' + e.id + '" aria-label="' + esc(e.title) + ' 본문 열기">' +
+      '<span class="pillNum">' + n + '</span>' +
+      '<span class="pt"><b>' + highlight(tt.t, tks) + '</b>' + (sum ? '<i>' + highlight(sum, tks) + '</i>' : '') + '</span>' +
       (e.exam ? '<span class="badge exam sm">기능사</span>' : '') +
       (e.cat === 'brand' ? '<span class="badge cmp sm">비교표</span>' : '') +
+      pillThumbsHTML(_th ? [_th] : []) +
       '</button>' +
       '<button type="button" class="tocStar' + (on ? ' on' : '') + '" data-star="' + e.id + '" ' +
       'aria-label="즐겨찾기" aria-pressed="' + on + '" title="즐겨찾기">★</button></li>';
   }
 
   function renderContents(title, sub, items, extra, tks) {
-    var h = contentsHeadHTML(title, sub) + (extra || '');
-    if (!items.length) {
-      h += '<div class="empty" style="padding:30px 10px"><span class="big">🥣</span>항목이 없습니다.</div>';
-    } else {
-      var pvC = pageSlice(items);
-      h += '<ul class="contentsList">' +
-        pvC.items.map(function (e, i) { return contentsRowHTML(e, pvC.from + i + 1, tks); }).join('') + '</ul>' +
-        pagerHTML(pvC.p, pvC.pc, items.length);
-    }
-    $('#toc').innerHTML = h;
+    var pvC = items.length ? pageSlice(items) : null;
+    var label = items.length + '개 항목' + (pvC && pvC.pc > 1 ? ' · ' + pvC.pc + '쪽' : '');
+    var rows = pvC ? pvC.items.map(function (e, i) {
+      return contentsRowHTML(e, pvC.from + i + 1, tks);
+    }).join('') : '';
+    $('#toc').innerHTML = '<div class="pillToc">' +
+      pillHeadHTML({ title: title, accent: '목차', label: label, sub: sub }, extra) +
+      pillBandHTML(rows) + '</div>' +
+      (pvC ? pagerHTML(pvC.p, pvC.pc, items.length) : '');
+  }
+
+  /* 사진 카테고리(호텔·틀·오븐·세계) 목차 — 분류 카드만 먼저 */
+  function renderCatTOC(cat, list, tks) {
+    var groups = (CAT_GROUPS[cat] || []).filter(function (g) { return countCatMg(cat, g.k) > 0; });
+    var rows = groups.map(function (g, i) {
+      var items = DB.filter(function (e) {
+        if (e.cat !== cat || e.mg !== g.k) return false;
+        if (cat === 'world' && state.wk !== 'all' && e.mg2 !== state.wk) return false;
+        return true;
+      });
+      var prev = [];
+      for (var j = 0; j < items.length && prev.length < 3; j++) {
+        var ph = photoOf(items[j]);
+        if (ph) prev.push(ph);
+      }
+      var sub;
+      if (cat === 'world') {
+        var np = 0, nb = 0;
+        items.forEach(function (x) { if (x.mg2 === 'pastry') np++; else if (x.mg2 === 'bread') nb++; });
+        sub = '제과 ' + np + ' · 제빵 ' + nb;
+      } else {
+        sub = items.slice(0, 2).map(function (x) { return String(x.title).split(/\(|（/)[0].trim(); }).join(' · ');
+      }
+      return '<li class="pillItem">' +
+        '<button type="button" class="pillRow" data-myg="' + esc(g.k) + '" aria-label="' + esc(g.n) + ' 분류 열기">' +
+        '<span class="pillNum">' + (i + 1) + '</span>' +
+        '<span class="pt"><b>' + (g.ic ? g.ic + ' ' : '') + esc(g.n) + '</b>' + (sub ? '<i>' + esc(sub) + '</i>' : '') + '</span>' +
+        pillThumbsHTML(prev) +
+        '<span class="pillCnt">' + items.length + '개</span></button></li>';
+    }).join('');
+    $('#toc').innerHTML = '<div class="pillToc">' +
+      pillHeadHTML({
+        title: CATNAME[cat] || '목차', accent: '목차',
+        label: groups.length + '분류 · ' + list.length + '개 항목',
+        sub: '분류를 누르면 사진 카드와 상세가 열립니다.'
+      }) + pillBandHTML(rows) + '</div>';
+  }
+  function countCatMg(cat, mg) {
+    var n = 0;
+    DB.forEach(function (e) {
+      if (e.cat !== cat || e.mg !== mg) return;
+      if (cat === 'world' && state.wk !== 'all' && e.mg2 !== state.wk) return;
+      n++;
+    });
+    return n;
   }
 
   function renderTOC(list, tks) {
+    if (photoCatOf(state.cat) && state.myg === 'all' && !state.tag && !state.bmOnly) {
+      renderCatTOC(state.cat, list, tks);
+      return;
+    }
     if (state.group) {
       var items = [];
       state.group.cats.forEach(function (c) {
@@ -9093,7 +10012,7 @@ DB.push({
         '<button type="button" class="toolBtn" data-export="1">⬇ 백업 내보내기</button>' +
         '<button type="button" class="toolBtn" data-import="1">⬆ 백업 불러오기</button></div>';
     }
-    renderContents(cat.n, cat.n + ' · ' + list.length + '개 항목', list, extra, tks);
+    renderContents(cat.n, '', list, extra, tks);
   }
 
   function jumpTo(id) {
@@ -9111,6 +10030,7 @@ DB.push({
       state.tag = ''; state.matcat = ''; state.group = null; state.myg = 'all'; state.wk = 'all';
       state.tml = 'all'; state.tmt = 'all';
       state.q = ''; if (qEl) qEl.value = '';
+      state.view = 'toc';
       resetLimit();
       renderTabs(); renderChips(); render();
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -9165,6 +10085,18 @@ DB.push({
       }
       return;
     }
+    var cb = ev.target.closest('[data-catback]');
+    if (cb) {
+      navDo(function () {
+        if (state.cat === 'material') { state.matcat = ''; }
+        else { state.myg = 'all'; state.view = 'toc'; }
+        resetLimit(); renderChips(); render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      return;
+    }
+    var mg = ev.target.closest('[data-myg]');
+    if (mg) { gotoMyGroup(mg.getAttribute('data-myg')); return; }
     var back = ev.target.closest('[data-home]');
     if (back) { backToList(); return; }
     var st = ev.target.closest('[data-star]');
@@ -9185,8 +10117,12 @@ DB.push({
     if (gc) { gotoTab(gc.getAttribute('data-gotocat')); return; }
     var mc = ev.target.closest('[data-matcat]');
     if (mc) { gotoMat(mc.getAttribute('data-matcat')); return; }
-    var row = ev.target.closest('.tocRow');
-    if (row) openModal(row.getAttribute('data-id'));
+    /* 목차 항목(pillRow) 클릭 → 상세 모달. v4.0 알약 목차 개편 때 .tocRow → .pillRow로
+       바뀌었는데 여기서 .tocRow만 찾아 모든 탭의 목차 항목이 눌리지 않았다. */
+    var row = ev.target.closest('.pillRow[data-id], .tocRow[data-id]');
+    if (row) { openModal(row.getAttribute('data-id')); return; }
+    var anyId = ev.target.closest('[data-id]');
+    if (anyId) openModal(anyId.getAttribute('data-id'));
   });
 
   /* ---------- 검색 입력 (디바운스) ---------- */
@@ -9236,6 +10172,20 @@ DB.push({
     if (state.bmOnly) render();
     if (state.openId === id) syncModalStar();
   }
+  /* 목차 안에서 항목 보기 상태의 '← 이전으로' (분류 목차로) */
+  var crumbEl = $('#crumb');
+  if (crumbEl) crumbEl.addEventListener('click', function (ev) {
+    if (ev.target.closest('[data-catback]')) {
+      navDo(function () {
+        if (state.cat === 'material') state.matcat = '';
+        else { state.myg = 'all'; state.view = 'toc'; }
+        resetLimit(); renderChips(); render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      return;
+    }
+    if (ev.target.closest('[data-home]')) backToList();
+  });
   $('#grid').addEventListener('click', function (ev) {
     var pgG = ev.target.closest('[data-page]');
     if (pgG && !pgG.disabled) { goPage(parseInt(pgG.getAttribute('data-page'), 10)); return; }
@@ -9281,6 +10231,111 @@ DB.push({
     b.setAttribute('aria-pressed', String(on));
   }
 
+  /* ---------- 🏷️ 호텔·틀·오븐 브랜드 비교표 ---------- */
+  var cmpWrap = null;
+  function openCmp(key) {
+    var C = (typeof HCM !== 'undefined' && HCM[key]) ? HCM[key] : null;
+    if (!C) return;
+    TTS.stop();
+    if (!restoring) navSync();
+    state.openId = null;
+    $('#mCat').textContent = '🏷️ 브랜드 비교';
+    $('#mTitle').textContent = C.t;
+    $('#mEn').textContent = '';
+    $('#mEn').style.display = 'none';
+    var h = '<div class="tblWrap"><table class="wTbl cmpTbl"><tr>' +
+      C.cols.map(function (c) { return '<th scope="col">' + esc(c) + '</th>'; }).join('') + '</tr>';
+    C.rows.forEach(function (r) {
+      h += '<tr>' + r.map(function (c, i) { return (i === 0 ? '<th scope="row">' + esc(c) + '</th>' : '<td>' + esc(c) + '</td>'); }).join('') + '</tr>';
+    });
+    h += '</table></div>';
+    if (C.notes && C.notes.length) {
+      h += '<div class="tips"><h5>고르는 기준</h5><ul>' + C.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul></div>';
+    }
+    mBody.innerHTML = h;
+    wrapTables(mBody);
+    modal.querySelector('.modal').classList.add('wide');
+    $('#mStar').style.display = 'none';
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    modal.querySelector('.modal').scrollTop = 0;
+    $('#mClose').focus({ preventScroll: true });
+    if (!restoring) navPush();
+  }
+  function renderCmpBar() {
+    var cb = document.getElementById('cmpBar');
+    if (!cb) return;
+    var on = (state.cat === 'hotel' || state.cat === 'pan' || state.cat === 'oven');
+    if (!on || typeof HCM === 'undefined') { cb.hidden = true; cb.innerHTML = ''; return; }
+    var keys = [];
+    DB.forEach(function (e) {
+      if (e.cat !== state.cat || !e.cmp) return;
+      if (state.myg !== 'all' && e.mg !== state.myg) return;
+      if (keys.indexOf(e.cmp) < 0) keys.push(e.cmp);
+    });
+    if (!keys.length) { cb.hidden = true; cb.innerHTML = ''; return; }
+    cb.hidden = false;
+    cb.innerHTML = keys.map(function (k) {
+      var t = (HCM[k] && HCM[k].t) ? HCM[k].t.split(' — ')[0] : '브랜드 비교';
+      return '<button type="button" class="cmpBtn" data-cmp="' + k + '">🏷️ ' + esc(t) + ' 비교표</button>';
+    }).join('');
+  }
+  /* 🌍 세계 제과·제빵 — 유래(역사·특징)와 레시피(배합·공정)를 나눈다 */
+  function worldSplit(e) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = e.body || '';
+    var story = [], recipe = [], cur = story;
+    for (var i = 0; i < tmp.childNodes.length; i++) {
+      var n = tmp.childNodes[i];
+      if (n.nodeType === 1 && n.tagName === 'H5' && cur === story) cur = recipe;
+      if (n.nodeType === 1) cur.push(n.outerHTML);
+      else if (n.nodeType === 3 && n.nodeValue.trim()) cur.push(esc(n.nodeValue));
+    }
+    return { story: story.join(''), recipe: recipe.join('') };
+  }
+  function worldBodyHTML(e) {
+    var ws = worldSplit(e);
+    if (!ws.recipe) return e.body;
+    var h = '<div class="wSeg" role="tablist" aria-label="세계 제과제빵 보기 전환">';
+    if (ws.story) h += '<button type="button" class="wSegBtn on" role="tab" aria-selected="true" data-wtab="story">📜 유래·특징</button>';
+    h += '<button type="button" class="wSegBtn' + (ws.story ? '' : ' on') + '" role="tab" aria-selected="' + (ws.story ? 'false' : 'true') +
+      '" data-wtab="recipe">🧾 레시피·배합</button></div>';
+    if (ws.story) h += '<div class="wPane" data-wpane="story">' + ws.story + '</div>';
+    h += '<div class="wPane" data-wpane="recipe"' + (ws.story ? ' hidden' : '') + '>' + ws.recipe + '</div>';
+    return h;
+  }
+
+  /* ---------- 사진 크게 보기(라이트박스) ---------- */
+  var lbEl = null;
+  function lightboxEl() {
+    if (lbEl) return lbEl;
+    lbEl = document.createElement('div');
+    lbEl.className = 'lightbox';
+    lbEl.id = 'lightbox';
+    lbEl.hidden = true;
+    lbEl.setAttribute('role', 'dialog');
+    lbEl.setAttribute('aria-label', '사진 크게 보기');
+    lbEl.innerHTML = '<button type="button" class="lbClose" aria-label="닫기">✕</button>' +
+      '<img class="lbImg" alt=""><p class="lbHint">화면을 누르면 닫힙니다</p>';
+    document.body.appendChild(lbEl);
+    lbEl.addEventListener('click', function () { closeLightbox(); });
+    return lbEl;
+  }
+  function openLightbox(src, alt) {
+    var el = lightboxEl();
+    var im = el.querySelector('.lbImg');
+    im.src = src; im.alt = alt || '';
+    el.hidden = false;
+    el.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    if (lbEl && !lbEl.hidden) {
+      lbEl.hidden = true;
+      lbEl.querySelector('.lbImg').removeAttribute('src');
+    }
+  }
+
   function openModal(id, nav) {
     var e = byId(id);
     if (!e) return;
@@ -9288,7 +10343,7 @@ DB.push({
     var doNav = nav !== false && !restoring;
     if (doNav) { navSync(); if (!historyOK) fbStack.push(snap()); }
     state.openId = id;
-    $('#mCat').textContent = CATNAME[e.cat] + (e.m ? ' · ' + e.m.c : '') + (e.exam ? ' · 기능사' : '');
+    $('#mCat').textContent = CATNAME[e.cat] + (e.wc ? ' · ' + e.wc : '') + (e.m ? ' · ' + e.m.c : '') + (e.exam ? ' · 기능사' : '');
     $('#mTitle').textContent = e.title;
     var dupEn = e.en && e.title.toLowerCase().indexOf(e.en.toLowerCase()) >= 0;
     $('#mEn').textContent = e.en || '';
@@ -9302,7 +10357,12 @@ DB.push({
         e.related.map(function (t) { return '<button class="relBtn" data-rel="' + esc(t) + '">' + esc(t) + '</button>'; }).join('') +
         '</div></div>'
       : '';
-    mBody.innerHTML = ((typeof TSDIAG !== 'undefined' && TSDIAG[e.id]) ? TSDIAG[e.id] : '') + e.body
+    var _ph = photoOf(e);
+    var _cr = (e.cat === 'world' && typeof WCREDIT !== 'undefined' && WCREDIT[e.id]) ? ' · ' + WCREDIT[e.id] : '';
+    var _fig = _ph ? '<figure class="mImgWrap"><img class="mImg" src="' + _ph + '" alt="' + esc(e.title) +
+      '" role="button" tabindex="0" aria-label="사진 크게 보기"><figcaption class="mImgCap">사진을 누르면 크게 볼 수 있습니다' + _cr + '</figcaption></figure>' : '';
+    var _body = (e.cat === 'world') ? worldBodyHTML(e) : e.body;
+    mBody.innerHTML = _fig + ((typeof TSDIAG !== 'undefined' && TSDIAG[e.id]) ? TSDIAG[e.id] : '') + _body
       + videoLinksHTML(e.id)
       + ((typeof EXCOST !== 'undefined' && EXCOST[e.id]) ? excelCostHTML(e.id) : '') + tips + rel;
     wrapTables(mBody);
@@ -10190,6 +11250,21 @@ DB.push({
     if (state.openId) toggleBm(null, state.openId);
   });
   mBody.addEventListener('click', function (ev) {
+    if (ev.target.closest('img.mImg')) { openLightbox(ev.target.closest('img.mImg').src, ev.target.closest('img.mImg').alt); return; }
+    var wt = ev.target.closest('[data-wtab]');
+    if (wt) {
+      var want = wt.getAttribute('data-wtab');
+      mBody.querySelectorAll('[data-wtab]').forEach(function (b) {
+        var on = b.getAttribute('data-wtab') === want;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      mBody.querySelectorAll('[data-wpane]').forEach(function (p) {
+        p.hidden = p.getAttribute('data-wpane') !== want;
+      });
+      mBody.scrollIntoView({ block: 'nearest' });
+      return;
+    }
     var ob = ev.target.closest('[data-openbrand]');
     if (ob) { openModal(ob.getAttribute('data-openbrand')); return; }
     var b = ev.target.closest('[data-rel]');
@@ -10206,6 +11281,7 @@ DB.push({
   });
   document.addEventListener('keydown', function (ev) {
     if (ev.key === 'Escape') {
+      if (lbEl && !lbEl.hidden) { closeLightbox(); return; }
       if (!modal.hidden) closeAll();
       else if (state.q) { qEl.value = ''; state.q = ''; resetLimit(); render(); }
     }
